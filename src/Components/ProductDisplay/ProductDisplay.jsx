@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './ProductDisplay.css';
 import star_icon from '../Assets/star_icon.png';
 import star_dull_icon from '../Assets/star_dull_icon.png';
@@ -8,8 +8,30 @@ const ProductDisplay = (props) => {
     const { product } = props;
     const { addToCart } = useContext(ShopContext);
 
-    // List of categories where the size selection should not be shown
+    const[magnifierStyle, setMagnifierStyle] = useState({display: 'none'});
+
     const categoriesWithoutSizes = ['mobile&tablet', 'laptop'];
+
+    const handleMouseEnter = () =>{
+        setMagnifierStyle({display: 'block'});
+    };
+
+    const handleMouseLeave = () => {
+        setMagnifierStyle({ display: 'none' });
+    };
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        setMagnifierStyle({
+            display: 'block',
+            left: `${x - 50}px`,
+            top: `${y - 50}px`,
+            backgroundImage: `url(${product.image})`,
+            backgroundPosition: `-${x * 2}px -${y * 2}px`, // Adjust zoom level here
+        });
+    };
 
     return (
         <div className='productdisplay'>
@@ -20,8 +42,16 @@ const ProductDisplay = (props) => {
                     <img src={product.image} alt="" />
                     <img src={product.image} alt="" />
                 </div>
-                <div className="productdisplay-img">
-                    <img className='productdisplay-main-img' src={product.image} alt="" />
+                <div className="productdisplay-main-img-container">
+                    <img 
+                        className='productdisplay-main-img'
+                        src={product.image}
+                        alt=""
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        onMouseMove={handleMouseMove}
+                    />
+                    <div className="productdisplay-magnifier" style={magnifierStyle} ></div>
                 </div>
             </div>
             <div className="productdisplay-right">
