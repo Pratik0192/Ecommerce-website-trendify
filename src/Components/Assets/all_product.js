@@ -49,13 +49,13 @@ import p48_img from "./laptop image/8.jpg";
 import p49_img from "./laptop image/9.jpg";
 import p50_img from "./laptop image/10.jpg";
 import p51_img from "./laptop image/11.jpg";
-import p52_img from "./laptop image/12.jpg";
+import p52_img from "./laptop image/28.1.jpg";
 import p53_img from "./laptop image/13.jpg";
 import p54_img from "./laptop image/14.jpg";
 import p55_img from "./laptop image/15.jpg";
 import p56_img from "./laptop image/16.jpg";
 import p57_img from "./laptop image/16.1.jpg";
-import p58_img from "./laptop image/17.jpg";
+import p58_img from "./laptop image/16.jpg";
 import p59_img from "./laptop image/19.2.jpg";
 import p60_img from "./laptop image/19.jpg";
 import p61_img from "./laptop image/20.jpg";
@@ -63,7 +63,7 @@ import p62_img from "./laptop image/21.jpg"
 import p63_img from "./laptop image/23.jpg";
 import p64_img from "./laptop image/26.jpg";
 import p65_img from "./laptop image/27.jpg";
-import p66_img from "./laptop image/28.2.jpg";
+import p66_img from "./laptop image/24.jpg";
 import p67_img from "./laptop image/29.jpg";
 
 let all_product = [{
