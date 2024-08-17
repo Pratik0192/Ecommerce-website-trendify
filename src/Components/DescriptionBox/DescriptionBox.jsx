@@ -10,6 +10,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -55,10 +56,6 @@ function SimpleDialog(props) {
   const handleClose = () => {
     onClose(selectedValue);
   };
-
-  // const handleListItemClick = (value) => {
-  //   onClose(value);
-  // };
 
   return (
     <Dialog onClose={handleClose} open={open}>
