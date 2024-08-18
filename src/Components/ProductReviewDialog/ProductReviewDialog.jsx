@@ -204,7 +204,7 @@ const ProductReviewDialog = ({ open, handleClose, product}) => {
             },
           }}
         />
-        <Divider sx={{ marginTop: 2, marginBottom: 2, width: '100%' }} />
+        <Divider sx={{ marginTop: 2, width: '100%' }} />
 
       </DialogContent>
       <DialogActions>
@@ -213,7 +213,8 @@ const ProductReviewDialog = ({ open, handleClose, product}) => {
             color: '#fff',
             background: '#ff4141',
             marginBottom: '30px',
-            marginRight: '30px'
+            marginRight: '30px',
+            marginTop: '0px'
           }}
         >
           Submit
