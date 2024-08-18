@@ -212,6 +212,8 @@ const ProductReviewDialog = ({ open, handleClose, product}) => {
           sx={{
             color: '#fff',
             background: '#ff4141',
+            marginBottom: '30px',
+            marginRight: '30px'
           }}
         >
           Submit
