@@ -37,9 +37,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-
-const DescriptionBox = () => {
+const DescriptionBox = ({product}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -79,7 +77,7 @@ const DescriptionBox = () => {
           <CustomTabPanel value={value} index={1}>
             <div className="customer-reviews-container">
               <div className="overall-review-bar">
-                <ReviewBarLeft />
+                <ReviewBarLeft product={product}/>
               </div>
               <div className="customer-reviews">
                 <ReviewHeader />
