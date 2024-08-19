@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <div className='navbar'>
         <div className="nav-logo">
-            <img src={logo} alt="" />
+        <img src={logo} alt="" />
         </div>
         <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="" />
         <ul ref={menuRef} className="nav-menu">
