@@ -1,52 +1,47 @@
 import React from 'react';
-import './RelatedProducts.css';  // Ensure this file contains your styles
+import './RelatedProducts.css';
 import Item from '../Item/Item';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Carousel } from 'react-responsive-carousel';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-const RelatedProducts = ({ product, all_products }) => {
-  const relatedProducts = all_products
-    .filter((item) => item.category === product.category && item.id !== product.id)
-    .slice(0, 8);
+const RelatedProducts = (props) => {
+  const { product, all_products } = props;
 
-  const itemsPerSlide = 4;
-  const slides = [];
+  const relatedProducts = all_products.filter(
+    (item) => item.category === product.category && item.id !== product.id
+  );
 
-  for (let i = 0; i < relatedProducts.length; i += itemsPerSlide) {
-    slides.push(
-      <div key={i} className="carousel-slide">
-        {relatedProducts.slice(i, i + itemsPerSlide).map((item) => (
-          <Item
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            image={item.image}
-            new_price={item.new_price}
-            old_price={item.old_price}
-          />
-        ))}
-      </div>
-    );
-  }
+  const limitedRelatedProducts = relatedProducts.slice(0, 20); // Adjust if needed
+
+  // Slick carousel settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+  };
 
   return (
     <div className='relatedproducts'>
       <h2>Related Products</h2>
       <hr />
-      <Carousel
-        showArrows={true}
-        showThumbs={false}
-        showStatus={false}
-        infiniteLoop={true}
-        useKeyboardArrows={true}
-        autoPlay={false}  // Set to false if you don't want auto-play
-        interval={3000}
-        className="carousel-container"
-      >
-        {slides}
-      </Carousel>
+      <Slider {...settings}>
+        {limitedRelatedProducts.map((item) => (
+          <div key={item.id} className="carousel-item">
+            <Item
+              id={item.id}
+              name={item.name}
+              image={item.image}
+              new_price={item.new_price}
+              old_price={item.old_price}
+            />
+          </div>
+        ))}
+      </Slider>
     </div>
   );
-};
+}
 
 export default RelatedProducts;
