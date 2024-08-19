@@ -56,7 +56,7 @@
   }
   
   .slick-dots li button:before {
-    color: black !important; /* Color for inactive dots */
+    color: #d23e1d !important; /* Color for inactive dots */
   }
   
   .slick-dots .slick-active button:before {
