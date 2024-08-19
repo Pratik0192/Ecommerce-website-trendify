@@ -20,11 +20,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    backgroundColor: theme.palette.mode === 'light' ? '#ff4141' : '#308fe8',
   },
 }));
 
-const ReviewBarLeft = () => {
+const ReviewBarLeft = ({product}) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -35,22 +35,30 @@ const ReviewBarLeft = () => {
     setOpen(false);
   };
 
+  const buttonStyle = { 
+    width: '80%', 
+    color: '#ff4141', 
+    borderColor: '#ff4141', 
+    '&:hover': { borderColor: '#ff4141'}, 
+  };
+
   return (
     <Box sx={{ p: 0 }}>
       <div className="reviews-heading-text">Customer Reviews</div>
-      <Rating name="read-only" value={4} size="large" readOnly />
-      <Typography color="text.secondary" variant="body2">
-        999 global ratings
-      </Typography>
+      <div className="rating-rating-no">
+        <Rating name="read-only" value={4} size="large" readOnly sx={{color: '#ff4141'}} />
+        <Typography color="text.primary" variant="body1">4 out of 5</Typography>
+      </div>
+      <Typography color="text.secondary" variant="body2">999 global ratings</Typography>
       <Stack sx={{ p: 0, marginTop: 3 }} direction="row" spacing={1}>
         <Typography color="text.primary" variant="body2">5 star</Typography>
-        <BorderLinearProgress className="review-progress" variant="determinate" value={80} />
-        <Typography color="text.primary" variant="body2">80%</Typography>
+        <BorderLinearProgress className="review-progress" variant="determinate" value={47}/>
+        <Typography color="text.primary" variant="body2">47%</Typography>
       </Stack>
       <Stack sx={{ p: 0, marginTop: 1 }} direction="row" spacing={1}>
         <Typography color="text.primary" variant="body2">4 star</Typography>
-        <BorderLinearProgress className="review-progress" variant="determinate" value={40} />
-        <Typography color="text.primary" variant="body2">40%</Typography>
+        <BorderLinearProgress className="review-progress" variant="determinate" value={60} />
+        <Typography color="text.primary" variant="body2">60%</Typography>
       </Stack>
       <Stack sx={{ p: 0, marginTop: 1 }} direction="row" spacing={1}>
         <Typography color="text.primary" variant="body2">3 star</Typography>
@@ -59,8 +67,8 @@ const ReviewBarLeft = () => {
       </Stack>
       <Stack sx={{ p: 0, marginTop: 1 }} direction="row" spacing={1}>
         <Typography color="text.primary" variant="body2">2 star</Typography>
-        <BorderLinearProgress className="review-progress" variant="determinate" value={20} />
-        <Typography color="text.primary" variant="body2">20%</Typography>
+        <BorderLinearProgress className="review-progress" variant="determinate" value={4} />
+        <Typography color="text.primary" variant="body2">4%</Typography>
       </Stack>
       <Stack sx={{ p: 0, marginTop: '5px' }} direction="row" spacing={1}>
         <Typography color="text.primary" variant="body2">1 star</Typography>
@@ -71,13 +79,18 @@ const ReviewBarLeft = () => {
       <div className="review-this-product">
         <p>Review this product</p>
         <span>Share your thoughts with other customers</span>
-        <Button sx={{ width: '80%' }} variant="outlined" onClick={handleClickOpen}>
+        <Button 
+          sx={buttonStyle} 
+          variant="outlined" 
+          onClick={handleClickOpen}
+        >
           Write a product review
         </Button>
         <ProductReviewDialog
           open={open}
           setOpen={setOpen}
           handleClose={handleClose}
+          product={product}
         />
       </div>
     </Box>

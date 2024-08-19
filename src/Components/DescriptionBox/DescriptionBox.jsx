@@ -26,7 +26,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 3, border:'none' }}>{children}</Box>}
     </div>
   );
 }
@@ -37,9 +37,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-
-const DescriptionBox = () => {
+const DescriptionBox = ({product}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,15 +60,14 @@ const DescriptionBox = () => {
 
   return (
     <div className='descriptionbox'>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Description" {...a11yProps(0)}  />
-              <Tab label="Reviews" {...a11yProps(1)} />
-              <Tab label="Write a review" {...a11yProps(2)} />
-            </Tabs>
-          </Box>
-          <div className="decriptionbox-description">
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Description" {...a11yProps(0)}  />
+            <Tab label="Reviews" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <div className="decriptionbox-description">
           <CustomTabPanel value={value} index={0}>
             <p>The iPhone 14 Pro Max is the most advanced and powerful smartphone that Apple has made. 
               It offers a stunning design, a superb display, a pro-level camera system, and a blazing-fast 
@@ -91,7 +88,7 @@ const DescriptionBox = () => {
           <CustomTabPanel value={value} index={1}>
             <div className="customer-reviews-container">
               <div className="overall-review-bar">
-                <ReviewBarLeft />
+                <ReviewBarLeft product={product}/>
               </div>
               <div className="customer-reviews">
                 <ReviewHeader />
@@ -117,14 +114,9 @@ const DescriptionBox = () => {
                 </div>
               </div>
             </div>
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <Button variant="outlined">
-              Write a product review
-            </Button>
-          </CustomTabPanel>
-          </div>
-        </Box>
+          </CustomTabPanel>     
+        </div>
+      </Box>
     </div>
   )
 }
