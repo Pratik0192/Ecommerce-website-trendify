@@ -22,6 +22,45 @@
     gap: 30px;
     margin-left: 50px;
 }
+
+.carousel-container {
+    width: 80%;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+  
+.carousel-slide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.carousel-slide .item {
+    flex: 1;
+    margin: 0 10px;
+    box-sizing: border-box;
+}
+.carousel-container .carousel .control-dot{
+    bottom: -50px;
+}
+
+.carousel-container .carousel .control-dots .dot {
+    background: gray;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    margin: 0 10px;
+    opacity: 0.6;
+    transition: background 0.3s ease, opacity 0.3s ease;
+  }
+  
+.item img {
+    width: 200px;
+    height: auto;
+}
+  
 @media(max-width:1280px){
     .relatedproducts{
         height: 70vh;

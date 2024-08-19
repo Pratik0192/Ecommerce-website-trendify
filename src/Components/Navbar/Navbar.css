@@ -72,6 +72,10 @@
     gap: 25px;
 }
 
+.nav-link{
+    text-decoration: none;
+}
+
 .nav-icon-container {
     display: flex;
     flex-direction: column;

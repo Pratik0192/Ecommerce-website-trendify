@@ -83,7 +83,7 @@ const Navbar = () => {
           <AiOutlineHeart className='nav-icon' />
           <p>Wishlist</p>
         </div>
-        <Link to='/cart'>
+        <Link to='/cart' className='nav-link'>
           <div className='nav-icon-container'>
             <BsBag className='nav-icon' />
             <p>Cart</p>
