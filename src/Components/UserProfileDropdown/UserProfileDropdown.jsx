@@ -58,7 +58,7 @@ const UserProfileDropdown = (props) => {
       </MenuItem>
       <MenuItem sx={{'&:hover':{backgroundColor: 'transparent'} }}>
         <Link to='/login'>
-        <Button 
+          <Button 
             sx={{ 
                 width: '100%', 
                 height: '45px',
@@ -66,9 +66,10 @@ const UserProfileDropdown = (props) => {
                 borderColor: '#ff4141', 
                 '&:hover': {borderColor: '#ff4141'}, 
             }} 
-            variant="outlined">
+            variant="outlined"
+          >
             Login / Sign Up
-        </Button>
+          </Button>
         </Link>
       </MenuItem>
       <Divider sx={{width: '90%', margin: '0 auto'}}/>
