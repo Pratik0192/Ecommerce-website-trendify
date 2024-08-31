@@ -5,11 +5,12 @@ import ShopCategory from './Pages/ShopCategory';
 import Product from './Pages/Product';
 import Cart from './Pages/Cart';
 import Shop from './Pages/Shop';
+import Checkout from './Pages/Checkout';
 import LoginSignup from './Pages/LoginSignup';
 import Footer from './Components/Footer/Footer';
-import men_banner from './Components/Assets/banner_mens.png'
-import women_banner from './Components/Assets/banner_women.png'
-import kid_banner from './Components/Assets/banner_kids.png'
+import men_banner from './Components/Assets/banner_mens.png';
+import women_banner from './Components/Assets/banner_women.png';
+import kid_banner from './Components/Assets/banner_kids.png';
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
           <Route path=':productId' element={<Product/>}/>
         </Route>
         <Route path='/cart' element={<Cart/>}/>
+        <Route path='/checkout/:section' element={<Checkout section="shipping"/>}/>
+        {/* <Route path='/checkout/confirm' element={<Checkout section="confirm"/>}/>
+        <Route path='/checkout/payment' element={<Checkout section="payment"/>}/> */}
         <Route path='/login' element={<LoginSignup authTab="Login"/>}/>
         <Route path='/signup' element={<LoginSignup authTab="SignUp"/>}/>
       </Routes>
