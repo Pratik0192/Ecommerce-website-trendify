@@ -3,7 +3,6 @@ import { ShopContext } from '../../Context/ShopContext';
 import { Link } from 'react-router-dom';
 import "./Wishlist.css";
 
-
 const Wishlist = () => {
   //const { wishlistItems } = useContext(ShopContext); // Access wishlist items from context
   const [wishlistItems, setWishListItems] = useState([]);
