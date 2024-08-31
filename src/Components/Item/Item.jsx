@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+// src/Components/Item/Item.jsx
+import React, { useState, useContext } from 'react';
 import './Item.css';
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
@@ -11,11 +12,9 @@ const Item = (props) => {
     wishlistItems, 
     addToWishlist, 
     removeFromWishlist, 
-    isItemInWishlist, 
-    showWishList 
+    isItemInWishlist 
   } = useContext(ShopContext); // Access wishlist functions
   const [liked, setLiked] = useState(isItemInWishlist(props.id)); // Check if the item is already liked
-
 
   const handleLikeClick = () => {
     setLiked(!liked);
