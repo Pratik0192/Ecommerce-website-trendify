@@ -44,3 +44,20 @@
 .remove-button:hover {
   background-color: #ff7875;
 }
+
+
+.wishlist-button {
+  margin-left: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  color: #FF3E6C; /* Change this color to match your theme */
+}
+
+.wishlist-button:hover {
+  color: #85081b; /* Hover color */
+}
+

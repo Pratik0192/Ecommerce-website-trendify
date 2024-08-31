@@ -76,12 +76,6 @@
     text-decoration: none;
 }
 
-.nav-icon-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 .nav-icon-container p{
     font-size: 12px;
@@ -89,7 +83,13 @@
     text-decoration: none;
     color: black;
 }
-
+.nav-icon-container {
+    position: relative; /* Set to relative to position wishlist count absolutely */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .nav-icon{
     width: 25px;
     height: 25px;
@@ -111,6 +111,22 @@
 .nav-dropdown{
     display: none;
 }
+
+  .nav-wishlist-count {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -47px;
+    margin-left: 28px;
+    border-radius: 11px;
+    font-size: 12px;
+    background-color: red;
+    color: white;
+    z-index: 1;
+  }
 @media(max-width:1280px){
     .navbar{
         padding: 12px 50px;
