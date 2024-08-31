@@ -6,6 +6,7 @@ import Product from './Pages/Product';
 import Cart from './Pages/Cart';
 import Shop from './Pages/Shop';
 import Checkout from './Pages/Checkout';
+import Wishlist from './Components/Wishlist/Wishlist';
 import LoginSignup from './Pages/LoginSignup';
 import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
@@ -29,6 +30,7 @@ function App() {
           <Route path=':productId' element={<Product/>}/>
         </Route>
         <Route path='/cart' element={<Cart/>}/>
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path='/checkout/:section' element={<Checkout section="shipping"/>}/>
         {/* <Route path='/checkout/confirm' element={<Checkout section="confirm"/>}/>
         <Route path='/checkout/payment' element={<Checkout section="payment"/>}/> */}
