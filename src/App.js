@@ -15,6 +15,7 @@ import kid_banner from './Components/Assets/banner_kids.png';
 
 
 function App() {
+  localStorage.setItem('wishlist',JSON.stringify([]));
   return (
     <div>
       <BrowserRouter>

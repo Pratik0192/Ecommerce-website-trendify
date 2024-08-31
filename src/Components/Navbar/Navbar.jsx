@@ -90,10 +90,10 @@ const Navbar = () => {
           open={open}
           handleClose={handleClose}
         />
-        <div className='nav-icon-container'>
+        <Link to='/wishlist' className='nav-icon-container'>
           <AiOutlineHeart className='nav-icon' />
           <p>Wishlist</p>
-        </div>
+        </Link>
         <Link to='/cart' className='nav-link'>
           <div className='nav-icon-container'>
             <BsBag className='nav-icon' />
@@ -103,6 +103,7 @@ const Navbar = () => {
         {getTotalCartItems() > 0 && <div className="nav-cart-count">{getTotalCartItems()}</div>}
       </div>
     </div>
+    
   );
 }
 
