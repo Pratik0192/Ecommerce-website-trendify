@@ -11,9 +11,6 @@ import { BiSearch } from 'react-icons/bi';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
 
 
@@ -46,13 +43,27 @@ const Navbar = () => {
       </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={() => { setMenu('shop') }}><Link style={{ textDecoration: 'none' }} to='/'>Home</Link>{menu === "shop" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('mens') }}><Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('womens') }}><Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('kids') }}><Link style={{ textDecoration: 'none' }} to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('home&living') }}><Link style={{ textDecoration: 'none' }} to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('laptop') }}><Link style={{ textDecoration: 'none' }} to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}</li>
-        <li onClick={() => { setMenu('mobile&tablet') }}><Link style={{ textDecoration: 'none' }} to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}</li>
+        <li onClick={() => { setMenu('shop') }}>
+          <Link style={{ textDecoration: 'none' }} to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('mens') }}>
+          <Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('womens') }}>
+          <Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('kids') }}>
+          <Link style={{ textDecoration: 'none' }} to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('home&living') }}>
+          <Link style={{ textDecoration: 'none' }} to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('laptop') }}>
+          <Link style={{ textDecoration: 'none' }} to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
+        </li>
+        <li onClick={() => { setMenu('mobile&tablet') }}>
+          <Link style={{ textDecoration: 'none' }} to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
+        </li>
       </ul>
       <div className="search">
         <BiSearch className='search-icon' />

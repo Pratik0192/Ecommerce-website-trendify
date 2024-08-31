@@ -12,10 +12,10 @@ const Product = () =>{
   const product = all_product.find((e)=> e.id === Number(productId));
   return (
     <div>
-        <Breadcrum product = {product} />
-        <ProductDisplay product={product}/>
-        <DescriptionBox product={product}/>
-        <RelatedProducts product={product} all_products={all_product}/>
+      <Breadcrum product = {product} />
+      <ProductDisplay product={product} />
+      <DescriptionBox product={product} />
+      <RelatedProducts product={product} all_products={all_product} />
     </div>
   )
 }
