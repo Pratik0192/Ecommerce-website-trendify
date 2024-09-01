@@ -1,13 +1,22 @@
 .item{
-    width: 280px;
+    width: 250px;
 }
 
 .item img{
-    width: 280px;
+    width: 250px;
 }
 .item p{
     margin: 6px 0px;
     margin-right: 10px;
+}
+
+.item-info {
+    height: 90px; /* Adjust this height to match the height of your button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -10px;
+    margin-bottom: -10px;
 }
 .item-prices{
     display: flex;
@@ -22,25 +31,12 @@
     width: 100%;
 }
 
-.like-button{
-    margin-right: 0 !important;
-}
-.icon-button {
-    margin-top: 10px;
-    margin-left: auto;
-    transition: transform 0.3s ease-in-out;
-}
-  
-.icon-button:hover {
-    transform: scale(1.2); /* Slight scaling effect on hover */
-}
-  
-.filled {
-    color: red; /* Filled heart color when liked */
-}
-  
-.outlined {
-    color: grey; /* Outlined heart color when not liked */
+.wishlist-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: transform 0.1s ease-in-out;
 }
 
 @media(max-width:1280px){
