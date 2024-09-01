@@ -11,14 +11,16 @@ const getDefaultCart = () => {
     cart[index] = 0;
   }
   return cart;
-};
+}; 
+
+const getDefaultWishlist = () => { 
+  return JSON.parse(localStorage.getItem("wishlist")) || [] // Load wishlist from localStorage
+}
 
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
   const [shippingAddress, setShippingAddress] = useState({});
-  const [wishlistItems, setWishlistItems] = useState(
-    JSON.parse(localStorage.getItem("wishlist")) || [] // Load wishlist from localStorage
-  );
+  const [wishlistItems, setWishlistItems] = useState(getDefaultWishlist());
 
   // Add shipping address
   const addShippingAddress = (address) => {

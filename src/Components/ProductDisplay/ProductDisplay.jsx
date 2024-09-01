@@ -113,7 +113,7 @@ const ProductDisplay = (props) => {
           <span>Category :</span> {product.category}
         </p>
         <p className="productdisplay-right-category">
-          <span>Tags :</span> Modern, Latest
+          <span>Tags :</span> Modern,Latest
         </p>
       </div>
     </div>
