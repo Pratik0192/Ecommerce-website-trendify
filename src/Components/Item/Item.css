@@ -1,112 +1,125 @@
-.item{
+.item {
     width: 280px;
+    position: relative; /* Make it relative to position overlay */
 }
 
-.item img{
-    width: 280px;
+.image-container {
+    position: relative;
+    overflow: hidden; /* Ensure the overlay stays within the container */
 }
-.item p{
-    margin: 6px 0px;
-    margin-right: 10px;
+
+.item img {
+    width: 100%;
+    transition: opacity 0.3s ease;
 }
-.item-prices{
+
+.wishlist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .wishlist-overlay {
+    opacity: 1; /* Show overlay on hover */
+}
+
+.wishlist-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white; /* White color for text and icon */
+}
+
+.wishlist-button span {
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+.item-prices {
+    display: flex;
+    flex-direction: row;
     gap: 20px;
 }
-.item-price-new{
-    color: #374151;
-    font-size: 18px;
-    font-weight: 600;
-}
-.item-price-old{
-    color: #8c8c8c;
-    font-weight: 500;
-    font-size: 18px;
-    text-decoration: line-through;
-}
-.item:hover{
-    transform: scale(1.05);
-    transition: 0.6s;
-}
-.item img{
-    width: 280px;
-}
-@media(max-width:1280px){
-    .item{
-        width: 220px;
-        font-size: 14px;
-    }
-    .item img{
-        width: 220px;
-    }
-    .item-price-old{
-        font-size: 14px;
-    }
-}
-@media(max-width:1024px){
-    .item{
-        width: 170px;
-        font-size: 13px;
-    }
-    .item img{
-        width: 170px;
-    }
-    .item-price-old{
-        font-size: 13px;
-    }
-}
-@media(max-width:800px){
-    .item{
-        width: 120px;
-        font-size: 12px;
-    }
-    .item img{
-        width: 120px;
-    }
-    .item-price-old{
-        font-size: 12px;
-    }
-}
-@media(max-width:500px){
-    .item{
-        width: 160px;
-    }
-    .item img{
-        width: 160px;
-    }
-}
-
-
-.icon-button {
-    margin-top: 10px;
-}
-
 
 .item-prices-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-  }
-  
-  .item-prices {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .icon-button {
+    margin-top: 10px;
+}
+
+.icon-button {
+    margin-top: 10px;
     margin-left: auto;
     transition: transform 0.3s ease-in-out;
-  }
-  
-  .icon-button:hover {
+}
+
+.icon-button:hover {
     transform: scale(1.2); /* Slight scaling effect on hover */
-  }
-  
-  .filled {
+}
+
+.filled {
     color: red; /* Filled heart color when liked */
-  }
-  
-  .outlined {
+}
+
+.outlined {
     color: grey; /* Outlined heart color when not liked */
-  }
+}
+
+/* Responsive styles */
+@media(max-width: 1280px) {
+    .item {
+        width: 220px;
+        font-size: 14px;
+    }
+    .item img {
+        width: 220px;
+    }
+    .item-price-old {
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .item {
+        width: 170px;
+        font-size: 13px;
+    }
+    .item img {
+        width: 170px;
+    }
+    .item-price-old {
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 800px) {
+    .item {
+        width: 120px;
+        font-size: 12px;
+    }
+    .item img {
+        width: 120px;
+    }
+    .item-price-old {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 500px) {
+    .item {
+        width: 160px;
+    }
+    .item img {
+        width: 160px;
+    }
+}
