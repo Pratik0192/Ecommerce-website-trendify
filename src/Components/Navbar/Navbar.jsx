@@ -13,10 +13,9 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
 
-
 const Navbar = () => {
   const [menu, setMenu] = useState('shop');
-  const { getTotalCartItems } = useContext(ShopContext);
+  const { getTotalCartItems, wishlistItems } = useContext(ShopContext);
   const menuRef = useRef();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,6 +32,9 @@ const Navbar = () => {
     menuRef.current.classList.toggle('nav-menu-visible');
     e.target.classList.toggle('open');
   };
+
+  // Calculate total number of wishlist items
+  const totalWishlistItems = wishlistItems.length;
 
   return (
     <div className='navbar'>
@@ -90,17 +92,24 @@ const Navbar = () => {
           open={open}
           handleClose={handleClose}
         />
+        <Link to='/wishlist' className='nav-link'>
         <div className='nav-icon-container'>
           <AiOutlineHeart className='nav-icon' />
           <p>Wishlist</p>
-        </div>
+          </div>
+          {totalWishlistItems > 0 && (
+            <div className="nav-wishlist-count">{totalWishlistItems}</div>
+          )}
+        </Link>
         <Link to='/cart' className='nav-link'>
           <div className='nav-icon-container'>
             <BsBag className='nav-icon' />
             <p>Cart</p>
           </div>
         </Link>
-        {getTotalCartItems() > 0 && <div className="nav-cart-count">{getTotalCartItems()}</div>}
+        {getTotalCartItems() > 0 && (
+          <div className="nav-cart-count">{getTotalCartItems()}</div>
+        )}
       </div>
     </div>
   );

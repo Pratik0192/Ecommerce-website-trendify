@@ -80,3 +80,38 @@
         width: 160px;
     }
 }
+
+
+.icon-button {
+    margin-top: 10px;
+}
+
+
+.item-prices-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .item-prices {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .icon-button {
+    margin-left: auto;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .icon-button:hover {
+    transform: scale(1.2); /* Slight scaling effect on hover */
+  }
+  
+  .filled {
+    color: red; /* Filled heart color when liked */
+  }
+  
+  .outlined {
+    color: grey; /* Outlined heart color when not liked */
+  }
