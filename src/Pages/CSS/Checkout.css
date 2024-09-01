@@ -1,0 +1,17 @@
+.checkout-page-container{
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkout-steps-box {
+  width: 60%;
+}
+
+.checkout-page-content {
+  display: flex;
+  margin-top: 15px;
+}
