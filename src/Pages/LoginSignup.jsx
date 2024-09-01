@@ -5,13 +5,9 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 const Login = (props) => {
-  const [currentTab, setCurrentTab] = useState("Login");
+  const [currentTab, setCurrentTab] = useState(props.authTab);
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
-
-  useEffect(() => {
-    setCurrentTab(props.authTab);
-  }, [props.authTab]);
 
   const changeTab = (tab) => {
     if(tab === "Login"){
