@@ -2,15 +2,19 @@ import React, { useContext, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ShopContext } from "../../Context/ShopContext";
 
 const ProductDisplay = (props) => {
   const { product } = props;
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, addToWishlist, removeFromWishlist, isItemInWishlist } = useContext(ShopContext);
 
   const [magnifierStyle, setMagnifierStyle] = useState({ display: "none" });
-
   const categoriesWithoutSizes = ["mobile&tablet", "laptop"];
+  
+  // Check if item is in wishlist
+  const [liked, setLiked] = useState(isItemInWishlist(product.id));
 
   const handleMouseEnter = () => {
     setMagnifierStyle({ display: "block" });
@@ -31,6 +35,15 @@ const ProductDisplay = (props) => {
       backgroundImage: `url(${product.image})`,
       backgroundPosition: `-${x * 2}px -${y * 2}px`, // Adjust zoom level here
     });
+  };
+
+  const handleWishlistClick = () => {
+    setLiked(!liked);
+    if (!liked) {
+      addToWishlist(product);
+    } else {
+      removeFromWishlist(product.id);
+    }
   };
 
   return (
@@ -88,15 +101,19 @@ const ProductDisplay = (props) => {
           </div>
         )}
 
-        <button onClick={() => {addToCart(product.id);}}>
-          ADD TO CART
-        </button>
+        <div className="productdisplay-right-buttons">
+          <button onClick={() => addToCart(product.id)}>ADD TO CART</button>
+          <button className="wishlist-button" onClick={handleWishlistClick}>
+            {liked ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteBorderIcon />}
+            <span>WISHLIST</span>
+          </button>
+        </div>
+
         <p className="productdisplay-right-category">
-          <span>Category :</span>
-          {product.category}
+          <span>Category :</span> {product.category}
         </p>
         <p className="productdisplay-right-category">
-          <span>Tags :</span>Modern, Latest
+          <span>Tags :</span> Modern,Latest
         </p>
       </div>
     </div>
@@ -104,3 +121,4 @@ const ProductDisplay = (props) => {
 };
 
 export default ProductDisplay;
+

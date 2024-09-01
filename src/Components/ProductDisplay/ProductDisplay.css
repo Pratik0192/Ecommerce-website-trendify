@@ -105,6 +105,7 @@
 .productdisplay-right-sizes div:hover{
     border: 1px solid grey;
 }
+
 .productdisplay-right button{
     height: 60px;
     padding: 20px 40px;
@@ -124,6 +125,29 @@
 .productdisplay-right-category span{
     font-weight: 500;
 }
+.productdisplay-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+  }
+  
+  .wishlist-button {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .wishlist-button span {
+    margin-left: 5px; /* Space between the icon and text */
+    /* font-weight: bold; */
+  }
+  
+  
 @media (max-width: 1280px){
     .productdisplay{
         margin: 0px 60px;

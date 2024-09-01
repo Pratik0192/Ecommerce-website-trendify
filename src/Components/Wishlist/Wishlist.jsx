@@ -1,17 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+// src/Components/Wishlist/Wishlist.jsx
+import React, { useContext } from 'react';
 import { ShopContext } from '../../Context/ShopContext';
 import { Link } from 'react-router-dom';
 import "./Wishlist.css";
 
-
 const Wishlist = () => {
-  //const { wishlistItems } = useContext(ShopContext); // Access wishlist items from context
-  const [wishlistItems, setWishListItems] = useState([]);
-
-  useEffect(() => {
-    //console.log(wishlistItems);
-    setWishListItems(JSON.parse(localStorage.getItem("wishlist")));
-  }, []);
+  const { wishlistItems, removeFromWishlist } = useContext(ShopContext); // Access wishlist items and remove function from context
 
   return (
     <div className="wishlist-page">
@@ -25,8 +19,16 @@ const Wishlist = () => {
               <Link to={`/product/${item.id}`}>
                 <img src={item.image} alt={item.name} />
               </Link>
-              <p>{item.name}</p>
-              <p>Price: Rs.{item.new_price}</p>
+              <div className="wishlist-item-info">
+                <p>{item.name}</p>
+                <p>Price: Rs.{item.new_price}</p>
+                <button 
+                  className="remove-button" 
+                  onClick={() => removeFromWishlist(item.id)}
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -36,3 +38,4 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
+
