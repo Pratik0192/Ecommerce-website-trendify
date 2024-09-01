@@ -8,6 +8,7 @@ import { ShopContext } from '../../Context/ShopContext';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'; 
+import { CardActions } from '@mui/material';
 
 const Item = (props) => {
   const { 
@@ -29,25 +30,9 @@ const Item = (props) => {
 
   return (
     <Card className='item'>
-      <div className="image-container">
         <Link to={`/product/${props.id}`}>
           <img onClick={() => window.scrollTo(0, 0)} src={props.image} alt={props.name} />
         </Link>
-        <div className="wishlist-overlay">
-          <IconButton
-            aria-label="add to favorites"
-            className="wishlist-button"
-            onClick={handleLikeClick}
-          >
-            {liked ? (
-              <FavoriteIcon className="filled" />
-            ) : (
-              <FavoriteBorderIcon className="outlined" />
-            )}
-            <span>Add to Wishlist</span>
-          </IconButton>
-        </div>
-      </div>
       <CardContent>
         <Typography 
           style={{fontSize: "18px", marginTop:"0px"}}  
@@ -71,6 +56,19 @@ const Item = (props) => {
               Rs.{props.old_price}
             </Typography>
           </div>
+          <CardActions>
+            <IconButton
+              aria-label="add to favorites"
+              className="wishlist-button"
+              onClick={handleLikeClick}
+            >
+              {liked ? (
+                <FavoriteIcon className="filled" />
+              ) : (
+                <FavoriteBorderIcon className="outlined" />
+              )}
+          </IconButton>
+          </CardActions>
         </div>
       </CardContent>
     </Card>
