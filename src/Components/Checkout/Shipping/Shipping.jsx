@@ -8,6 +8,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
 import { Country, State } from "country-state-city";
 import { ShopContext } from "../../../Context/ShopContext";
+import { Link } from "react-router-dom";
 
 
 const Shipping = ({ history }) => {
@@ -33,7 +34,8 @@ const Shipping = ({ history }) => {
       phoneNo: phoneNo
     };
     console.log(shippingAddress);
-    addShippingAddress(shippingAddress)
+    addShippingAddress(shippingAddress);
+    //window.location = "/checkout/confirm"
   };
 
   return (
@@ -130,12 +132,14 @@ const Shipping = ({ history }) => {
               </div>
             )}
 
-            <input
-              type="submit"
-              value="Continue"
-              className="shippingBtn"
-              disabled={state ? false : true}
-            />
+            <Link to="/checkout/confirm" >
+              <input
+                type="submit"
+                value="Continue"
+                className="shippingBtn"
+                disabled={state ? false : true}
+              />
+            </Link>            
           </form>
         </div>
       </div>
