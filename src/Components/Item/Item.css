@@ -21,7 +21,6 @@
 .item-prices{
     display: flex;
     flex-direction: row;
-    gap: 20px;
 }
 
 .item-prices-container {
