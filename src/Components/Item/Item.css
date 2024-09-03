@@ -2,9 +2,14 @@
     width: 250px;
 }
 
+.image-container{
+    min-height: 270px;
+}
+
 .item img{
     width: 250px;
 }
+
 .item p{
     margin: 6px 0px;
     margin-right: 10px;
