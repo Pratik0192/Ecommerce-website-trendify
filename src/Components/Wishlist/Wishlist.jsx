@@ -6,14 +6,14 @@ import { Button, Card, CardContent, Divider, Typography } from '@mui/material';
 import { CancelOutlined, Padding, Star } from '@mui/icons-material';
 import wishlist_icon from '../Assets/wishlist.png';
 
-const Wishlist = () => {
+const Wishlist = (props) => {
+  const product = props;
   const { addToCart, wishlistItems, removeFromWishlist } = useContext(ShopContext); // Access wishlist items and remove function from context
 
   const buttonStyle = {
-    marginLeft:'43.5%',
     marginTop:'20px',
-    marginBottom:'20%',
-    Padding:'14.5px 51px',
+    marginBottom:'60%',
+    padding:'14px 45px',
     color: '#ff4141', 
     borderColor: '#ff4141',
     fontSize:'16px',
@@ -25,19 +25,20 @@ const Wishlist = () => {
     <div className="wishlist-page">
       {wishlistItems.length === 0 ? (
         <>
-          <Typography style={{marginTop:'120px', fontSize:'20px', fontWeight:'600', color:'#282c3f', marginLeft:'43%'}} >
-            Your Wishlist is Empty
+          <Typography style={{marginTop:'120px', fontSize:'20px', fontWeight:'600', color:'#282c3f' }} >
+            YOUR WISHLIST IS EMPTY
+          </Typography>
+          <Typography style={{fontSize:'17px', color:'#94989f', marginTop:'15px' }} >
+            Add items that you like to in your wishlist.Review
+          </Typography>
+          <Typography style={{fontSize:'17px', color:'#94989f' }} >
+            them anytime and easily move them to the bag.
           </Typography>
           <img 
             src={wishlist_icon}
-            style={{marginLeft:'42.5%', marginTop:'20px'}}
-            alt="" />
-          <Typography style={{fontSize:'18px', color:'#94989f', marginTop:'20px' ,marginLeft:'37%'}} >
-            Add items that you like to in your wishlist.Review
-          </Typography>
-          <Typography style={{fontSize:'18px', color:'#94989f', marginLeft:'37.5%'}} >
-            them anytime and easily move them to the bag.
-          </Typography>
+            style={{ margin:'30px 0', width: "160px"}}
+            alt="" 
+          />
           <Link to='/' >
             <Button
               variant='outlined'
@@ -115,7 +116,10 @@ const Wishlist = () => {
                 </div>
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
-                  onClick={() => addToCart(item.id)}
+                  onClick={() => {
+                    addToCart(item.id);
+                    removeFromWishlist(item.id);
+                  }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >
                   Move to bag
@@ -130,4 +134,3 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
-
