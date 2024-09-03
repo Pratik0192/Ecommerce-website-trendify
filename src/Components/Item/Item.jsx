@@ -33,10 +33,16 @@ const Item = (props) => {
     width: '100%',
     marginTop: '0px',
     marginBottom: '23px',
-    color: '#ff4141', 
+    color: liked ? '#ffffff' : '#ff4141',
+    backgroundColor: liked ? '#ff4141' : '#ffffff',
     borderColor: '#ff4141',
     fontWeight: '600', 
-    '&:hover': { borderColor: '#ff4141', color: '#ff4141', fontWeight: '600'}, 
+    '&:hover': { 
+      borderColor: '#ff4141', 
+      color: liked ? '#ffffff' : '#ff4141',
+      backgroundColor: liked ? '#ff4141' : '#ffffff', 
+      fontWeight: '600'
+    }, 
   };
 
   return (
