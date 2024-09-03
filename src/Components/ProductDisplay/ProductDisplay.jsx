@@ -104,7 +104,7 @@ const ProductDisplay = (props) => {
         <div className="productdisplay-right-buttons">
           <button onClick={() => addToCart(product.id)}>ADD TO CART</button>
           <button className="wishlist-button" onClick={handleWishlistClick}>
-            {liked ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteBorderIcon />}
+            {liked ? <FavoriteIcon style={{ color: "white" }} /> : <FavoriteBorderIcon />}
             <span>WISHLIST</span>
           </button>
         </div>

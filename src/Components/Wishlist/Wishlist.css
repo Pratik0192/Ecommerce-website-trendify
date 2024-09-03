@@ -1,8 +1,10 @@
-/* src/Components/Wishlist/Wishlist.css */
 
 .wishlist-page {
   padding: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .wishlist-items {
@@ -12,52 +14,29 @@
   justify-content: center;
 }
 
-.wishlist-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  max-width: 200px;
-  text-align: center;
+.wishlist-item{
+  width: 250px;
+}
+.wishlist-item img{
+  width: 250px;
+  display: block;
+}
+
+.wishlist-img-container {
   position: relative;
+  display: inline-block;
 }
 
-.wishlist-item img {
-  max-width: 100%;
-  border-radius: 4px;
-}
-
-.wishlist-item-info {
-  margin-top: 10px;
-}
-
-.remove-button {
-  background-color: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 5px 10px;
+.wishlist-remove-icon {
+  position: absolute;
+  font-size: 30px;
+  top: 8px; /* Adjust this value if you need to move the icon up or down */
+  right: 8px; /* Adjust this value if you need to move the icon left or right */
   cursor: pointer;
-  border-radius: 4px;
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-.remove-button:hover {
-  background-color: #ff7875;
+  color: #ff4141;
+  border-radius: 50%;
+  padding: 3px;
 }
 
 
-.wishlist-button {
-  margin-left: 10px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  color: #FF3E6C; /* Change this color to match your theme */
-}
-
-.wishlist-button:hover {
-  color: #85081b; /* Hover color */
-}
 
