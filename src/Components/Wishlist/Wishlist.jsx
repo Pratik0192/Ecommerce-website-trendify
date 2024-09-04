@@ -5,6 +5,7 @@ import "./Wishlist.css";
 import { Button, Card, CardContent, Divider, Typography } from '@mui/material';
 import { CancelOutlined, Padding, Star } from '@mui/icons-material';
 import wishlist_icon from '../Assets/wishlist.png';
+import Navbar from '../Navbar/Navbar';
 
 const Wishlist = (props) => {
   const product = props;

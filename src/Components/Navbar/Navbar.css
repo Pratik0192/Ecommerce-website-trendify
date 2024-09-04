@@ -116,11 +116,12 @@
     justify-content: center;
     align-items: center;
     margin-top: -35px;
-    margin-left: -35px;
+    margin-left: -27px;
     border-radius: 11px;
     font-size: 12px;
     background-color: red;
     color: white;
+    z-index: 1;
 }
 .nav-dropdown{
     display: none;
