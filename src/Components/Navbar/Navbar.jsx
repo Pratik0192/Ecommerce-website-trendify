@@ -46,25 +46,25 @@ const Navbar = () => {
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
         <li onClick={() => { setMenu('shop') }}>
-          <Link style={{ textDecoration: 'none' }} to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('mens') }}>
-          <Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('womens') }}>
-          <Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('kids') }}>
-          <Link style={{ textDecoration: 'none' }} to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('home&living') }}>
-          <Link style={{ textDecoration: 'none' }} to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('laptop') }}>
-          <Link style={{ textDecoration: 'none' }} to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu('mobile&tablet') }}>
-          <Link style={{ textDecoration: 'none' }} to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="search">
@@ -77,7 +77,7 @@ const Navbar = () => {
             <IconButton
               onClick={handleClick}
               size="small"
-              sx={{ ml: 2 }}
+              sx={{ ml: 2, maxWidth: "40px"}}
               aria-controls={open ? 'account-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
@@ -95,9 +95,9 @@ const Navbar = () => {
           handleClose={handleClose}
         />
         <Link to='/wishlist' className='nav-link'>
-        <div className='nav-icon-container'>
-          <AiOutlineHeart className='nav-icon' />
-          <p>Wishlist</p>
+          <div className='nav-icon-container'>
+            <AiOutlineHeart className='nav-icon' />
+            <p>Wishlist</p>
           </div>
           {totalWishlistItems > 0 && (
             <div className="nav-wishlist-count">{totalWishlistItems}</div>

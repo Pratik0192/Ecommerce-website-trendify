@@ -116,7 +116,10 @@ const Wishlist = (props) => {
                 </div>
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
-                  onClick={() => addToCart(product.id)}
+                  onClick={() => {
+                    addToCart(item.id);
+                    removeFromWishlist(item.id);
+                  }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >
                   Move to bag
@@ -131,4 +134,3 @@ const Wishlist = (props) => {
 };
 
 export default Wishlist;
-
