@@ -1,6 +1,6 @@
 .navbar{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     padding: 16px;
     box-shadow: 0 1px 3px -2px black;
     align-items: center;
@@ -12,6 +12,7 @@
 .nav-logo img{
     width: 50px;
 }
+
 .nav-logo p{
     color: #171717;
     font-size: 38px;
@@ -20,28 +21,32 @@
 .nav-menu{
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     list-style: none;
-    gap: 20px;
     color: #626262;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
+    margin-left: 18px;
+    padding-left: 0;
 }
+
 .nav-menu li{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
     cursor: pointer;
+    padding: 0 15px;
 }
 
 .search{
-    min-width: 300px;
-    width: 30%;
     display: flex;
+    flex-grow: 1;
     align-items: center;
     color: #696e79;
     background: #f5f5f6;
+    border: 1px solid #ccc;
+    margin-left: 25px;
 }
 .search-icon{
     width: 24px;
@@ -49,7 +54,6 @@
     padding-left: 10px;
 }
 .search input{
-    width: 500px;
     height: 20px;
     font-size: 14px;
     padding: 8px 10px 10px;
@@ -58,6 +62,15 @@
     border: 0px;
     outline: none;
 }
+
+.nav-item-link {
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
 
 .nav-menu hr{
     border: none;
@@ -69,20 +82,13 @@
 .nav-login-cart{
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 15px;
 }
 
 .nav-link{
     text-decoration: none;
 }
 
-
-.nav-icon-container p{
-    font-size: 12px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-}
 .nav-icon-container {
     position: relative; /* Set to relative to position wishlist count absolutely */
     display: flex;
@@ -90,6 +96,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.nav-icon-container p{
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
 .nav-icon{
     width: 25px;
     height: 25px;
@@ -112,7 +126,7 @@
     display: none;
 }
 
-  .nav-wishlist-count {
+.nav-wishlist-count {
     position: absolute;
     width: 17px;
     height: 17px;
@@ -126,7 +140,8 @@
     background-color: red;
     color: white;
     z-index: 1;
-  }
+}
+
 @media(max-width:1280px){
     .navbar{
         padding: 12px 50px;
@@ -138,11 +153,16 @@
         font-size: 25px;
     }
     .nav-menu{
-        gap: 30px;
         font-size: 16px;
     }
+    .nav-menu li {
+        padding: 0 6px;
+    }
+    .nav-item-link {
+        max-width: 100px;
+    }
     .nav-login-cart{
-        gap: 30px;
+        gap: 10px;
     }
     .nav-login-cart button{
         width: 120px;
@@ -159,8 +179,13 @@
         padding: 12px 30px;
     }
     .nav-menu{
-        gap: 25px;
         font-size: 14px;
+    }
+    .nav-menu li {
+        padding: 0 5px;
+    }    
+    .nav-item-link {
+        max-width: 70px;
     }
     .nav-login-cart button{
         width: 80px;
@@ -175,13 +200,18 @@
         height: 18px;
     }
 }
-@media(max-width: 800px){
+@media(max-width: 900px){
     .navbar{
+        margin-right: 30px;
         padding: 10px 0px;
+    }
+    .nav-logo{
+        margin-left: 25px;
     }
     .nav-dropdown{
         display: block;
         width: 30px;
+        margin-left: 15px;
         rotate: -90deg;
         transition: 0.5s;
     }
@@ -194,6 +224,9 @@
         justify-content: center;
         top: 50px;
     }
+    .nav-menu li {
+        padding: 5px 15px;
+    }    
     .nav-menu-visible{
         display: flex;
     }
