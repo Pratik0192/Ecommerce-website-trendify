@@ -2,14 +2,15 @@ import React, { useContext } from 'react';
 import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import { Link } from 'react-router-dom';
-import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Undo } from '@mui/icons-material';
+import { BorderColor, CheckBox, Undo } from '@mui/icons-material';
 import expressicon from '../Assets/express.png';
+import emptycart from '../Assets/emptyCartIcon.png';
 import { Close } from '@mui/icons-material';
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, cartItems, removeCart, getTotalCartItems } = useContext(ShopContext);
+  const { getTotalCartAmount, addToCart, all_product, cartItems, removeCart, getTotalCartItems } = useContext(ShopContext);
 
   const spanStyle = {
     fontWeight: '700',
@@ -66,12 +67,49 @@ const CartItems = () => {
     '&:hover': {background: '#f5f5f5',}
   }
 
+  const donationButtonStyle = {
+    border:'1px solid #d4d5d9',
+    color:'#282c3f',
+    borderRadius:'40px',
+    fontWeight:'700',
+    padding:'8px 16px',
+    '&:hover': {border:'1px solid #ff3f6c', color:'#ff3f6c', background:'transparent'}
+  }
+
+  const emptyCartButtonStyle = {
+    border:'1px solid #ff3f6c',
+    color:'#ff3f6c',
+    fontWeight:'700',
+    padding:'8px 16px',
+    borderRadius:'2px',
+    '&:hover': {border:'1px solid #ff3f6c', color:'#ff3f6c', background:'transparent'}
+  }
+
   let totalDiscount = 0;
+
+  if (getTotalCartItems() === 0) {
+    return (
+      <Box textAlign="center" mt={15} mb={28}>
+        <img src={emptycart} style={{width: '250px'}} />
+        <Typography sx={{ fontWeight: '700', color: '#282c3f', fontSize:'20px', marginBottom:'2px' }}>
+          Hey, it feels so light!
+        </Typography>
+        <Typography  sx={{fontSize:'14px', color:'#7e818c', marginBottom:'25px'}}>
+          There is nothing in your bag. Let's add some items
+        </Typography>
+        <Link to="/wishlist">
+          <Button variant="outlined" sx={emptyCartButtonStyle}>
+            Add items from wishlist
+          </Button>
+        </Link>
+      </Box>
+    );
+  }
 
   return (
     <Box p={2} className='cartitems'>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={11} md={7}>
           {all_product.map((e) => {
             const quantity = cartItems[e.id] || 0;
             if (quantity > 0) {
@@ -90,8 +128,8 @@ const CartItems = () => {
                   </Box>
                   <CardContent>
                     <Grid container spacing={2}>
-                      <Grid item xs={2.5}>
-                        <img src={e.image} alt="" style={{ width: '135px', height: '175px' }} />
+                      <Grid item xs={2.5} mr={2}>
+                        <img src={e.image} alt="" style={{ width: '135px', height: '175px'}} />
                       </Grid>
                       <Grid item xs={9}>
                         <Typography
@@ -123,13 +161,20 @@ const CartItems = () => {
                             Size: 39
                           </span>
                           <span style={{marginLeft:'-3px', marginRight:'-8px'}}>
-                            <Button variant='text' sx={quantityButtonstyle} >+</Button>
+                            <Button 
+                              variant='text' 
+                              sx={quantityButtonstyle} >+</Button>
                           </span>
                           <span style={spanStyle}>
                             Qty: {quantity}                         
                           </span>
                           <span style={{marginLeft:'-20px', marginRight:'10px'}}>
-                            <Button variant='text' sx={quantityButtonstyle} >-</Button>
+                            <Button 
+                              variant='text'
+                              sx={quantityButtonstyle}
+                            >
+                              -
+                            </Button>
                           </span>
                           <span
                             style={{
@@ -224,6 +269,45 @@ const CartItems = () => {
             <CardContent>
               <Typography
                 style={{
+                  fontSize:'12px',
+                  fontWeight:'700',
+                  color:'#535766',
+                  marginTop:'12px',
+                  marginBottom:'20px'
+                }}
+              >
+                SUPPORT TRANSFORMATIVE SOCIAL WORK IN INDIA
+              </Typography>
+              <Box display="flex" alignItems="center" paddingBottom="5px">
+                <Checkbox sx={{marginLeft:'-10px', color:'#282c3f', '&.Mui-checked':{color:'#ff3f6c'},}}/>
+                <Typography
+                  style={{
+                    fontSize:'14px',
+                    fontWeight:'700',
+                    color:'#282c3f'
+                  }}
+                >
+                  Donate and make a difference
+                </Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" paddingTop="10px" paddingBottom="16px">
+                <Button variant='outlined' sx={donationButtonStyle}>Rs.10</Button>
+                <Button variant='outlined' sx={donationButtonStyle}>Rs.20</Button>
+                <Button variant='outlined' sx={donationButtonStyle}>Rs.50</Button>
+                <Button variant='outlined' sx={donationButtonStyle}>Rs.100</Button>
+              </Box>
+              <Typography 
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '700',
+                  color: '#ff3f6c',
+                }}
+              >
+                Know more
+              </Typography>
+              <Divider sx={{marginTop:'18px', marginBottom:'18px'}} />
+              <Typography
+                style={{
                   fontSize: '12px',
                   fontWeight: '700',
                   color: '#535766',
@@ -267,7 +351,7 @@ const CartItems = () => {
                 <Typography style={styleFree}>Free</Typography>
               </Box>
               <Typography style={{fontSize:'12px', color:'#686b79', marginTop:'-3px'}}>Free Shipping for you</Typography>
-              <Divider sx={{ margin: '10px -16px 10px -16px' }} />
+              <Divider sx={{margin: '10px 0 10px 0'}}/>
               <Box display="flex" justifyContent="space-between">
                 <Typography style={totalAmountStyle}>Total Amount</Typography>
                 <Typography style={totalAmountStyle}>Rs.{getTotalCartAmount()}</Typography>
