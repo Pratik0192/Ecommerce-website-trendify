@@ -1,21 +1,21 @@
-// src/Context/ShopContext.jsx
 import React, { createContext, useState } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import all_product from "../Components/Assets/all_product";
 
 export const ShopContext = createContext(null);
 
-// Initialize default cart state
 const getDefaultCart = () => {
   let cart = {};
   for (let index = 0; index < all_product.length; index++) {
     cart[index] = 0;
   }
   return cart;
-}; 
+};
 
-const getDefaultWishlist = () => { 
-  return JSON.parse(localStorage.getItem("wishlist")) || [] // Load wishlist from localStorage
-}
+const getDefaultWishlist = () => {
+  return JSON.parse(localStorage.getItem("wishlist")) || []; // Load wishlist from localStorage
+};
 
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
@@ -30,56 +30,61 @@ const ShopContextProvider = (props) => {
   // Add to cart
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    const product = all_product.find(item => item.id === itemId);
+    toast.success(`Added to cart!`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   // Remove from cart
   const removeCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-  };
-
-  // Calculate total amount
-  const getTotalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        const itemInfo = all_product.find(
-          (product) => product.id === Number(item)
-        );
-        totalAmount += itemInfo.new_price * cartItems[item];
-      }
-    }
-    return totalAmount;
-  };
-
-  // Calculate total items in cart
-  const getTotalCartItems = () => {
-    let totalItem = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        totalItem += cartItems[item];
-      }
-    }
-    return totalItem;
+    const product = all_product.find(item => item.id === itemId);
+    toast.error(`Removed from cart!`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   // Wishlist Management
-
-  const showWishList = () => {
-    return wishlistItems;
-  };
-
   const addToWishlist = (item) => {
     setWishlistItems((prev) => {
       const updatedWishlist = [...prev, item];
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      toast.success(`Added to wishlist!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return updatedWishlist;
     });
   };
 
   const removeFromWishlist = (itemId) => {
     setWishlistItems((prev) => {
+      const item = prev.find(item => item.id === itemId);
       const updatedWishlist = prev.filter((item) => item.id !== itemId);
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      toast.error(`Removed from wishlist!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return updatedWishlist;
     });
   };
@@ -95,24 +100,28 @@ const ShopContextProvider = (props) => {
 
   // Context value object
   const contextValue = {
-    getTotalCartItems,
-    getTotalCartAmount,
+    getTotalCartItems: () => Object.values(cartItems).reduce((a, b) => a + b, 0),
+    getTotalCartAmount: () => Object.keys(cartItems).reduce((total, key) => {
+      const itemInfo = all_product.find(product => product.id === Number(key));
+      return total + (itemInfo ? itemInfo.new_price * cartItems[key] : 0);
+    }, 0),
     all_product,
     cartItems,
     addToCart,
     removeCart,
     addShippingAddress,
     getShippingAddress,
-    wishlistItems, // Add wishlist to context
-    addToWishlist, // Add item to wishlist
-    removeFromWishlist, // Remove item from wishlist
-    isItemInWishlist, // Check if an item is in wishlist
-    showWishList,
+    wishlistItems,
+    addToWishlist,
+    removeFromWishlist,
+    isItemInWishlist,
+    showWishList: () => wishlistItems,
   };
 
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}
+      <ToastContainer />
     </ShopContext.Provider>
   );
 };
