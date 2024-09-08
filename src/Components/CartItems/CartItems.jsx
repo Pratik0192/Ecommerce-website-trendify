@@ -89,7 +89,7 @@ const CartItems = () => {
   if (getTotalCartItems() === 0) {
     return (
       <Box textAlign="center" mt={15} mb={28}>
-        <img src={emptycart} style={{width: '250px'}} />
+        <img src={emptycart} style={{width: '250px'}} alt="empty-cart-image"/>
         <Typography sx={{ fontWeight: '700', color: '#282c3f', fontSize:'20px', marginBottom:'2px' }}>
           Hey, it feels so light!
         </Typography>
