@@ -59,17 +59,26 @@ const Item = (props) => {
         />
       </Link>
       <CardContent>
-        <Typography style={{marginTop:'-10px'}}>
+        <Typography style={{marginTop:'-18px'}}>
           {props.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | {props.rating_count}
         </Typography>
         <div className="item-info">
           {!isHovered ? (
             <>
-              <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
+              <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f'}}>
                 {props.company}
               </Typography>
               <Typography 
-                style={{ fontSize: "14px", marginTop: "0px", marginLeft:'-80px' ,fontWeight: "400",color: "#535766", whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'260px',display:'block'}}  
+                style={{
+                  fontSize: "14px", 
+                  marginTop: "0px", 
+                  fontWeight: "400",
+                  color: "#535766", 
+                  whiteSpace:'nowrap', 
+                  overflow:'hidden', 
+                  textOverflow:'ellipsis', 
+                  maxWidth:'260px'
+                  }}  
               >
                 {props.name}
               </Typography>
@@ -97,12 +106,12 @@ const Item = (props) => {
             </Typography>
             <Typography 
               variant='body2' 
-              style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-18px',marginLeft:'-1px' ,textDecoration: "line-through" }}
+              style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-17px',marginLeft:'4px', textDecoration: "line-through" }}
               className='item-prices-old'
             >
               Rs.{props.original_price}
             </Typography>
-            <Typography style={{fontSize:'14px', marginLeft:'-5px', color:'#ff905a', marginTop:'-19px'}} >
+            <Typography style={{fontSize:'14px', marginLeft:'4px', color:'#ff905a', marginTop:'-17px'}} >
               ({props.discount}% off)
             </Typography>
           </div>

@@ -67,11 +67,11 @@ const Wishlist = (props) => {
               </div>
               <CardContent>
                 <Typography style={{marginTop:'-10px'}}>
-                  4.5 <Star sx={{color:'#ff4141', marginBottom:'-5px'}} />
+                  {item.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} />
                 </Typography>
                 <div className="wishlist-item-info">
                   <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
-                    Roadster
+                    {item.company}
                   </Typography>
                   <Typography
                     style={{
@@ -95,7 +95,7 @@ const Wishlist = (props) => {
                     style={{ fontSize: "16px", fontWeight: "600", color: "#282c3f", marginTop:'3px'}}
                     className='item-prices-new'
                   >
-                    Rs.{item.new_price}
+                    Rs.{item.current_price}
                   </Typography>
                   <Typography 
                     variant='body2' 
@@ -109,10 +109,10 @@ const Wishlist = (props) => {
                     }}
                       className='item-prices-old'
                     >
-                      Rs.{item.old_price}
+                      Rs.{item.original_price}
                     </Typography>
                     <Typography style={{fontSize:'14px', marginLeft:'120px', color:'#ff905a', marginTop:'-20.5px'}} >
-                      (50% off)
+                      ({item.discount}% off)
                     </Typography>
                 </div>
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />

@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import { Link } from 'react-router-dom';
-import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox, useScrollTrigger } from '@mui/material';
 import { Undo } from '@mui/icons-material';
 import expressicon from '../Assets/express.png';
 import emptycart from '../Assets/emptyCartIcon.png';
 import { Close } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 
 const CartItems = () => {
-  const { getTotalCartAmount, addToCart, all_product, cartItems, removeCart, getTotalCartItems } = useContext(ShopContext);
+  const { getTotalCartAmount, all_product, cartItems, removeCart, getTotalCartItems } = useContext(ShopContext);
+  const products = useSelector((store) => store.products);
 
   const spanStyle = {
     fontWeight: '700',
@@ -109,8 +111,9 @@ const CartItems = () => {
     <Box p={2} className='cartitems'>
       <Grid container spacing={2}>
         <Grid item xs={11} md={7}>
-          {all_product.map((e) => {
+          {products.data && products.data.map((e) => {
             const quantity = cartItems[e.id] || 0;
+            console.log(quantity);
             if (quantity > 0) {
               totalDiscount += (e.old_price - e.new_price) * quantity;
               return (

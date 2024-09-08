@@ -14,7 +14,7 @@ const ProductDisplay = (props) => {
   const categoriesWithoutSizes = ["mobile&tablet", "laptop"];
   
   // Check if item is in wishlist
-  const [liked, setLiked] = useState(isItemInWishlist(product.id));
+  const [liked, setLiked] = useState(isItemInWishlist(product._id));
 
   const handleMouseEnter = () => {
     setMagnifierStyle({ display: "block" });
@@ -68,21 +68,22 @@ const ProductDisplay = (props) => {
         </div>
       </div>
       <div className="productdisplay-right">
-        <h2>{product.name}</h2>
+        <h2>{product.company}</h2>
         <div className="productdisplay-right-star">
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           <img src={star_dull_icon} alt="" />
-          <p>(122)</p>
+          <p>({product.rating.count})</p>
         </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-            Rs.{product.old_price}
+          Rs.{product.current_price}
+            
           </div>
           <div className="productdisplay-right-price-new">
-            Rs.{product.new_price}
+          Rs.{product.original_price}
           </div>
         </div>
         <div className="productdisplay-right-description">
@@ -102,7 +103,7 @@ const ProductDisplay = (props) => {
         )}
 
         <div className="productdisplay-right-buttons">
-          <button onClick={() => addToCart(product.id)}>ADD TO CART</button>
+          <button onClick={() => addToCart(product._id)}>ADD TO CART</button>
           <button className="wishlist-button" onClick={handleWishlistClick}>
             {liked ? <FavoriteIcon style={{ color: "white" }} /> : <FavoriteBorderIcon />}
             <span>WISHLIST</span>
