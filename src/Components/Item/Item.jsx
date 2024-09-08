@@ -60,13 +60,13 @@ const Item = (props) => {
       </Link>
       <CardContent>
         <Typography style={{marginTop:'-10px'}}>
-          4.5 <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | 172
+          {props.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | {props.rating_count}
         </Typography>
         <div className="item-info">
           {!isHovered ? (
             <>
               <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
-                Roadster
+                {props.company}
               </Typography>
               <Typography 
                 style={{ fontSize: "14px", marginTop: "0px", marginLeft:'-80px' ,fontWeight: "400",color: "#535766", whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'260px',display:'block'}}  
@@ -93,17 +93,17 @@ const Item = (props) => {
               style={{ fontSize: "16px", fontWeight: "600", color: "#282c3f", marginTop:'-20px'}}
               className='item-prices-new'
             >
-              Rs.{props.new_price}
+              Rs.{props.current_price}
             </Typography>
             <Typography 
               variant='body2' 
               style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-18px',marginLeft:'-1px' ,textDecoration: "line-through" }}
               className='item-prices-old'
             >
-              Rs.{props.old_price}
+              Rs.{props.original_price}
             </Typography>
             <Typography style={{fontSize:'14px', marginLeft:'-5px', color:'#ff905a', marginTop:'-19px'}} >
-              (50% off)
+              ({props.discount}% off)
             </Typography>
           </div>
         </div>
