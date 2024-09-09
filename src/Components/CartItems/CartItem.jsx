@@ -10,8 +10,8 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../../store/cartSlice';
 
 const CartItems = (props) => {
-  const { removeCart } = useContext(ShopContext);
-  const{ cartItem, quantity } = props;
+  //const { removeCart } = useContext(ShopContext);
+  const{ cartItem } = props;
   const dispatch = useDispatch();
 
   const spanStyle = {
@@ -37,6 +37,14 @@ const CartItems = (props) => {
 
   const handleRemoveFromCart = () => {
     dispatch(cartActions.removeFromCart(cartItem._id))
+  }
+
+  const handleIncrementCartItemQuantity = () => {
+    dispatch(cartActions.incrementCartItemQuantity(cartItem._id));
+  }
+
+  const handleDecrementCartItemQuantity = () => {
+    dispatch(cartActions.decrementCartItemQuantity(cartItem._id));
   }
 
   return (
@@ -88,15 +96,20 @@ const CartItems = (props) => {
               <span style={{marginLeft:'-3px', marginRight:'-8px'}}>
                 <Button 
                   variant='text' 
-                  sx={quantityButtonstyle} >+</Button>
+                  sx={quantityButtonstyle}
+                  onClick={handleIncrementCartItemQuantity}
+                >
+                  +
+                </Button>
               </span>
               <span style={spanStyle}>
-                Qty: {quantity}                         
+                Qty: {cartItem.quantity}                         
               </span>
               <span style={{marginLeft:'-20px', marginRight:'10px'}}>
                 <Button 
                   variant='text'
                   sx={quantityButtonstyle}
+                  onClick={handleDecrementCartItemQuantity}
                 >
                   -
                 </Button>
@@ -120,7 +133,7 @@ const CartItems = (props) => {
                   fontWeight: '700',
                   marginRight: '8px'
                 }}
-              >Rs.{cartItem.current_price * quantity}</span>
+              >Rs.{cartItem.current_price * cartItem.quantity}</span>
               <span
                 style={{
                   fontSize: '14px',
@@ -128,7 +141,7 @@ const CartItems = (props) => {
                   textDecoration: 'line-through',
                   marginRight: '8px'
                 }}
-              >Rs.{cartItem.original_price * quantity}</span>
+              >Rs.{cartItem.original_price * cartItem.quantity}</span>
               <span
                 style={{
                   fontSize: '14px',

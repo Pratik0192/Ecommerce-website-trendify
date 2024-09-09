@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
@@ -16,6 +16,7 @@ const ProductDisplay = (props) => {
     isItemInWishlist 
   } = useContext(ShopContext);
 
+  const [cartItemIndex, setCartItemIndex] = useState(-1);
   const [magnifierStyle, setMagnifierStyle] = useState({ display: "none" });
   const categoriesWithoutSizes = ["mobile&tablet", "laptop"];
 
@@ -25,6 +26,12 @@ const ProductDisplay = (props) => {
   
   // Check if item is in wishlist
   const [liked, setLiked] = useState(isItemInWishlist(product._id));
+
+  useEffect(() => {
+    const itemIndex = cart.findIndex((item) => item._id === product._id);
+    setCartItemIndex(itemIndex);
+  }, [cart, product]);
+
 
   const handleMouseEnter = () => {
     setMagnifierStyle({ display: "block" });
@@ -57,7 +64,26 @@ const ProductDisplay = (props) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(cartActions.addToCart(product));
+    const itemIndex = cart.findIndex((item) => item._id === product._id);
+    if(itemIndex === -1){
+      const productObj = {
+        _id: product._id,
+        name: product.name,
+        category: product.category,
+        company: product.company,
+        image: product.image,
+        original_price: product.original_price,
+        current_price: product.current_price,
+        discount_percentage: product.discount_percentage,
+        stock: product.stock,
+        return_period: product.return_period,
+        quantity: 1
+      };
+      dispatch(cartActions.addToCart(productObj));
+    }
+    else {
+      dispatch(cartActions.incrementCartItemQuantity(product._id))
+    }
   }
 
   return (
@@ -117,7 +143,9 @@ const ProductDisplay = (props) => {
         )}
 
         <div className="productdisplay-right-buttons">
-          <button onClick={handleAddToCart}>ADD TO CART</button>
+          <button onClick={handleAddToCart}>
+            ADD TO CART {cartItemIndex !== -1 && '(' + cart[cartItemIndex].quantity + ')'}
+          </button>
           <button className="wishlist-button" onClick={handleWishlistClick}>
             {liked ? <FavoriteIcon style={{ color: "white" }} /> : <FavoriteBorderIcon />}
             <span>WISHLIST</span>

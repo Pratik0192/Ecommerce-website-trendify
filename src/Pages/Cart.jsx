@@ -107,7 +107,6 @@ const Cart = () =>{
               <CartItem
                 key={item._id}
                 cartItem={item}
-                quantity={quantity}
               />
             );
           })}
