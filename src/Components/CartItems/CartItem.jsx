@@ -60,7 +60,7 @@ const CartItems = (props) => {
             <Typography
               sx={{fontWeight: '700', fontSize: '13px', color: '#282c3f', marginBottom: '4px'}}
             >
-              Roadster
+              {cartItem.company}
             </Typography>
             <Typography
               sx={{
@@ -134,7 +134,7 @@ const CartItems = (props) => {
                   fontSize: '14px',
                   color: '#f16565',
                 }}
-              >45% OFF</span>
+              >{cartItem.discount_percentage}% OFF</span>
             </Typography>
             <Typography style={{ marginBottom: '8px' }}>
               <span>

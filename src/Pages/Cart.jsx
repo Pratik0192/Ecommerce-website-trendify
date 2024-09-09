@@ -20,14 +20,15 @@ const Cart = () =>{
 
   const priceStyle = {
     fontSize: '14px',
-    color: '#282c3f'
+    color: '#282c3f',
+    marginRight:'8px'
   };
 
   const styleKnowMore = {
     fontSize: '14px',
     fontWeight: '700',
     color: '#ff3f6c',
-    marginLeft: '8px'
+    cursor:'pointer'
   };
 
   const styleFree = {
@@ -70,7 +71,9 @@ const Cart = () =>{
     '&:hover': {border:'1px solid #ff3f6c', color:'#ff3f6c', background:'transparent'}
   }
 
+  let totalMrp = 0;
   let totalDiscount = 0;
+  let totalAmount = 0;
 
   if (cart.length === 0) {
     return (
@@ -97,7 +100,9 @@ const Cart = () =>{
         <Grid item xs={11} md={7}>
           {cart.map((item) => {
             let quantity = 1;
+            totalMrp += (item.original_price) * quantity;
             totalDiscount += (item.original_price - item.current_price) * quantity;
+            totalAmount += (item.current_price) * quantity;
             return (
               <CartItem
                 key={item._id}
@@ -140,11 +145,7 @@ const Cart = () =>{
                 <Button variant='outlined' sx={donationButtonStyle}>Rs.100</Button>
               </Box>
               <Typography 
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '700',
-                  color: '#ff3f6c',
-                }}
+                style={styleKnowMore}
               >
                 Know more
               </Typography>
@@ -161,7 +162,7 @@ const Cart = () =>{
               </Typography>
               <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
                 <Typography style={priceStyle}>Total MRP</Typography>
-                <Typography style={priceStyle}>Rs.{getTotalCartAmount()}</Typography>
+                <Typography style={priceStyle}>Rs.{totalMrp}</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
                 <Typography style={priceStyle}>Discount on MRP</Typography>
@@ -197,7 +198,7 @@ const Cart = () =>{
               <Divider sx={{margin: '10px 0 10px 0'}}/>
               <Box display="flex" justifyContent="space-between">
                 <Typography style={totalAmountStyle}>Total Amount</Typography>
-                <Typography style={totalAmountStyle}>Rs.{getTotalCartAmount()}</Typography>
+                <Typography style={totalAmountStyle}>Rs.{totalAmount}</Typography>
               </Box>
               <Box mt={3}>
                 <Link to="/checkout/shipping">

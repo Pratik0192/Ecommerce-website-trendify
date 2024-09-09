@@ -5,6 +5,7 @@ import Item from '../Components/Item/Item';
 import ShopFilter from '../Components/ShopFilter/ShopFilter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/productsSlice';
+import RecommendationDropdown from '../Components/RecommendationDropdown/RecommendationDropdown';
 
 
 const ShopCategory = (props) => {
@@ -28,9 +29,12 @@ const ShopCategory = (props) => {
     <div className='shop-category'>
       <img className='shopcategory-banner' src={props.banner} alt="Category Banner" />
       <div className="shopcategory-indexSort">
-        <p>
+        <div>
           <span>Showing 1-12</span> out of {all_product.filter(item => item.category === props.category).length} products
-        </p>
+        </div>
+        <div>
+          <RecommendationDropdown />
+        </div>
       </div>
       <div className="shopcategory-content">
         <div className="shopcategory-filter">

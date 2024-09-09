@@ -47,12 +47,12 @@ const UserProfileDropdown = (props) => {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
       <MenuItem sx={{'&:hover': {backgroundColor:'transparent'} }}>
-      <Typography sx={{ fontSize: '20px',fontWeight:'700', color: '#000' }}>
+        <Typography sx={{ fontSize: '20px',fontWeight:'700', color: '#000' }}>
           Welcome 
         </Typography>
       </MenuItem>
       <MenuItem sx={{'&:hover':{backgroundColor: 'transparent'} }}>
-      <Typography sx={{ fontSize: '14px', color: '#666' }}>
+        <Typography sx={{ fontSize: '14px', color: '#666' }}>
           To access accounts and manage orders
         </Typography>
       </MenuItem>
