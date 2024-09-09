@@ -22,10 +22,6 @@ const ShopContextProvider = (props) => {
   const [shippingAddress, setShippingAddress] = useState({});
   const [wishlistItems, setWishlistItems] = useState(getDefaultWishlist());
 
-  useEffect(()=>{
-    console.log("cartitems: ",cartItems);
-  }, [cartItems]);
-
   // Add shipping address
   const addShippingAddress = (address) => {
     setShippingAddress(address);
@@ -33,8 +29,8 @@ const ShopContextProvider = (props) => {
 
   // Add to cart
   const addToCart = (itemId) => {
-    console.log("item id: ",itemId )
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    console.log("item id: ",itemId);
+    //setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     const product = all_product.find(item => item.id === itemId);
     toast.success(`Added to cart!`, {
       position: "top-right",

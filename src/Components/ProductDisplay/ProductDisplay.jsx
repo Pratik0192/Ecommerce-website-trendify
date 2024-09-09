@@ -5,13 +5,23 @@ import star_dull_icon from "../Assets/star_dull_icon.png";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ShopContext } from "../../Context/ShopContext";
+import { cartActions } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductDisplay = (props) => {
   const { product } = props;
-  const { addToCart, addToWishlist, removeFromWishlist, isItemInWishlist } = useContext(ShopContext);
+  const { 
+    addToWishlist, 
+    removeFromWishlist, 
+    isItemInWishlist 
+  } = useContext(ShopContext);
 
   const [magnifierStyle, setMagnifierStyle] = useState({ display: "none" });
   const categoriesWithoutSizes = ["mobile&tablet", "laptop"];
+
+  // Import the cart from Redux
+  const cart = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
   
   // Check if item is in wishlist
   const [liked, setLiked] = useState(isItemInWishlist(product._id));
@@ -45,6 +55,10 @@ const ProductDisplay = (props) => {
       removeFromWishlist(product.id);
     }
   };
+
+  const handleAddToCart = () => {
+    dispatch(cartActions.addToCart(product));
+  }
 
   return (
     <div className="productdisplay">
@@ -103,7 +117,7 @@ const ProductDisplay = (props) => {
         )}
 
         <div className="productdisplay-right-buttons">
-          <button onClick={() => addToCart(product._id)}>ADD TO CART</button>
+          <button onClick={handleAddToCart}>ADD TO CART</button>
           <button className="wishlist-button" onClick={handleWishlistClick}>
             {liked ? <FavoriteIcon style={{ color: "white" }} /> : <FavoriteBorderIcon />}
             <span>WISHLIST</span>

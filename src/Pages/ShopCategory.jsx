@@ -18,7 +18,7 @@ const ShopCategory = (props) => {
     }
 
     fetchUserData();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     console.log(products);
@@ -37,25 +37,26 @@ const ShopCategory = (props) => {
           <ShopFilter />
         </div>
         <div className="shopcategory-products">
-          {products.data && 
-            products.data.filter(item => item.category === props.category)
-            .map((item, i) => (
-            <Item 
-              key={item._id} 
-              id={item._id}
-              category={item.category}
-              company={item.company}
-              name={item.name}
-              description={item.description}
-              image={item.image} 
-              current_price={item.current_price} 
-              original_price={item.original_price}
-              discount={item.discount_percentage}
-              rating_stars={item.rating.stars}
-              rating_count={item.rating.count}
-              return_period={item.return_period}
-              stock={item.stock}
-            />
+          {products.data == null ?
+            <div className="loader"></div>
+            : products.data.filter(item => item.category === props.category)
+              .map((item, i) => (
+                <Item 
+                  key={item._id} 
+                  id={item._id}
+                  category={item.category}
+                  company={item.company}
+                  name={item.name}
+                  description={item.description}
+                  image={item.image} 
+                  current_price={item.current_price} 
+                  original_price={item.original_price}
+                  discount={item.discount_percentage}
+                  rating_stars={item.rating.stars}
+                  rating_count={item.rating.count}
+                  return_period={item.return_period}
+                  stock={item.stock}
+                />
           ))}
         </div>
       </div>
