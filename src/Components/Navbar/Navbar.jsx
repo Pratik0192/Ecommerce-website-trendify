@@ -12,11 +12,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [menu, setMenu] = useState('shop');
-  const { getTotalCartItems, wishlistItems } = useContext(ShopContext);
+  const { wishlistItems } = useContext(ShopContext);
   const menuRef = useRef();
+
+  const cartLength = useSelector((store) => store.cart.totalItems);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -109,8 +112,8 @@ const Navbar = () => {
             <p>Cart</p>
           </div>
         </Link>
-        {getTotalCartItems() > 0 && (
-          <div className="nav-cart-count">{getTotalCartItems()}</div>
+        {cartLength > 0 && (
+          <div className="nav-cart-count">{cartLength}</div>
         )}
       </div>
     </div>

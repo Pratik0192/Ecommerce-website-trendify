@@ -21,7 +21,7 @@ const ProductDisplay = (props) => {
   const categoriesWithoutSizes = ["mobile&tablet", "laptop"];
 
   // Import the cart from Redux
-  const cart = useSelector((store) => store.cart);
+  const cart = useSelector((store) => store.cart.data);
   const dispatch = useDispatch();
   
   // Check if item is in wishlist

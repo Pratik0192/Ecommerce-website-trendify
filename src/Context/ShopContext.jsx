@@ -31,7 +31,7 @@ const ShopContextProvider = (props) => {
   const addToCart = (itemId) => {
     console.log("item id: ",itemId);
     //setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    const product = all_product.find(item => item.id === itemId);
+    const product = all_product.find(item => item._id === itemId);
     toast.success(`Added to cart!`, {
       position: "top-right",
       autoClose: 2000,
@@ -45,7 +45,7 @@ const ShopContextProvider = (props) => {
   // Remove from cart
   const removeCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    const product = all_product.find(item => item.id === itemId);
+    const product = all_product.find(item => item._id === itemId);
     toast.error(`Removed from cart!`, {
       position: "top-right",
       autoClose: 2000,
@@ -75,8 +75,8 @@ const ShopContextProvider = (props) => {
 
   const removeFromWishlist = (itemId) => {
     setWishlistItems((prev) => {
-      const item = prev.find(item => item.id === itemId);
-      const updatedWishlist = prev.filter((item) => item.id !== itemId);
+      const item = prev.find(item => item._id === itemId);
+      const updatedWishlist = prev.filter((item) => item._id !== itemId);
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
       toast.error(`Removed from wishlist!`, {
         position: "top-right",
@@ -91,7 +91,7 @@ const ShopContextProvider = (props) => {
   };
 
   const isItemInWishlist = (itemId) => {
-    return wishlistItems.some((item) => item.id === itemId);
+    return wishlistItems.some((item) => item._id === itemId);
   };
 
   // Getters for other states
@@ -101,11 +101,10 @@ const ShopContextProvider = (props) => {
 
   // Context value object
   const contextValue = {
-    getTotalCartItems: () => Object.values(cartItems).reduce((a, b) => a + b, 0),
-    getTotalCartAmount: () => Object.keys(cartItems).reduce((total, key) => {
-      const itemInfo = all_product.find(product => product.id === Number(key));
+    /* getTotalCartAmount: () => Object.keys(cartItems).reduce((total, key) => {
+      const itemInfo = all_product.find(product => product._id === Number(key));
       return total + (itemInfo ? itemInfo.new_price * cartItems[key] : 0);
-    }, 0),
+    }, 0), */
     all_product,
     cartItems,
     addToCart,

@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './CSS/ShopCategory.css';
-import { ShopContext } from '../Context/ShopContext';
 import Item from '../Components/Item/Item';
 import ShopFilter from '../Components/ShopFilter/ShopFilter';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +8,7 @@ import RecommendationDropdown from '../Components/RecommendationDropdown/Recomme
 
 
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext); // Access all products from context
-  const products = useSelector((store) => store.products);
+  const products = useSelector((store) => store.products.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const ShopCategory = (props) => {
       <img className='shopcategory-banner' src={props.banner} alt="Category Banner" />
       <div className="shopcategory-indexSort">
         <div>
-          <span>Showing 1-12</span> out of {all_product.filter(item => item.category === props.category).length} products
+          <span>Showing 1-12</span> out of {products && products.length} products
         </div>
         <div>
           <RecommendationDropdown />
@@ -41,27 +39,30 @@ const ShopCategory = (props) => {
           <ShopFilter />
         </div>
         <div className="shopcategory-products">
-          {products.data == null ?
-            <div className="loader"></div>
-            : products.data.filter(item => item.category === props.category)
-              .map((item, i) => (
-                <Item 
-                  key={item._id} 
-                  id={item._id}
-                  category={item.category}
-                  company={item.company}
-                  name={item.name}
-                  description={item.description}
-                  image={item.image} 
-                  current_price={item.current_price} 
-                  original_price={item.original_price}
-                  discount={item.discount_percentage}
-                  rating_stars={item.rating.stars}
-                  rating_count={item.rating.count}
-                  return_period={item.return_period}
-                  stock={item.stock}
-                />
-          ))}
+          {products == null ?
+            <div className="loader"></div> : 
+            products
+            .filter(item => item.category === props.category)
+            .map((item) => (
+              <Item 
+                key={item._id}
+                product={item}
+                // _id={item._id}
+                // category={item.category}
+                // company={item.company}
+                // name={item.name}
+                // description={item.description}
+                // image={item.image} 
+                // current_price={item.current_price} 
+                // original_price={item.original_price}
+                // discount={item.discount_percentage}
+                // rating_stars={item.rating.stars}
+                // rating_count={item.rating.count}
+                // return_period={item.return_period}
+                // stock={item.stock}
+              />
+            )
+          )}
         </div>
       </div>
       <div className="shopcategory-loadmore">

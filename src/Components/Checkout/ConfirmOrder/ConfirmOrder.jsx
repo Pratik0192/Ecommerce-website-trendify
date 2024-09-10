@@ -9,7 +9,7 @@ import { ShopContext } from "../../../Context/ShopContext";
 const ConfirmOrder = ({ history }) => {
   //const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   //const { user } = useSelector((state) => state.user);
-  const { getTotalCartAmount, getShippingAddress } = useContext(ShopContext);
+  const { getShippingAddress } = useContext(ShopContext);
   const [shippingInfo, setShippingInfo] = useState({});
   const [address, setAddress] = useState("");
   const [subtotal, setSubTotal] = useState(0);
@@ -22,7 +22,7 @@ const ConfirmOrder = ({ history }) => {
     console.log(getShippingAddress());
     setShippingInfo(getShippingAddress());
 
-    setSubTotal(getTotalCartAmount());
+    //setSubTotal(getTotalCartAmount());
 
     setShippingCharges(subtotal > 1000 ? 0 : 200);
 

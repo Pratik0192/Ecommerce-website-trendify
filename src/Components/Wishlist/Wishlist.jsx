@@ -8,7 +8,6 @@ import wishlist_icon from '../Assets/wishlist.png';
 import Navbar from '../Navbar/Navbar';
 
 const Wishlist = (props) => {
-  const product = props;
   const { addToCart, wishlistItems, removeFromWishlist } = useContext(ShopContext); // Access wishlist items and remove function from context
 
   const buttonStyle = {
@@ -55,14 +54,14 @@ const Wishlist = (props) => {
             My Wishlist
           </Typography>
           {wishlistItems.map((item) => (
-            <Card key={item.id} className='wishlist-item'>
+            <Card key={item._id} className='wishlist-item'>
               <div className="wishlist-img-container">
-                <Link to={`/product/${item.id}`}>
+                <Link to={`/product/${item._id}`}>
                   <img src={item.image} alt={item.name} />
                 </Link>
                 <CancelOutlined 
                   className="wishlist-remove-icon" 
-                  onClick={() => removeFromWishlist(item.id)} 
+                  onClick={() => removeFromWishlist(item._id)}
                 />
               </div>
               <CardContent>
@@ -118,8 +117,8 @@ const Wishlist = (props) => {
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
                   onClick={() => {
-                    addToCart(item.id);
-                    removeFromWishlist(item.id);
+                    addToCart(item._id);
+                    removeFromWishlist(item._id);
                   }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >

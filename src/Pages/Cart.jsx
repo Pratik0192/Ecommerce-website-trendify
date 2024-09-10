@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import CartItem from '../Components/CartItems/CartItem';
-import { ShopContext } from '../Context/ShopContext';
 import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox, useScrollTrigger } from '@mui/material';
 //import { Undo, Close } from '@mui/icons-material';
@@ -9,14 +8,13 @@ import emptycart from '../Components/Assets/emptyCartIcon.png';
 import { useSelector } from 'react-redux';
 
 const Cart = () =>{
-  const { getTotalCartAmount } = useContext(ShopContext);
 
   // Fetch the Cart from Redux Store
-  const cart = useSelector((store) => store.cart);
+  const cart = useSelector((store) => store.cart.data);
 
   useEffect(() => {
-    console.log('Cart: ', cart);
-  }, [cart]);
+    //console.log('Cart: ', cart);
+  }, []);
 
   const priceStyle = {
     fontSize: '14px',

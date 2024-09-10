@@ -11,16 +11,11 @@ const Product = () =>{
   const products = useSelector((store)=> store.products);
   const {all_product} = useContext(ShopContext);
   const {productId} = useParams();
-  const product = products.data.find((item)=> item._id === (productId));
-
-  useEffect(() => {
-    //console.log(products);
-    console.log(product);
-  }, [product]);
+  const product = products.data.find((item)=> item._id === productId);
 
   return (
     <div>
-      <Breadcrum product = {product} />
+      <Breadcrum product={product} />
       <ProductDisplay product={product} />
       <DescriptionBox product={product} />
       <RelatedProducts product={product} all_products={all_product} /> 

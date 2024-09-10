@@ -16,16 +16,19 @@ const Item = (props) => {
     removeFromWishlist, 
     isItemInWishlist 
   } = useContext(ShopContext);
+
   
-  const [liked, setLiked] = useState(isItemInWishlist(props.id));
+
+  const { product } = props;
+  const [liked, setLiked] = useState(isItemInWishlist(product ? product._id : null));
   const [isHovered, setIsHovered] = useState(false);
 
   const handleLikeClick = () => {
     setLiked(!liked);
     if (!liked) {
-      addToWishlist(props);
+      addToWishlist(product);
     } else {
-      removeFromWishlist(props.id);
+      removeFromWishlist(product._id);
     }
   };
 
@@ -51,22 +54,22 @@ const Item = (props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={`/product/${props.id}`}>
+      <Link to={`/product/${product && product._id}`}>
         <img 
           onClick={() => window.scrollTo(0, 0)} 
-          src={props.image} 
-          alt={props.name} 
+          src={product && product.image} 
+          alt={product && product.name} 
         />
       </Link>
       <CardContent>
         <Typography style={{marginTop:'-18px'}}>
-          {props.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | {props.rating_count}
+          {product && product.rating.stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | {product && product.rating.count}
         </Typography>
         <div className="item-info">
           {!isHovered ? (
             <>
               <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f'}}>
-                {props.company}
+                {product && product.company}
               </Typography>
               <Typography 
                 style={{
@@ -80,7 +83,7 @@ const Item = (props) => {
                   maxWidth:'260px'
                   }}  
               >
-                {props.name}
+                {product && product.name}
               </Typography>
             </>
             ) : (
@@ -102,17 +105,17 @@ const Item = (props) => {
               style={{ fontSize: "16px", fontWeight: "600", color: "#282c3f", marginTop:'-20px'}}
               className='item-prices-new'
             >
-              Rs.{props.current_price}
+              Rs.{product && product.current_price}
             </Typography>
             <Typography 
               variant='body2' 
               style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-17px',marginLeft:'4px', textDecoration: "line-through" }}
               className='item-prices-old'
             >
-              Rs.{props.original_price}
+              Rs.{product && product.original_price}
             </Typography>
             <Typography style={{fontSize:'14px', marginLeft:'4px', color:'#ff905a', marginTop:'-17px'}} >
-              ({props.discount}% off)
+              ({product && product.discount_percentage}% off)
             </Typography>
           </div>
         </div>
