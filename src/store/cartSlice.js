@@ -3,7 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "Cart",
-  initialState: { data: [], loading: false, totalItems: 0 },
+  initialState: { 
+    data: [], 
+    loading: false, 
+    totalItems: 0,
+    priceDetails: {
+      totalMrp: 0,
+      totalDiscount: 0,
+      totalAmount: 0
+    } 
+  },
   reducers: {
     addToCart: (state, action) => {
       let itemIndex = state.data.findIndex(
@@ -12,6 +21,13 @@ const cartSlice = createSlice({
       if(itemIndex === -1){
         state.data.push(action.payload);
         state.totalItems += 1;
+        let itemObj = action.payload;
+        state.priceDetails.totalMrp += 
+          (itemObj.original_price) * itemObj.quantity;
+        state.priceDetails.totalDiscount += 
+          (itemObj.original_price - itemObj.current_price) * itemObj.quantity;
+        state.priceDetails.totalAmount += 
+          (itemObj.current_price) * itemObj.quantity;
       }
       else {
         console.log("Item already present");
@@ -24,6 +40,11 @@ const cartSlice = createSlice({
       if(state.data[itemIndex].quantity < 10){
         state.data[itemIndex].quantity += 1;
         state.totalItems += 1;
+        let itemObj = state.data[itemIndex];
+        state.priceDetails.totalMrp += itemObj.original_price;
+        state.priceDetails.totalDiscount += 
+          itemObj.original_price - itemObj.current_price;
+        state.priceDetails.totalAmount += itemObj.current_price;
       }
       else {
         console.log("Quantity > 10");
@@ -34,6 +55,13 @@ const cartSlice = createSlice({
         (item) => item._id === action.payload
       );
       state.totalItems -= 1;
+
+      let itemObj = state.data[itemIndex];
+      state.priceDetails.totalMrp -= itemObj.original_price;
+      state.priceDetails.totalDiscount -= 
+        itemObj.original_price - itemObj.current_price;
+      state.priceDetails.totalAmount -= itemObj.current_price;
+      
       if(state.data[itemIndex].quantity === 1){
         state.data = state.data.filter((item) => item._id !== action.payload);
       }
@@ -46,6 +74,15 @@ const cartSlice = createSlice({
         (item) => item._id === action.payload
       );
       state.totalItems -= state.data[itemIndex].quantity;
+
+      let itemObj = state.data[itemIndex];
+      state.priceDetails.totalMrp -= 
+        (itemObj.original_price) * itemObj.quantity;
+      state.priceDetails.totalDiscount -= 
+        (itemObj.original_price - itemObj.current_price) * itemObj.quantity;
+      state.priceDetails.totalAmount -= 
+        (itemObj.current_price) * itemObj.quantity;
+
       state.data = state.data.filter((item) => item._id !== action.payload);
     },
     getTotalCartItems: (state, action) => {

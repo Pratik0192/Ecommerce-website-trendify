@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
-import { ShopContext } from '../../Context/ShopContext';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import "./Wishlist.css";
 import { Button, Card, CardContent, Divider, Typography } from '@mui/material';
-import { CancelOutlined, Padding, Star } from '@mui/icons-material';
+import { CancelOutlined, Star } from '@mui/icons-material';
 import wishlist_icon from '../Assets/wishlist.png';
-import Navbar from '../Navbar/Navbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { wishlistActions } from '../../store/wishlistSlice';
+import { cartActions } from '../../store/cartSlice';
 
 const Wishlist = (props) => {
-  const { addToCart, wishlistItems, removeFromWishlist } = useContext(ShopContext); // Access wishlist items and remove function from context
+  const wishlistItems = useSelector((store) => store.wishlist.data);
+  const dispatch = useDispatch();
 
   const buttonStyle = {
     marginTop:'20px',
@@ -61,7 +63,9 @@ const Wishlist = (props) => {
                 </Link>
                 <CancelOutlined 
                   className="wishlist-remove-icon" 
-                  onClick={() => removeFromWishlist(item._id)}
+                  onClick={() => {
+                    dispatch(wishlistActions.removeFromWishlist(item._id));
+                  }}
                 />
               </div>
               <CardContent>
@@ -117,8 +121,8 @@ const Wishlist = (props) => {
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
                   onClick={() => {
-                    addToCart(item._id);
-                    removeFromWishlist(item._id);
+                    //addToCart(item._id);
+                    dispatch(wishlistActions.removeFromWishlist(item._id));
                   }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >

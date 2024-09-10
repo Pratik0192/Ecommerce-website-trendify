@@ -11,6 +11,7 @@ const Cart = () =>{
 
   // Fetch the Cart from Redux Store
   const cart = useSelector((store) => store.cart.data);
+  const priceDetails = useSelector((store) => store.cart.priceDetails);
 
   useEffect(() => {
     //console.log('Cart: ', cart);
@@ -69,10 +70,6 @@ const Cart = () =>{
     '&:hover': {border:'1px solid #ff3f6c', color:'#ff3f6c', background:'transparent'}
   }
 
-  let totalMrp = 0;
-  let totalDiscount = 0;
-  let totalAmount = 0;
-
   if (cart.length === 0) {
     return (
       <Box textAlign="center" mt={15} mb={28}>
@@ -97,10 +94,6 @@ const Cart = () =>{
       <Grid container spacing={2}>
         <Grid item xs={11} md={7}>
           {cart.map((item) => {
-            let quantity = 1;
-            totalMrp += (item.original_price) * quantity;
-            totalDiscount += (item.original_price - item.current_price) * quantity;
-            totalAmount += (item.current_price) * quantity;
             return (
               <CartItem
                 key={item._id}
@@ -159,11 +152,11 @@ const Cart = () =>{
               </Typography>
               <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
                 <Typography style={priceStyle}>Total MRP</Typography>
-                <Typography style={priceStyle}>Rs.{totalMrp}</Typography>
+                <Typography style={priceStyle}>Rs.{priceDetails.totalMrp}</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
                 <Typography style={priceStyle}>Discount on MRP</Typography>
-                <Typography style={styleFree}>-Rs.{totalDiscount}</Typography>
+                <Typography style={styleFree}>-Rs.{priceDetails.totalDiscount}</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
                 <Typography style={priceStyle}>Coupon Discount</Typography>
@@ -195,7 +188,7 @@ const Cart = () =>{
               <Divider sx={{margin: '10px 0 10px 0'}}/>
               <Box display="flex" justifyContent="space-between">
                 <Typography style={totalAmountStyle}>Total Amount</Typography>
-                <Typography style={totalAmountStyle}>Rs.{totalAmount}</Typography>
+                <Typography style={totalAmountStyle}>Rs.{priceDetails.totalAmount}</Typography>
               </Box>
               <Box mt={3}>
                 <Link to="/checkout/shipping">

@@ -14,7 +14,7 @@ export const fetchProducts = createAsyncThunk(
 
 const productsSlice = createSlice({
   name: "Products",
-  initialState: { data: null, loading: false },
+  initialState: { data: null, loading: false, fetchProductsDone: false },
   reducers: {
     addInitialItems: (state, action) => {
       return action.payload;
@@ -29,6 +29,7 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         console.log("User Data Fetched");
         state.loading = false;
+        state.fetchProductsDone = true;
         state.data = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {

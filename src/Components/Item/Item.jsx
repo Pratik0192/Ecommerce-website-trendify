@@ -1,34 +1,34 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Item.css';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
-import FavoriteIcon from '@mui/icons-material/Favorite'; 
-import { ShopContext } from '../../Context/ShopContext';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'; 
 import { Button } from '@mui/material';
 import { Star } from '@mui/icons-material';
+import { wishlistActions } from '../../store/wishlistSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Item = (props) => {
-  const { 
-    addToWishlist, 
-    removeFromWishlist, 
-    isItemInWishlist 
-  } = useContext(ShopContext);
 
-  
+  const dispatch = useDispatch();
+  const wishlist = useSelector((store) => store.wishlist.data);
 
   const { product } = props;
-  const [liked, setLiked] = useState(isItemInWishlist(product ? product._id : null));
+  const productId = product ? product._id : null;
+  let isItemInWishlist = wishlist.some((item) => item._id === productId);
+  const [liked, setLiked] = useState(isItemInWishlist);
   const [isHovered, setIsHovered] = useState(false);
+
 
   const handleLikeClick = () => {
     setLiked(!liked);
     if (!liked) {
-      addToWishlist(product);
+      dispatch(wishlistActions.addToWishlist(product));
     } else {
-      removeFromWishlist(product._id);
+      dispatch(wishlistActions.removeFromWishlist(product._id));
     }
   };
 

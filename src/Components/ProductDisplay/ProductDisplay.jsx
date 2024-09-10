@@ -1,22 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { ShopContext } from "../../Context/ShopContext";
 import { cartActions } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import { Padding } from "@mui/icons-material";
+import { wishlistActions } from "../../store/wishlistSlice";
 
 const ProductDisplay = (props) => {
   const { product } = props;
-  const { 
-    addToWishlist, 
-    removeFromWishlist, 
-    isItemInWishlist 
-  } = useContext(ShopContext);
 
   const [cartItemIndex, setCartItemIndex] = useState(-1);
   const [magnifierStyle, setMagnifierStyle] = useState({ display: "none" });
@@ -24,10 +18,12 @@ const ProductDisplay = (props) => {
 
   // Import the cart from Redux
   const cart = useSelector((store) => store.cart.data);
+  const wishlist = useSelector((store) => store.wishlist.data);
   const dispatch = useDispatch();
   
   // Check if item is in wishlist
-  const [liked, setLiked] = useState(isItemInWishlist(product._id));
+  let isItemInWishlist = wishlist.some((item) => item._id === product._id);
+  const [liked, setLiked] = useState(isItemInWishlist);
 
   useEffect(() => {
     const itemIndex = cart.findIndex((item) => item._id === product._id);
@@ -59,9 +55,9 @@ const ProductDisplay = (props) => {
   const handleWishlistClick = () => {
     setLiked(!liked);
     if (!liked) {
-      addToWishlist(product);
+      dispatch(wishlistActions.addToWishlist(product));
     } else {
-      removeFromWishlist(product.id);
+      dispatch(wishlistActions.removeFromWishlist(product._id));
     }
   };
 

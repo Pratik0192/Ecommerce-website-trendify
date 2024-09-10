@@ -9,6 +9,7 @@ import RecommendationDropdown from '../Components/RecommendationDropdown/Recomme
 
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
+  const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,8 +17,10 @@ const ShopCategory = (props) => {
       await dispatch(fetchProducts());
     }
 
-    fetchUserData();
-  }, [dispatch]);
+    if(!fetchProductsDone){
+      fetchUserData();
+    }
+  }, [dispatch, fetchProductsDone]);
 
   useEffect(() => {
     console.log(products);
@@ -47,19 +50,6 @@ const ShopCategory = (props) => {
               <Item 
                 key={item._id}
                 product={item}
-                // _id={item._id}
-                // category={item.category}
-                // company={item.company}
-                // name={item.name}
-                // description={item.description}
-                // image={item.image} 
-                // current_price={item.current_price} 
-                // original_price={item.original_price}
-                // discount={item.discount_percentage}
-                // rating_stars={item.rating.stars}
-                // rating_count={item.rating.count}
-                // return_period={item.return_period}
-                // stock={item.stock}
               />
             )
           )}

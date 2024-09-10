@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const wishlistSlice = createSlice({
   name: "Wishlist",
-  initialState: { data: [], loading: false },
+  initialState: { 
+    data: JSON.parse(localStorage.getItem("wishlist")) ?? [], 
+    loading: false
+  },
   reducers: {
     addToWishlist: (state, action) => {
       let itemIndex = state.data.findIndex(
@@ -17,14 +20,11 @@ const wishlistSlice = createSlice({
     removeFromWishlist: (state, action) => {
       state.data = state.data.filter((item) => item._id !== action.payload);
       localStorage.setItem("wishlist", JSON.stringify(state.data));
-    },
-    isItemInWishlist: (state, action) => {
-
     }
   }
 });
 
 
-export const WishlistActions = wishlistSlice.actions;
+export const wishlistActions = wishlistSlice.actions;
 
 export default wishlistSlice;

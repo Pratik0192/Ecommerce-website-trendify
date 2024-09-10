@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import './CartItem.css';
-import { ShopContext } from '../../Context/ShopContext';
 import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox, useScrollTrigger } from '@mui/material';
 import { Undo } from '@mui/icons-material';
@@ -10,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../../store/cartSlice';
 
 const CartItems = (props) => {
-  //const { removeCart } = useContext(ShopContext);
   const{ cartItem } = props;
   const dispatch = useDispatch();
 
