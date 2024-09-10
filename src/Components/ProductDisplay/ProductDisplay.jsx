@@ -7,6 +7,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ShopContext } from "../../Context/ShopContext";
 import { cartActions } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { Padding } from "@mui/icons-material";
 
 const ProductDisplay = (props) => {
   const { product } = props;
@@ -86,6 +88,15 @@ const ProductDisplay = (props) => {
     }
   }
 
+  const buttonStyle ={
+    backgroundColor:'#ff4141',
+    fontSize:'16px',
+    width:'220px',
+    padding:'14px 0',
+    marginBottom:'90px',
+    '&:hover':{backgroundColor:'#ff4141',}
+  };
+
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
@@ -109,6 +120,9 @@ const ProductDisplay = (props) => {
       </div>
       <div className="productdisplay-right">
         <h2>{product.company}</h2>
+        <div className="productdisplay-right-description">
+          {product.description}
+        </div>
         <div className="productdisplay-right-star">
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
@@ -119,16 +133,16 @@ const ProductDisplay = (props) => {
         </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-          Rs.{product.current_price}
-            
+            Rs.{product.current_price}
           </div>
           <div className="productdisplay-right-price-new">
-          Rs.{product.original_price}
+            Rs.{product.original_price}
+          </div>
+          <div>
+            ({product.discount_percentage}% OFF)
           </div>
         </div>
-        <div className="productdisplay-right-description">
-          {product.description}
-        </div>
+        
         {!categoriesWithoutSizes.includes(product.category) && (
           <div className="productdisplay-right-size">
             <h2>Select Size</h2>
@@ -143,13 +157,21 @@ const ProductDisplay = (props) => {
         )}
 
         <div className="productdisplay-right-buttons">
-          <button onClick={handleAddToCart}>
+          <Button 
+            onClick={handleAddToCart}
+            variant="contained"
+            sx={buttonStyle}
+          >
             ADD TO CART {cartItemIndex !== -1 && '(' + cart[cartItemIndex].quantity + ')'}
-          </button>
-          <button className="wishlist-button" onClick={handleWishlistClick}>
+          </Button>
+          <Button 
+            onClick={handleWishlistClick}
+            variant="contained"
+            sx={buttonStyle}
+          >
             {liked ? <FavoriteIcon style={{ color: "white" }} /> : <FavoriteBorderIcon />}
             <span>WISHLIST</span>
-          </button>
+          </Button>
         </div>
 
         <p className="productdisplay-right-category">
