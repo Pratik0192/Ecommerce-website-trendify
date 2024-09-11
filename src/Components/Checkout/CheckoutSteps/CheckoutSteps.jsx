@@ -7,12 +7,14 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import "./CheckoutSteps.css";
+import { Link } from "react-router-dom";
+import { StepButton } from "@mui/material";
 
 const CheckoutSteps = ({ activeStep }) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
-      icon: <LocalShippingIcon />,
+      icon:  <LocalShippingIcon />,
     },
     {
       label: <Typography>Confirm Order</Typography>,
@@ -37,14 +39,22 @@ const CheckoutSteps = ({ activeStep }) => {
             active={activeStep === index ? true : false}
             completed={activeStep >= index ? true : false}
           >
-            <StepLabel
+            <StepButton
               style={{
                 color: activeStep >= index ? "tomato" : "rgba(0, 0, 0, 0.649)",
               }}
               icon={item.icon}
             >
-              {item.label}
-            </StepLabel>
+            {item.label}
+            </StepButton>
+            {/* <StepLabel
+              style={{
+                color: activeStep >= index ? "tomato" : "rgba(0, 0, 0, 0.649)",
+              }}
+              icon={item.icon}
+            >
+              
+            </StepLabel> */}
           </Step>
         ))}
       </Stepper>
