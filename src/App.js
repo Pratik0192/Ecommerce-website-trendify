@@ -14,6 +14,7 @@ import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
+import OrderDetails from './Components/OrderDetails/OrderDetails'
 // import ShopProvider from './Context/ShopContext'; // Import the context provider
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path='/checkout/payment' element={<Checkout section="payment"/>}/> */}
           <Route path='/login' element={<LoginSignup authTab="Login"/>}/>
           <Route path='/signup' element={<LoginSignup authTab="SignUp"/>}/>
+          <Route path='/orderdetails' element={<OrderDetails />}/>
         </Routes>
         <Footer/>
       </BrowserRouter>
