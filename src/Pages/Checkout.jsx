@@ -2,7 +2,8 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import CheckoutSteps from "../Components/Checkout/CheckoutSteps/CheckoutSteps";
 import Shipping from "../Components/Checkout/Shipping/Shipping";
-import ConfirmOrder from "../Components/Checkout/ConfirmOrder/ConfirmOrder";
+import ReviewOrder from "../Components/Checkout/ReviewOrder/ReviewOrder";
+import Payment from "../Components/Checkout/Payment/Payment";
 import "./CSS/Checkout.css";
 
 const Checkout = (props) => {
@@ -17,8 +18,8 @@ const Checkout = (props) => {
       <div className="checkout-page-content">
         {
           param.section === "shipping" ? <Shipping /> : 
-          param.section === "confirm" ? <ConfirmOrder /> : 
-          param.section === "payment" ? <p>This is Payment</p> :
+          param.section === "review" ? <ReviewOrder /> : 
+          param.section === "payment" ? <Payment /> :
           <p>404 Not Found</p>
         }
       </div>

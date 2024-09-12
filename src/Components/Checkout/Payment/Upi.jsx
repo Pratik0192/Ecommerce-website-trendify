@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import {
   Button,RadioGroup,Box,Radio, FormControlLabel,TextField
 } from '@mui/material';
-import UPIlogo from '../Assets/upi-logo.png'
-import Phonepe from '../Assets/phonepayupi.png'
+import UPIlogo from '../../Assets/upi-logo.png'
+import Phonepe from '../../Assets/phonepayupi.png'
 const Upi = () => {
   const [selectedOpt2, setSelectedOpt2] = useState("phonepe");
   const [upiId, setUpiId] = useState('');

@@ -84,7 +84,7 @@ const ShippingAmount = () => {
               ₹404
             </Typography>
           </Box>
-          <Link to="/checkout/confirm">
+          <Link to="/checkout/review">
             <Button
               variant='contained'
               sx = {{

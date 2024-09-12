@@ -11,11 +11,11 @@ import {
   Box,
 } from "@mui/material";
 
-import Axis from "../Assets/axis_bank.png";
-import Hdfc from "../Assets/hdfc_bank.png";
-import Icici from "../Assets/icici_bank.png";
-import Kotak from "../Assets/kotak_bank.png";
-import Sbi from "../Assets/sbi_bank.png";
+import Axis from "../../Assets/axis_bank.png";
+import Hdfc from "../../Assets/hdfc_bank.png";
+import Icici from "../../Assets/icici_bank.png";
+import Kotak from "../../Assets/kotak_bank.png";
+import Sbi from "../../Assets/sbi_bank.png";
 
 
 const bankLogos = {

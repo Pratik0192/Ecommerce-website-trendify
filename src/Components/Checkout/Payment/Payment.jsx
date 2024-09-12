@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
   Grid,
   Typography,
   List,
@@ -9,10 +8,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import { AccountBalance, Money, CreditCard } from "@mui/icons-material";
-import UPILogo from "../Assets/upi-logo.png"
+import UPILogo from "../../Assets/upi-logo.png"
 
 // Importing Components
-import ShippingAmount from "../ShippingAmount/ShippingAmount";
+import ShippingAmount from "../../ShippingAmount/ShippingAmount";
 import Cod from "./Cod";
 import Upi from "./Upi";
 import Card from "./Card"

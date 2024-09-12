@@ -1,14 +1,16 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 //import { useSelector } from "react-redux";
-import "./ConfirmOrder.css";
+import "./ReviewOrder.css";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { ShopContext } from "../../../Context/ShopContext";
+import { useNavigate } from "react-router-dom";
 
 
 const ConfirmOrder = ({ history }) => {
   //const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   //const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const { getShippingAddress } = useContext(ShopContext);
   const [shippingInfo, setShippingInfo] = useState({});
   const [address, setAddress] = useState("");
@@ -47,6 +49,7 @@ const ConfirmOrder = ({ history }) => {
     console.log("Proceed To Payment");
     //sessionStorage.setItem("orderInfo", JSON.stringify(data));
     //history.push("/process/payment");
+    navigate("/checkout/payment");
   };
 
   return (
@@ -114,7 +117,7 @@ const ConfirmOrder = ({ history }) => {
               </p>
               <span>₹{totalPrice}</span>
             </div>
-
+            
             <button onClick={() => proceedToPayment()}>Proceed To Payment</button>
           </div>
         </div>

@@ -134,7 +134,7 @@ const Shipping = () => {
         {/*Check if user has address*/}
         <>
         {savedAddresses.length > 0 ? (
-          savedAddresses.map((address, i) => {
+          savedAddresses.map((address) => {
             return (
               <Grid container spacing={1} sx={{boxShadow: '0px 2px 5px rgba(212, 213, 217, 0.5) ', padding:'10px', paddingBottom:'20px', borderRadius:'4px', marginBottom:'25px', cursor:'pointer'}}>
                 <Grid item xs={12}>
@@ -163,76 +163,79 @@ const Shipping = () => {
                   </Typography>
                 </Grid>
                 {/* Buttons to edit or remove address */}
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  spacing={2}
-                  sx={{ marginBottom: "0px" }} // Reduced bottom margin
-                >
-                  <Grid item>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        textTransform: 'uppercase',
-                        fontWeight: '700',
-                        fontSize: '12px',
-                        borderRadius: '4px',
-                        color: "#282c3f",
-                        padding: '6.5px 16px',
-                        border: '1px solid #282c3f',
-                        marginLeft: '25px',
-                        '&:hover': {
-                          borderColor: '#282c3f',
-                          backgroundColor: '#ffffff',
-                        },
-                      }}
-                    >
-                      Remove
-                    </Button>
+                {selectedValue === address.name && (
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    spacing={2}
+                    sx={{ marginBottom: "0px" }} // Reduced bottom margin
+                  >
+                    <Grid item>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          textTransform: 'uppercase',
+                          fontWeight: '700',
+                          fontSize: '12px',
+                          borderRadius: '4px',
+                          color: "#282c3f",
+                          padding: '6.5px 16px',
+                          border: '1px solid #282c3f',
+                          marginLeft: '25px',
+                          '&:hover': {
+                            borderColor: '#282c3f',
+                            backgroundColor: '#ffffff',
+                          },
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button variant="outlined" 
+                        sx={{
+                          textTransform: 'uppercase',
+                          fontWeight: '700',
+                          fontSize: '12px',
+                          borderRadius: '4px',
+                          color: "#282c3f",
+                          padding: '6.5px 16px',
+                          border: '1px solid #282c3f',
+                          '&:hover': {
+                            borderColor: '#282c3f',
+                            backgroundColor: '#ffffff',
+                          },
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Button variant="outlined" 
-                      sx={{
-                        textTransform: 'uppercase',
-                        fontWeight: '700',
-                        fontSize: '12px',
-                        borderRadius: '4px',
-                        color: "#282c3f",
-                        padding: '6.5px 16px',
-                        border: '1px solid #282c3f',
-                        '&:hover': {
-                          borderColor: '#282c3f',
-                          backgroundColor: '#ffffff',
-                        },
-                      }}
-                    >
-                      Edit
-                    </Button>
-                  </Grid>
-                </Grid>
+                )}
+                
               </Grid>
             )
           })
         ) : (
           <>
-          <ShippingAddress />
-          <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  sx={buttonStyle}
-                >
-                  Add Address
-                </Button>
+            <ShippingAddress />
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={buttonStyle}
+              >
+                Add Address
+              </Button>
             </Grid>
-            </>
+          </>
         )}
         </>
         {savedAddresses.length > 0 && (
         <Button variant="outlined" sx={addressButtonStyle} onClick={handleOpenDialog} >
-          +Add New Address
+          + Add New Address
         </Button>
       )}
         
