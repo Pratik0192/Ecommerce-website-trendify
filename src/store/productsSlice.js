@@ -5,7 +5,7 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProducts', 
   async () => {
     console.log("fetching Data");
-    const response = await fetch("https://trendify-backend-0k4b.onrender.com/api/v1/allproducts");
+    const response = await fetch("https://trendify-backend-production.up.railway.app/api/v1/allproducts");
     const jsonData = await response.json();
     return jsonData.products;
   }
