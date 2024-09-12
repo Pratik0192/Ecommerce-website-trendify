@@ -1,5 +1,6 @@
 import React from 'react'
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 
 const priceDetailStyle = {
@@ -29,13 +30,12 @@ const priceDetailStyle = {
     fontSize:'14px',
     color:'#ff3f6c',
     fontWeight:'700',
-    marginLeft:'-112px'
   }
 
 const ShippingAmount = () => {
   return (
     <div>
-        <Box sx={{ padding: 2, border: "1px solid #e0e0e0", borderRadius: 2 }}>
+        <Box sx={{ padding: 2, border: "1px solid #eaeaec", borderRadius: 2 }}>
           <Typography  sx={priceDetailStyle}>
             PRICE DETAILS (1 Item)
           </Typography>
@@ -50,15 +50,19 @@ const ShippingAmount = () => {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-            <Typography sx={priceSubHeadings} >Platform Fee</Typography>
-            <Typography sx={knowmoreStyle}>Know More</Typography>
+            <Typography sx={priceSubHeadings}>
+              Platform Fee 
+              <span style={knowmoreStyle}> Know More</span>
+            </Typography>
             <Typography sx={styleFree}>
               FREE
             </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-            <Typography sx={priceSubHeadings} >Shipping Fee</Typography>
-            <Typography sx={knowmoreStyle}>Know More</Typography>
+            <Typography sx={priceSubHeadings}>
+              Shipping Fee
+              <span style={knowmoreStyle}> Know More</span>  
+            </Typography>
             <Typography sx={styleFree}>
               FREE
             </Typography>
@@ -80,6 +84,27 @@ const ShippingAmount = () => {
               ₹404
             </Typography>
           </Box>
+          <Link to="/checkout/confirm">
+            <Button
+              variant='contained'
+              sx = {{
+                width:'100%',
+                color:'#fff',
+                backgroundColor:'#ff3f6c',
+                borderRadius:'2px',
+                padding:'10px',
+                textTransform:'uppercase',
+                border:'1px solid #ff3f6c',
+                marginTop:'10px',
+                '&:hover':{
+                  backgroundColor:'#ff3f6c',
+                  border:'1px solid #ff3f6c',
+                }
+              }}
+            >
+              continue
+            </Button>
+          </Link>
         </Box>
     </div>
   )

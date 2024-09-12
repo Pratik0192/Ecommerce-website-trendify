@@ -7,7 +7,7 @@ import { Grid, TextField, Typography, Button, FormControlLabel, Checkbox, Box } 
 
 
 const detailsHeading = {
-    fontSize: "12px",
+    fontSize: "13px",
     fontWeight: "700",
     color: "#282c3f",
     padding: "16px 16px 0",
@@ -48,17 +48,7 @@ const detailsHeading = {
     },
   };
 
-  const buttonStyle = {
-    backgroundColor: "#ff3f6c",
-    borderRadius: "4px",
-    padding: "14px",
-    fontSize: "14px",
-    textTransform: "uppercase",
-    marginBottom: "20px",
-    "&:hover": {
-      backgroundColor: "#ff3f6c",
-    },
-  };
+  
 
   const addressButtonStyle = {
     marginRight: "10px",
@@ -109,7 +99,8 @@ const ShippingAddress = () => {
     };
   return (
     <div>
-        <Typography sx={detailsHeading}>CONTACT DETAILS</Typography>
+      <Box sx={{borderRadius:'10px', padding:'20px'}}>
+      <Typography sx={detailsHeading}>CONTACT DETAILS</Typography>
         <form onSubmit={shippingSubmit}>
           <Grid container spacing={2} sx={{ marginTop: "3px" }}>
             <Grid item xs={12}>
@@ -210,21 +201,10 @@ const ShippingAddress = () => {
                 label="Make this my default address"
               />
             </Grid>
-            <Grid item xs={12}>
-              <Link to="/checkout/confirm">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  sx={buttonStyle}
-                >
-                  Add Address
-                </Button>
-              </Link>
-            </Grid>
+            
           </Grid>
         </form>
+      </Box>
     </div>
   )
 }
