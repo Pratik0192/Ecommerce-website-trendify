@@ -1,12 +1,15 @@
-.item{
+.item-container{
     width: 250px;
 }
 
 .image-container{
-    min-height: 270px;
+    height: 333px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
 }
 
-.item img{
+.item-container img{
     width: 250px;
 }
 
@@ -14,13 +17,12 @@
     height: 90px; /* Adjust this height to match the height of your button */
     margin-top: 6px;
 }
+
 .item-prices{
     margin-top: -20px;
     display: flex;
     flex-direction: row;
 }
-
-
 
 .wishlist-button {
     display: flex;

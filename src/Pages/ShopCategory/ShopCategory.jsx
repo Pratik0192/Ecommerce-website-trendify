@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './ShopCategory.css';
-import Item from '../../Components/Item/Item';
+import ProductCard from '../../Components/ProductCard/ProductCard';
 import ShopFilter from '../../Components/ShopFilter/ShopFilter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/productsSlice';
@@ -27,6 +27,7 @@ const ShopCategory = (props) => {
     console.log(products);
   }, [products]);
 
+  
   // Skeleton Placeholder for Loading Items
   const renderSkeletons = () => {
     return (
@@ -64,7 +65,7 @@ const ShopCategory = (props) => {
             : products
               .filter(item => item.category === props.category)
               .map((item) => (
-                <Item 
+                <ProductCard 
                   key={item._id}
                   product={item}
                 />

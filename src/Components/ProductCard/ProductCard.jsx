@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Item.css';
+import './ProductCard.css';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -11,7 +11,7 @@ import { Star } from '@mui/icons-material';
 import { wishlistActions } from '../../store/wishlistSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Item = (props) => {
+const ProductCard = (props) => {
 
   const dispatch = useDispatch();
   const wishlist = useSelector((store) => store.wishlist.data);
@@ -49,17 +49,20 @@ const Item = (props) => {
   };
 
   return (
-    <Card 
-      className='item'
+    <Card
+      sx={{ height: "456px" }}
+      className="item-container"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link to={`/product/${product && product._id}`}>
-        <img 
-          onClick={() => window.scrollTo(0, 0)} 
-          src={product && product.image} 
-          alt={product && product.name} 
-        />
+        <div className="image-container">
+          <img
+            onClick={() => window.scrollTo(0, 0)} 
+            src={product && product.image} 
+            alt={product && product.name} 
+          />
+        </div>
       </Link>
       <CardContent>
         <Typography style={{marginTop:'-18px'}}>
@@ -124,4 +127,4 @@ const Item = (props) => {
   );
 };
 
-export default Item;
+export default ProductCard;
