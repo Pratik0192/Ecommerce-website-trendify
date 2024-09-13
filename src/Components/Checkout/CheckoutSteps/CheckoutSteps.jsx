@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Stepper from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
 import Step from "@mui/material/Step";
+import Box from "@mui/material/Box";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -13,15 +14,15 @@ import { StepButton } from "@mui/material";
 const CheckoutSteps = ({ activeStep }) => {
   const steps = [
     {
-      label: <Typography>Shipping Details</Typography>,
+      label: <Typography>Shipping Address</Typography>,
       icon:  <LocalShippingIcon />,
     },
     {
-      label: <Typography>Confirm Order</Typography>,
+      label: <Typography>Review Order</Typography>,
       icon: <LibraryAddCheckIcon />,
     },
     {
-      label: <Typography>Payment</Typography>,
+      label: <Typography>Payment Info</Typography>,
       icon: <AccountBalanceIcon />,
     },
   ];
@@ -31,7 +32,14 @@ const CheckoutSteps = ({ activeStep }) => {
   };
 
   return (
-    <Fragment>
+    <div style={{ boxShadow: "0 1px 3px -2px black", paddingBottom: "16px" }}>
+    <Box
+      sx={{
+        width: "80%",
+        margin: "auto",
+        marginTop: "20px",
+      }}
+    >
       <Stepper alternativeLabel activeStep={activeStep} style={stepStyles}>
         {steps.map((item, index) => (
           <Step
@@ -41,24 +49,22 @@ const CheckoutSteps = ({ activeStep }) => {
           >
             <StepButton
               style={{
-                color: activeStep >= index ? "tomato" : "rgba(0, 0, 0, 0.649)",
+                color: activeStep >= index ? "#ff3f6c" : "#555",
               }}
               icon={item.icon}
             >
-            {item.label}
+              <Box sx={{ 
+                marginTop:"-12px", 
+                color: activeStep >= index ? "#ff3f6c" : "#555" 
+              }}>
+                {item.label}
+              </Box>
             </StepButton>
-            {/* <StepLabel
-              style={{
-                color: activeStep >= index ? "tomato" : "rgba(0, 0, 0, 0.649)",
-              }}
-              icon={item.icon}
-            >
-              
-            </StepLabel> */}
           </Step>
         ))}
       </Stepper>
-    </Fragment>
+    </Box>
+    </div>
   );
 };
 

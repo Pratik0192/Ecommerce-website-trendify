@@ -1,0 +1,40 @@
+.wishlist-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.wishlist-item{
+  width: 250px;
+}
+.wishlist-item img{
+  width: 250px;
+  display: block;
+}
+
+.wishlist-img-container {
+  position: relative;
+  display: inline-block;
+}
+
+.wishlist-remove-icon {
+  position: absolute;
+  font-size: 30px;
+  top: 8px; /* Adjust this value if you need to move the icon up or down */
+  right: 8px; /* Adjust this value if you need to move the icon left or right */
+  cursor: pointer;
+  color: #ff4141;
+  border-radius: 50%;
+  padding: 3px;
+}
+
+
