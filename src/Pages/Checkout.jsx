@@ -5,6 +5,8 @@ import Shipping from "../Components/Checkout/Shipping/Shipping";
 import ReviewOrder from "../Components/Checkout/ReviewOrder/ReviewOrder";
 import Payment from "../Components/Checkout/Payment/Payment";
 import "./CSS/Checkout.css";
+import OrderConfirmed from "../Components/Checkout/OrderConfirmed/OrderConfirmed"
+
 
 const Checkout = (props) => {
   //const { section } = props;
@@ -20,6 +22,7 @@ const Checkout = (props) => {
           param.section === "shipping" ? <Shipping /> : 
           param.section === "review" ? <ReviewOrder /> : 
           param.section === "payment" ? <Payment /> :
+          param.section === "orderconfirm" ? <OrderConfirmed /> :
           <p>404 Not Found</p>
         }
       </div>

@@ -7,7 +7,7 @@ import { ShopContext } from "../../../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
 
 
-const ConfirmOrder = ({ history }) => {
+const ReviewOrder = ({ history }) => {
   //const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   //const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const ConfirmOrder = ({ history }) => {
     //history.push("/process/payment");
     navigate("/checkout/payment");
   };
-
+  
   return (
     <Fragment>
       <div className="confirmOrderPage">
@@ -126,4 +126,4 @@ const ConfirmOrder = ({ history }) => {
   );
 };
 
-export default ConfirmOrder;
+export default ReviewOrder;
