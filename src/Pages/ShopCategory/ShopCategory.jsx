@@ -60,16 +60,17 @@ const ShopCategory = (props) => {
         </div>
         <div className="shopcategory-products">
           {/* Render Skeletons if products are null */}
-          {products == null
-            ? renderSkeletons()
-            : products
+          {products == null ? 
+            renderSkeletons() :
+            products
               .filter(item => item.category === props.category)
               .map((item) => (
                 <ProductCard 
                   key={item._id}
                   product={item}
                 />
-              ))
+              )
+            )
           }
         </div>
       </div>

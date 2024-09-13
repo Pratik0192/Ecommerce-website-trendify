@@ -13,7 +13,17 @@ import Rating from '@mui/material/Rating';
 
 
 const ReviewListItem = (props) => {
-  const { avatar, userName, reviewText } = props;
+  const { avatar, review } = props;
+
+  const getDateFromTimestamp = (date) => {
+    let timestamp = new Date(date);
+    let monthName = timestamp.toLocaleString("en-US", { month: "long" });
+    //let dateString = timestamp.getDate() +" "+ monthName +" "+ timestamp.getFullYear();
+    let dateArray = timestamp.toUTCString().split(" ");
+    let dateString = dateArray[1] + " " + dateArray[2] + " " + dateArray[3]; 
+    //console.log(dateString);
+    return dateString;
+  }
 
   return (
     <>
@@ -22,23 +32,25 @@ const ReviewListItem = (props) => {
           <Avatar alt="Remy Sharp" src={avatar} />
         </ListItemAvatar>
         <ListItemText
-          primary={userName}
+          primary={review.userName}
           secondary={
             <React.Fragment>
               <Stack direction="row" spacing={2}>
-                <Rating name="read-only" value={5} size="small" readOnly />
-                <h4 className="rating-title">The iPhone 14 Pro Max: An Epitome of Excellence</h4>
+                <Rating name="read-only" value={review.rating} size="small" readOnly />
+                <h4 className="rating-title">{review.title}</h4>
               </Stack>
-              {"Reviewed in India on 28 July 2023"}
-              <Typography
-                sx={{ display: 'block', color: 'red', fontWeight: 600, fontSize: 12, marginBottom: 1 }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Verified Purchase
-              </Typography>
-              {reviewText}
+              Reviewed in India on {getDateFromTimestamp(review.date)}
+              {review.verified_purchase &&
+                <Typography
+                  sx={{ display: 'block', color: 'red', fontWeight: 600, fontSize: 12, marginBottom: 1 }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  Verified Purchase
+                </Typography>
+              }
+              {review.comment}
             </React.Fragment>
           }
         />
