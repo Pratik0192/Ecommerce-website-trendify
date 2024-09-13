@@ -1,31 +1,34 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Item.css';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
-import FavoriteIcon from '@mui/icons-material/Favorite'; 
-import { ShopContext } from '../../Context/ShopContext';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'; 
 import { Button } from '@mui/material';
 import { Star } from '@mui/icons-material';
+import { wishlistActions } from '../../store/wishlistSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Item = (props) => {
-  const { 
-    addToWishlist, 
-    removeFromWishlist, 
-    isItemInWishlist 
-  } = useContext(ShopContext);
-  
-  const [liked, setLiked] = useState(isItemInWishlist(props.id));
+
+  const dispatch = useDispatch();
+  const wishlist = useSelector((store) => store.wishlist.data);
+
+  const { product } = props;
+  const productId = product ? product._id : null;
+  let isItemInWishlist = wishlist.some((item) => item._id === productId);
+  const [liked, setLiked] = useState(isItemInWishlist);
   const [isHovered, setIsHovered] = useState(false);
+
 
   const handleLikeClick = () => {
     setLiked(!liked);
     if (!liked) {
-      addToWishlist(props);
+      dispatch(wishlistActions.addToWishlist(product));
     } else {
-      removeFromWishlist(props.id);
+      dispatch(wishlistActions.removeFromWishlist(product._id));
     }
   };
 
@@ -51,27 +54,36 @@ const Item = (props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={`/product/${props.id}`}>
+      <Link to={`/product/${product && product._id}`}>
         <img 
           onClick={() => window.scrollTo(0, 0)} 
-          src={props.image} 
-          alt={props.name} 
+          src={product && product.image} 
+          alt={product && product.name} 
         />
       </Link>
       <CardContent>
-        <Typography style={{marginTop:'-10px'}}>
-          4.5 <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | 172
+        <Typography style={{marginTop:'-18px'}}>
+          {product && product.rating.stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} /> | {product && product.rating.count}
         </Typography>
         <div className="item-info">
           {!isHovered ? (
             <>
-              <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
-                Roadster
+              <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f'}}>
+                {product && product.company}
               </Typography>
               <Typography 
-                style={{ fontSize: "14px", marginTop: "0px", marginLeft:'-80px' ,fontWeight: "400",color: "#535766", whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', maxWidth:'260px',display:'block'}}  
+                style={{
+                  fontSize: "14px", 
+                  marginTop: "0px", 
+                  fontWeight: "400",
+                  color: "#535766", 
+                  whiteSpace:'nowrap', 
+                  overflow:'hidden', 
+                  textOverflow:'ellipsis', 
+                  maxWidth:'260px'
+                  }}  
               >
-                {props.name}
+                {product && product.name}
               </Typography>
             </>
             ) : (
@@ -93,17 +105,17 @@ const Item = (props) => {
               style={{ fontSize: "16px", fontWeight: "600", color: "#282c3f", marginTop:'-20px'}}
               className='item-prices-new'
             >
-              Rs.{props.new_price}
+              Rs.{product && product.current_price}
             </Typography>
             <Typography 
               variant='body2' 
-              style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-18px',marginLeft:'-1px' ,textDecoration: "line-through" }}
+              style={{ fontSize: "14px", fontWeight: "500", color: "#7e818c", marginTop:'-17px',marginLeft:'4px', textDecoration: "line-through" }}
               className='item-prices-old'
             >
-              Rs.{props.old_price}
+              Rs.{product && product.original_price}
             </Typography>
-            <Typography style={{fontSize:'14px', marginLeft:'-5px', color:'#ff905a', marginTop:'-19px'}} >
-              (50% off)
+            <Typography style={{fontSize:'14px', marginLeft:'4px', color:'#ff905a', marginTop:'-17px'}} >
+              ({product && product.discount_percentage}% off)
             </Typography>
           </div>
         </div>

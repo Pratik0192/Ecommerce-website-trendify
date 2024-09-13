@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
-import { ShopContext } from '../../Context/ShopContext';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import "./Wishlist.css";
+import { Link } from 'react-router-dom';
 import { Button, Card, CardContent, Divider, Typography } from '@mui/material';
-import { CancelOutlined, Padding, Star } from '@mui/icons-material';
-import wishlist_icon from '../Assets/wishlist.png';
-import Navbar from '../Navbar/Navbar';
+import { CancelOutlined, Star } from '@mui/icons-material';
+import wishlist_icon from '../../Components/Assets/wishlist.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { wishlistActions } from '../../store/wishlistSlice';
+import { cartActions } from '../../store/cartSlice';
+
 
 const Wishlist = (props) => {
-  const product = props;
-  const { addToCart, wishlistItems, removeFromWishlist } = useContext(ShopContext); // Access wishlist items and remove function from context
+  const wishlistItems = useSelector((store) => store.wishlist.data);
+  const dispatch = useDispatch();
 
   const buttonStyle = {
     marginTop:'20px',
@@ -55,23 +57,25 @@ const Wishlist = (props) => {
             My Wishlist
           </Typography>
           {wishlistItems.map((item) => (
-            <Card key={item.id} className='wishlist-item'>
+            <Card key={item._id} className='wishlist-item'>
               <div className="wishlist-img-container">
-                <Link to={`/product/${item.id}`}>
+                <Link to={`/product/${item._id}`}>
                   <img src={item.image} alt={item.name} />
                 </Link>
                 <CancelOutlined 
                   className="wishlist-remove-icon" 
-                  onClick={() => removeFromWishlist(item.id)} 
+                  onClick={() => {
+                    dispatch(wishlistActions.removeFromWishlist(item._id));
+                  }}
                 />
               </div>
               <CardContent>
                 <Typography style={{marginTop:'-10px'}}>
-                  4.5 <Star sx={{color:'#ff4141', marginBottom:'-5px'}} />
+                  {item.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} />
                 </Typography>
                 <div className="wishlist-item-info">
                   <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
-                    Roadster
+                    {item.company}
                   </Typography>
                   <Typography
                     style={{
@@ -95,7 +99,7 @@ const Wishlist = (props) => {
                     style={{ fontSize: "16px", fontWeight: "600", color: "#282c3f", marginTop:'3px'}}
                     className='item-prices-new'
                   >
-                    Rs.{item.new_price}
+                    Rs.{item.current_price}
                   </Typography>
                   <Typography 
                     variant='body2' 
@@ -109,17 +113,17 @@ const Wishlist = (props) => {
                     }}
                       className='item-prices-old'
                     >
-                      Rs.{item.old_price}
+                      Rs.{item.original_price}
                     </Typography>
                     <Typography style={{fontSize:'14px', marginLeft:'120px', color:'#ff905a', marginTop:'-20.5px'}} >
-                      (50% off)
+                      ({item.discount}% off)
                     </Typography>
                 </div>
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
                   onClick={() => {
-                    addToCart(item.id);
-                    removeFromWishlist(item.id);
+                    //addToCart(item._id);
+                    dispatch(wishlistActions.removeFromWishlist(item._id));
                   }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >

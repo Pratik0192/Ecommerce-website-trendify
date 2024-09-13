@@ -2,7 +2,6 @@ import React, { useContext, useRef, useState } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
-import { ShopContext } from '../../Context/ShopContext';
 import dropdown_icon from '../Assets/nav_dropdown.png';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
@@ -12,11 +11,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [menu, setMenu] = useState('shop');
-  const { getTotalCartItems, wishlistItems } = useContext(ShopContext);
   const menuRef = useRef();
+
+  const cartLength = useSelector((store) => store.cart.totalItems);
+  const wishlist = useSelector((store) => store.wishlist.data);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -34,7 +36,7 @@ const Navbar = () => {
   };
 
   // Calculate total number of wishlist items
-  const totalWishlistItems = wishlistItems.length;
+  const totalWishlistItems = wishlist.length;
 
   return (
     <div className='navbar'>
@@ -109,8 +111,8 @@ const Navbar = () => {
             <p>Cart</p>
           </div>
         </Link>
-        {getTotalCartItems() > 0 && (
-          <div className="nav-cart-count">{getTotalCartItems()}</div>
+        {cartLength > 0 && (
+          <div className="nav-cart-count">{cartLength}</div>
         )}
       </div>
     </div>

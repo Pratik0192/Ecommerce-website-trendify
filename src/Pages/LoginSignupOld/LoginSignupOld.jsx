@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import './CSS/LoginSignupOld.css'
+import './LoginSignupOld.css'
 
 const LoginSignup = () =>{
-
-
   const [state, setState] = useState("Login");
 
   return (

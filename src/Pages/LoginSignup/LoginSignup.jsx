@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import './CSS/LoginSignup.css';
-import googleIcon from './images/google.svg';
+import React, { useState } from 'react';
+import './LoginSignup.css';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
+import googleIcon from '../../Components/Assets/google.svg';
+
 
 const Login = (props) => {
   const [currentTab, setCurrentTab] = useState(props.authTab);
