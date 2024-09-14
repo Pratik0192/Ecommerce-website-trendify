@@ -22,6 +22,7 @@ import OrderConfirmed from "./Components/Checkout/OrderConfirmed/OrderConfirmed"
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
+import OrderCancel from "./Pages/OrderCancel/OrderCancel";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path='/checkout/review' element={<OrderReview />}/>
           <Route path='/checkout/payment' element={<OrderPayment showNavbar={showNavbar} />}/>
           <Route path='/orderconfirmed' element={<OrderConfirmed />}/>
+          <Route path='/ordercancel' element={<OrderCancel/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>
