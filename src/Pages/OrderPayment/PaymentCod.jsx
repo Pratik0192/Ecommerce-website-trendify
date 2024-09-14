@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 
 
-const PaymentCod = ({ showNavbar }) => {
+const PaymentCod = () => {
   const [selectedOpt, setSelectedOpt] = useState("cashondelivery");
 
   const handleOptSelect = (event) => {

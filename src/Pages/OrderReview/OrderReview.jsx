@@ -13,9 +13,9 @@ import { Close } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
 
-const ConfirmOrder = () => {
+const ConfirmOrder = (props) => {
+  const { hideNavbar } = props;
   const navigate = useNavigate();
-
   const cartItems = useSelector((store) => store.cart.data);
 
   const { getShippingAddress } = useContext(ShopContext);
@@ -25,6 +25,10 @@ const ConfirmOrder = () => {
   const [shippingCharges, setShippingCharges] = useState(0);
   const [tax, setTax] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    hideNavbar()
+  }, [hideNavbar]);
 
   useEffect(() => {
     //console.log(getShippingAddress());

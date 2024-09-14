@@ -18,15 +18,15 @@ import { useSelector } from 'react-redux';
 
 
 const Cart = (props) =>{
-  const { hideNavbar } = props;
-
   // Fetch the Cart from Redux Store
+  const { showNavbar } = props;
   const cart = useSelector((store) => store.cart.data);
   const priceDetails = useSelector((store) => store.cart.priceDetails);
 
   useEffect(() => {
     //console.log('Cart: ', cart);
-  }, []);
+    showNavbar();
+  }, [showNavbar]);
 
   const priceStyle = {
     fontSize: '14px',
@@ -203,7 +203,7 @@ const Cart = (props) =>{
               </Box>
               <Box mt={3}>
                 <Link to="/checkout/address">
-                  <Button variant="contained" style={buttonStyle} onClick={hideNavbar}>
+                  <Button variant="contained" style={buttonStyle}>
                     PLACE ORDER
                   </Button>
                 </Link>
