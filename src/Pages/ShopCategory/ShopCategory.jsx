@@ -6,20 +6,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/productsSlice';
 import RecommendationDropdown from '../../Components/RecommendationDropdown/RecommendationDropdown';
 import { Grid, Skeleton } from '@mui/material'; // Import Material UI Skeleton
+import { productActions } from '../../store/productsSlice';
 
 
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
+  
   const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    dispatch(productActions.resetProduct());
+
+    const fetchProductsAsync = async () => {
       await dispatch(fetchProducts());
     }
 
     if (!fetchProductsDone) {
-      fetchUserData();
+      fetchProductsAsync();
     }
   }, [dispatch, fetchProductsDone]);
 
