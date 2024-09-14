@@ -73,9 +73,11 @@ const UserProfileDropdown = (props) => {
         </Link>
       </MenuItem>
       <Divider sx={{width: '90%', margin: '0 auto'}}/>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px'}}}>
-        Orders
-      </MenuItem>
+      <Link to='/accountpage'>
+        <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px'}}}>
+          Orders
+        </MenuItem>
+      </Link>
       <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
         Wishlists
       </MenuItem>
