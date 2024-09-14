@@ -27,7 +27,14 @@ const PaymentUpi = () => {
 
   return (
     <Box sx={{ marginLeft: "15px", marginTop: "15px" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px" }}>
+      <Typography variant="h6" 
+        sx={{ 
+          marginBottom: "16px",
+          fontSize:"18px", 
+          fontWeight: "700",
+          color:"#424553"
+        }}
+      >
         Pay using UPI
       </Typography>
       <RadioGroup value={selectedOpt2} onChange={handleOpt2Select}>
@@ -69,30 +76,26 @@ const PaymentUpi = () => {
       {/* Conditionally render the UPI ID text field */}
       {selectedOpt2 === "upi" && (
         <TextField
-          label="Enter UPI ID"
-          variant="outlined"
-          value={upiId}
-          onChange={handleUpiIdChange}
-          fullWidth
-          sx={{ marginTop: "16px" }}
-        />
-      )}
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: "#ff4081",
-          color: "#fff",
-          width: "100%",
-          marginTop: "16px",
-          padding: "12px",
-          fontSize: "16px",
-          "&:hover": {
-            backgroundColor: "#ff4081",
+        label="Enter UPI ID"
+        variant="outlined"
+        value={upiId}
+        onChange={handleUpiIdChange}
+        fullWidth
+        sx={{ 
+          marginTop: "16px", 
+          "& .MuiOutlinedInput-root": {
+            "&.Mui-focused fieldset": {
+              borderColor: "#555", // Change the border color when focused
+            },
+          },
+          "& .MuiInputLabel-root": {
+            "&.Mui-focused": {
+              color: "#555", // Change label color when focused
+            },
           },
         }}
-      >
-        PAY NOW
-      </Button>
+      />      
+      )}
     </Box>
   );
 };
