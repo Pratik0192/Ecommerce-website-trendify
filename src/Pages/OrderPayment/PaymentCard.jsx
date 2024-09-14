@@ -14,9 +14,30 @@ import InfoIcon from "@mui/icons-material/Info";
 
 
 const PaymentCard = () => {
+
+  const textFieldActiveStateStyle = {
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: "#555", // Change the border color when focused
+      },
+    },
+    "& .MuiInputLabel-root": {
+      "&.Mui-focused": {
+        color: "#555", // Change label color when focused
+      },
+    },
+  }
+
   return (
     <Box sx={{ marginLeft: "15px", marginTop: "15px" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px" }}>
+      <Typography variant="h6" 
+        sx={{ 
+          marginBottom: "16px" ,
+          fontSize:"18px", 
+          fontWeight: "700",
+          color:"#424553"
+        }}
+      >
         Credit/Dedit Card
       </Typography>
 
@@ -64,7 +85,7 @@ const PaymentCard = () => {
             </InputAdornment>
           ),
         }}
-        sx={{ marginBottom: "16px" }}
+        sx={{ marginBottom: "16px", ...textFieldActiveStateStyle }}
       />
 
       {/* Name on Card Field */}
@@ -73,7 +94,7 @@ const PaymentCard = () => {
         label="Name on card"
         placeholder="Enter name as on card"
         variant="outlined"
-        sx={{ marginBottom: "16px" }}
+        sx={{ marginBottom: "16px", ...textFieldActiveStateStyle }}
       />
 
       {/* Valid Through and CVV Fields */}
@@ -84,6 +105,7 @@ const PaymentCard = () => {
             label="Valid Thru (MM/YY)"
             placeholder="MM/YY"
             variant="outlined"
+            sx={textFieldActiveStateStyle}
           />
         </Grid>
         <Grid item xs={6}>
@@ -101,24 +123,10 @@ const PaymentCard = () => {
                 </InputAdornment>
               ),
             }}
+            sx={textFieldActiveStateStyle}
           />
         </Grid>
-      </Grid>
-
-      {/* Pay Now Button */}
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{
-          backgroundColor: "#ff4081",
-          color: "#fff",
-          marginTop: "16px",
-          padding: "12px",
-          fontSize: "16px",
-        }}
-      >
-        PAY NOW
-      </Button>
+      </Grid>      
     </Box>
   );
 };

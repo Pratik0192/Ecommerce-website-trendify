@@ -35,79 +35,73 @@ const PaymentNetbanking = () => {
   
   return (
     <Box sx={{ marginLeft: "15px", marginTop: "15px" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px" }}>
+      <Typography variant="h6" 
+        sx={{
+          marginBottom: "16px",
+          fontSize:"18px", 
+          fontWeight: "700",
+          color:"#424553",
+        }}
+      >
         Net Banking
       </Typography>
       <RadioGroup value={selectedBank} onChange={handleBankChange}>
         <FormControlLabel
-          sx={{margin:"10px"}}
+          sx={{margin:"6px"}}
           value="axis"
           control={<Radio sx={{ '&.Mui-checked': { color: "#FF4141" } }} />}
           label={
             <Box display="flex" alignItems="center">
-              <img src={bankLogos.axis} alt="Axis Bank" width={50} height={50} style={{ marginRight: 8 }} />
+              <img src={bankLogos.axis} alt="Axis Bank" width={60} height={60} style={{ marginRight: 8 }} />
               Axis Bank
             </Box>
           }
         />
         <FormControlLabel
-          sx={{margin:"10px"}}
+          sx={{margin:"6px"}}
           value="hdfc"
           control={<Radio sx={{ '&.Mui-checked': { color: "#FF4141" } }} />}
           label={
             <Box display="flex" alignItems="center">
-              <img src={bankLogos.hdfc} alt="HDFC Bank" width={50} height={50} style={{ marginRight: 8 }} />
+              <img src={bankLogos.hdfc} alt="HDFC Bank" width={60} height={60} style={{ marginRight: 8 }} />
               HDFC Bank
             </Box>
           }
         />
         <FormControlLabel
-          sx={{margin:"10px"}}
+          sx={{margin:"6px"}}
           value="icici"
           control={<Radio sx={{ '&.Mui-checked': { color: "#FF4141" } }} />}
           label={
             <Box display="flex" alignItems="center">
-              <img src={bankLogos.icici} alt="ICICI Bank" width={50} height={50} style={{ marginRight: 8 }} />
+              <img src={bankLogos.icici} alt="ICICI Bank" width={60} height={60} style={{ marginRight: 8 }} />
               ICICI Bank
             </Box>
           }
         />
         <FormControlLabel
-          sx={{margin:"10px"}}
+          sx={{margin:"6px"}}
           value="kotak"
           control={<Radio sx={{ '&.Mui-checked': { color: "#FF4141" } }} />}
           label={
             <Box display="flex" alignItems="center">
-              <img src={bankLogos.kotak} alt="Kotak" width={50} height={50} style={{ marginRight: 8 }} />
+              <img src={bankLogos.kotak} alt="Kotak" width={60} height={60} style={{ marginRight: 8 }} />
               Kotak
             </Box>
           }
         />
         <FormControlLabel
-          sx={{margin:"10px"}}
+          sx={{margin:"6px"}}
           value="sbi"
           control={<Radio sx={{ '&.Mui-checked': { color: "#FF4141" } }} />}
           label={
             <Box display="flex" alignItems="center">
-              <img src={bankLogos.sbi} alt="SBI" width={50} height={50} style={{ marginRight: 8 }} />
+              <img src={bankLogos.sbi} alt="SBI" width={60} height={60} style={{ marginRight: 8 }} />
               SBI
             </Box>
           }
         />
       </RadioGroup>
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: "#ff4081",
-          color: "#fff",
-          width: "100%",
-          marginTop: "16px",
-          padding: "12px",
-          fontSize: "16px",
-        }}
-      >
-        PAY NOW
-      </Button>
       <Select
         defaultValue=""
         displayEmpty

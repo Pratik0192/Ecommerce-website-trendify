@@ -8,7 +8,9 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Button,
 } from "@mui/material";
+import {Link} from "react-router-dom";
 import { AccountBalance, Money, CreditCard } from "@mui/icons-material";
 import UPILogo from "../../Components/Assets/upi-logo.png"
 
@@ -99,6 +101,7 @@ const OrderPayment = (props) => {
           >
             <List component="nav" sx={{ marginLeft: "-16px", marginTop: "-20px" }}>
               <ListItem
+                disableRipple
                 button
                 onClick={() => handleItemSelect("cod")}
                 sx={selectedItem === "cod" ? selectedStyle : {minHeight: "70px",backgroundColor: "#eee"}}
@@ -106,17 +109,24 @@ const OrderPayment = (props) => {
                 <ListItemIcon>
                   <Money />
                 </ListItemIcon>
-                <ListItemText primary="Cash On Delivery" />
+                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>
+                  Cash On Delivery
+                </Typography>
               </ListItem>
               <ListItem
+                disableRipple
                 button
                 onClick={() => handleItemSelect("upi")}
                 sx={selectedItem === "upi" ? selectedStyle : {minHeight: "70px",backgroundColor: "#eee"}}
               >
                 <img src={UPILogo} alt="Axis Bank" width={50} height={50} style={{ marginRight: 8 }} />
-                <ListItemText primary="UPI (Pay via any App)" secondary="2 Offers" sx={{ color: "green" }} />
+                {/* <ListItemText primary="UPI (Pay via any App)" secondary="2 Offers" sx={{ color: "green" }} /> */}
+                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                  UPI (Pay via any App)
+                </Typography>
               </ListItem>
               <ListItem
+                disableRipple
                 button
                 onClick={() => handleItemSelect("card")}
                 sx={selectedItem === "card" ? selectedStyle : {minHeight: "70px",backgroundColor: "#eee"}}
@@ -124,9 +134,13 @@ const OrderPayment = (props) => {
                 <ListItemIcon>
                   <CreditCard />
                 </ListItemIcon>
-                <ListItemText primary="Credit/Debit Card" secondary="9 Offers" sx={{ color: "green" }} />
+                {/* <ListItemText primary="Credit/Debit Card" secondary="9 Offers" sx={{ color: "green" }} /> */}
+                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                  Credit/Debit Card
+                </Typography>
               </ListItem>
               <ListItem
+                disableRipple
                 button
                 onClick={() => handleItemSelect("netbanking")}
                 sx={selectedItem === "netbanking" ? selectedStyle : {minHeight: "70px",backgroundColor: "#eee"}}
@@ -134,7 +148,10 @@ const OrderPayment = (props) => {
                 <ListItemIcon>
                   <AccountBalance />
                 </ListItemIcon>
-                <ListItemText primary="Net Banking" />
+                {/* <ListItemText primary="Net Banking" /> */}
+                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                  Net Banking
+                </Typography>
               </ListItem>
             </List>
           </Grid>
@@ -157,6 +174,27 @@ const OrderPayment = (props) => {
                 <PaymentNetbanking /> 
               : <div></div>
             }
+            <Link to="/orderconfirmed">
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#ff3f6c",
+                  color: "#fff",
+                  width: "96%",
+                  marginTop: "16px",
+                  marginLeft: "17px",
+                  padding: "12px",
+                  fontSize: "16px",
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "#ff3f6c",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                {selectedItem === "cod" ? "PLACE ORDER" : "PAY NOW"}
+              </Button>
+            </Link>
           </Grid>
         </Grid>
         

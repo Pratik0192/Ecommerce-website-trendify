@@ -14,10 +14,18 @@ const PaymentCod = () => {
   const handleOptSelect = (event) => {
     setSelectedOpt(event.target.value);
   };
-
+  
   return (
     <Box sx={{ marginLeft: "15px", marginTop: "15px" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px" , marginLeft:"2px"}}>
+      <Typography variant="h6" 
+        sx={{ 
+          marginBottom: "16px" , 
+          marginLeft:"2px",
+          fontSize:"18px", 
+          fontWeight: "700",
+          color:"#424553"
+        }}
+      >
         Cash On Delivery
       </Typography>
       <RadioGroup value={selectedOpt} onChange={handleOptSelect}>
@@ -35,21 +43,6 @@ const PaymentCod = () => {
           }
         />
       </RadioGroup>
-      <Link to="/orderconfirmed">
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#ff4081",
-            color: "#fff",
-            width: "100%",
-            marginTop: "16px",
-            padding: "12px",
-            fontSize: "16px",
-          }}
-        >
-          PLACE ORDER
-        </Button>
-      </Link>
     </Box>
   )
 }
