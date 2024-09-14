@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Box,
@@ -31,8 +31,13 @@ const theme = createTheme({
   },
 });
 
-const OrderPayment = ({ showNavbar }) => {
+const OrderPayment = (props) => {
+  const { hideNavbar } = props;
   const [selectedItem, setSelectedItem] = useState("cod");
+
+  useEffect(() => {
+    hideNavbar();
+  }, [hideNavbar]);
 
   const handleItemSelect = (item) => {
     setSelectedItem(item);
@@ -143,7 +148,7 @@ const OrderPayment = ({ showNavbar }) => {
           >
             {
               selectedItem === "cod" ? 
-                <PaymentCod showNavbar={showNavbar} /> : 
+                <PaymentCod /> : 
               selectedItem === "upi" ? 
                 <PaymentUpi /> :
               selectedItem === "card" ? 

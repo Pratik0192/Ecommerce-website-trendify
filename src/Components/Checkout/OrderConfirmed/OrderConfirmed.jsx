@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Grid, Typography, Button, Divider } from '@mui/material';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
+import { Link } from 'react-router-dom';
 
-const OrderConfirmed = () => {
+import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
+
+const OrderConfirmed = (props) => {
+  const { hideNavbar } = props;
+
+  useEffect(() => {
+    hideNavbar();
+  }, [hideNavbar]);
+
   return (
+    <div>
+      <CheckoutSteps activeStep={2} />
+    
     <Box sx={{ padding: '40px', textAlign: 'center' }}>
       {/* Header Section */}
       <Box 
@@ -84,34 +96,44 @@ const OrderConfirmed = () => {
           maxWidth: "650px"
         }}>
         <Grid item xs={6} sx={{ marginLeft: "-18px" }}>
-          <Button variant="contained" fullWidth 
-            sx={{ 
-              backgroundColor: 'white', 
-              color: '#333', 
-              fontWeight:'bold',
-              fontSize:'16px', 
-              textTransform: 'upperCase', 
-              marginLeft:'0px',
-              border:'1px solid #d4d5d9',
-              height:'60px',    
-              "&:hover": {
-                backgroundColor: "white",
-              },
-            }}
-          >
-            Continue Shopping
-          </Button>
+          <Link to="/">
+            <Button
+              disableRipple
+              disableElevation
+              variant="contained" 
+              fullWidth
+              sx={{
+                backgroundColor: 'white', 
+                color: '#333', 
+                fontWeight:'bold',
+                fontSize:'16px', 
+                textTransform: 'upperCase', 
+                marginLeft:'0px',
+                border:'1px solid #d4d5d9',
+                height:'60px',    
+                "&:hover": {
+                  backgroundColor: "white",
+                },
+              }}
+            >
+              Continue Shopping
+            </Button>
+          </Link>
         </Grid>
         <Grid item xs={6}>
-          <Button variant="contained" fullWidth 
-            sx={{ 
-              backgroundColor: 'rgb(255, 63, 108)',
+          <Button 
+            variant="contained"
+            fullWidth
+            disableRipple
+            disableElevation
+            sx={{
+              backgroundColor: '#ff3f6c',
               fontWeight:'bold',
               fontSize:'16px', 
               color: '#ffffff', 
               textTransform: 'upperCase',
               marginRight:'-5px',
-              height:'60px',    
+              height:'60px',
               "&:hover": {
                 backgroundColor: "#ff3f6c",
               },
@@ -122,6 +144,7 @@ const OrderConfirmed = () => {
         </Grid>
       </Grid>
     </Box>
+    </div>
   );
 };
 

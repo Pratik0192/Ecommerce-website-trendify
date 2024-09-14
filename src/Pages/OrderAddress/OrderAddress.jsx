@@ -30,16 +30,21 @@ const savedAddressesObj = [
   }
 ];
 
-const OrderAddress = () => {
+const OrderAddress = (props) => {
+  const { hideNavbar } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState(0);
   const [savedAddresses, setSavedAddresses] = useState(savedAddressesObj);
 
   useEffect(() => {
+    hideNavbar();
+  }, [hideNavbar]);
+
+  useEffect(() => {
     if(savedAddresses.length > 0){
       setSelectedValue(savedAddresses[0].name);
     }
-  }, []);
+  }, [savedAddresses]);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -93,184 +98,182 @@ const OrderAddress = () => {
 
   return (
     <div>
-      
-    <CheckoutSteps activeStep={0} />
-      
-    <Grid container spacing={2} justifyContent="center" sx={{ padding: "2rem"}}>
-      {/* SHIPPING ADDRESS SECTION */}
-      
-      {savedAddresses.length > 0 && (
-        <Grid item xs={12} sx={{ marginBottom: "1rem" }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginLeft: '138px',
-              marginBottom: '10px',
-              width: '734px',
-            }}
-          >
-            <Typography sx={{ fontSize: '18px', color: '#282c3f', fontWeight: '700' }}>
-              Select Delivery Address
-            </Typography>
-            {/* <Button variant="outlined" sx={addressButtonStyle}>
-              Add new Address
-            </Button> */}
-          </Box>
-          <Typography sx={{ fontSize: '12px', color: '#535766', fontWeight: '700', marginLeft: '138px' }}>
-            DEFAULT ADDRESS
-          </Typography>
-        </Grid>
-      )}
-
-      <Grid
-        item
-        xs={12}
-        md={6}
-        sx={{
-          borderRadius: "5px",
-          paddingRight: "15px",
-        }}
-      >
-        {/*Check if user has address*/}
-        <>
-        {savedAddresses.length > 0 ? (
-          savedAddresses.map((address) => {
-            return (
-              <Grid
-                key={address.name}
-                container 
-                spacing={1} 
-                sx={{
-                  boxShadow: '0px 2px 5px rgba(212, 213, 217, 0.5) ', 
-                  padding:'10px', 
-                  paddingBottom:'20px', 
-                  borderRadius:'4px', 
-                  marginBottom:'25px', 
-                  cursor:'pointer'
-                }}>
-                <Grid item xs={12}>
-                  <Box sx={{ display: 'flex' }}>
-                    <Radio
-                      checked={selectedValue === address.name}
-                      onChange={handleChange}
-                      value={address.name}
-                      name="radio-buttons"
-                      sx={{ marginTop: '-10px', marginLeft: '-15px' }}
-                    />
-                    <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
-                      {address.name}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography sx={savedAddressStyle}>{address.address}</Typography>
-                  <Typography sx={savedAddressStyle}>
-                    Mobile: <span style={{ fontWeight: '700' }}>{address.mobile}</span>
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography sx={savedAddressStyle}>
-                    {address.codAvailable ? "Pay on Delivery available" : "Pay on Delivery not available"}
-                  </Typography>
-                </Grid>
-                {/* Buttons to edit or remove address */}
-                {selectedValue === address.name && (
-                  <Grid
-                    item
-                    xs={12}
-                    container
-                    spacing={2}
-                    sx={{ marginBottom: "0px" }} // Reduced bottom margin
-                  >
-                    <Grid item>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          textTransform: 'uppercase',
-                          fontWeight: '700',
-                          fontSize: '12px',
-                          borderRadius: '4px',
-                          color: "#282c3f",
-                          padding: '6.5px 16px',
-                          border: '1px solid #282c3f',
-                          marginLeft: '25px',
-                          '&:hover': {
-                            borderColor: '#282c3f',
-                            backgroundColor: '#ffffff',
-                          },
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button variant="outlined" 
-                        sx={{
-                          textTransform: 'uppercase',
-                          fontWeight: '700',
-                          fontSize: '12px',
-                          borderRadius: '4px',
-                          color: "#282c3f",
-                          padding: '6.5px 16px',
-                          border: '1px solid #282c3f',
-                          '&:hover': {
-                            borderColor: '#282c3f',
-                            backgroundColor: '#ffffff',
-                          },
-                        }}
-                      >
-                        Edit
-                      </Button>
-                    </Grid>
-                  </Grid>
-                )}
-                
-              </Grid>
-            )
-          })
-        ) : (
-          <>
-            <AddressForm />
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={buttonStyle}
-              >
-                Add Address
-              </Button>
-            </Grid>
-          </>
-        )}
-        </>
-        {savedAddresses.length > 0 && (
-        <Button variant="outlined" sx={addressButtonStyle} onClick={handleOpenDialog} >
-          + Add New Address
-        </Button>
-      )}
+      <CheckoutSteps activeStep={0} />
+      <Grid container spacing={2} justifyContent="center" sx={{ padding: "2rem"}}>
+        {/* SHIPPING ADDRESS SECTION */}
         
-        {/* Add new address button */}
-        {savedAddresses === 0 && (
-          <Box mt={2} display="flex" justifyContent="flex-start">
-            <Button variant="contained" color="primary" >
-              Save Address
-            </Button>
-          </Box>
+        {savedAddresses.length > 0 && (
+          <Grid item xs={12} sx={{ marginBottom: "1rem" }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginLeft: '138px',
+                marginBottom: '10px',
+                width: '734px',
+              }}
+            >
+              <Typography sx={{ fontSize: '18px', color: '#282c3f', fontWeight: '700' }}>
+                Select Delivery Address
+              </Typography>
+              {/* <Button variant="outlined" sx={addressButtonStyle}>
+                Add new Address
+              </Button> */}
+            </Box>
+            <Typography sx={{ fontSize: '12px', color: '#535766', fontWeight: '700', marginLeft: '138px' }}>
+              DEFAULT ADDRESS
+            </Typography>
+          </Grid>
         )}
-      </Grid>
 
-      {/* PRICE DETAILS SECTION */}
-      <Grid item xs={12} md={3.5}>
-        <OrderSummary linkTo="/checkout/review" displayButton={true} />
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            borderRadius: "5px",
+            paddingRight: "15px",
+          }}
+        >
+          {/*Check if user has address*/}
+          <>
+          {savedAddresses.length > 0 ? (
+            savedAddresses.map((address) => {
+              return (
+                <Grid
+                  key={address.name}
+                  container 
+                  spacing={1} 
+                  sx={{
+                    boxShadow: '0px 2px 5px rgba(212, 213, 217, 0.5) ', 
+                    padding:'10px', 
+                    paddingBottom:'20px', 
+                    borderRadius:'4px', 
+                    marginBottom:'25px', 
+                    cursor:'pointer'
+                  }}>
+                  <Grid item xs={12}>
+                    <Box sx={{ display: 'flex' }}>
+                      <Radio
+                        checked={selectedValue === address.name}
+                        onChange={handleChange}
+                        value={address.name}
+                        name="radio-buttons"
+                        sx={{ marginTop: '-10px', marginLeft: '-15px' }}
+                      />
+                      <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
+                        {address.name}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography sx={savedAddressStyle}>{address.address}</Typography>
+                    <Typography sx={savedAddressStyle}>
+                      Mobile: <span style={{ fontWeight: '700' }}>{address.mobile}</span>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography sx={savedAddressStyle}>
+                      {address.codAvailable ? "Pay on Delivery available" : "Pay on Delivery not available"}
+                    </Typography>
+                  </Grid>
+                  {/* Buttons to edit or remove address */}
+                  {selectedValue === address.name && (
+                    <Grid
+                      item
+                      xs={12}
+                      container
+                      spacing={2}
+                      sx={{ marginBottom: "0px" }} // Reduced bottom margin
+                    >
+                      <Grid item>
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            textTransform: 'uppercase',
+                            fontWeight: '700',
+                            fontSize: '12px',
+                            borderRadius: '4px',
+                            color: "#282c3f",
+                            padding: '6.5px 16px',
+                            border: '1px solid #282c3f',
+                            marginLeft: '25px',
+                            '&:hover': {
+                              borderColor: '#282c3f',
+                              backgroundColor: '#ffffff',
+                            },
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button variant="outlined" 
+                          sx={{
+                            textTransform: 'uppercase',
+                            fontWeight: '700',
+                            fontSize: '12px',
+                            borderRadius: '4px',
+                            color: "#282c3f",
+                            padding: '6.5px 16px',
+                            border: '1px solid #282c3f',
+                            '&:hover': {
+                              borderColor: '#282c3f',
+                              backgroundColor: '#ffffff',
+                            },
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  )}
+                  
+                </Grid>
+              )
+            })
+          ) : (
+            <>
+              <AddressForm />
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={buttonStyle}
+                >
+                  Add Address
+                </Button>
+              </Grid>
+            </>
+          )}
+          </>
+          {savedAddresses.length > 0 && (
+          <Button variant="outlined" sx={addressButtonStyle} onClick={handleOpenDialog} >
+            + Add New Address
+          </Button>
+        )}
+          
+          {/* Add new address button */}
+          {savedAddresses === 0 && (
+            <Box mt={2} display="flex" justifyContent="flex-start">
+              <Button variant="contained" color="primary" >
+                Save Address
+              </Button>
+            </Box>
+          )}
+        </Grid>
+
+        {/* PRICE DETAILS SECTION */}
+        <Grid item xs={12} md={3.5}>
+          <OrderSummary linkTo="/checkout/review" displayButton={true} />
+        </Grid>
+        <AddressDialog 
+          openDialog = {openDialog}
+          setOpenDialog = {setOpenDialog}
+          handleCloseDialog = {handleCloseDialog}
+        />
       </Grid>
-      <AddressDialog 
-        openDialog = {openDialog}
-        setOpenDialog = {setOpenDialog}
-        handleCloseDialog = {handleCloseDialog}
-      />
-    </Grid>
     </div>
   );
 };
