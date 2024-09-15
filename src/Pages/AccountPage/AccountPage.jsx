@@ -105,7 +105,7 @@ const AccountPage = () => {
         </Grid>
 
       {/* Main Content */}
-        <Grid item xs={12} md={9.5} container justifyContent="center" alignItems="center">
+        <Grid item xs={12} md={9.5} container justifyContent="center" alignItems="center" >
           {
             selectedItem === "overview" ?
               <OverviewComponent/>:
