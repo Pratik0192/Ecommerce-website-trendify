@@ -79,19 +79,6 @@ const OverviewComponent = () => {
             Trendify User
           </Typography> */}
         </Box>
-        <Button
-          variant="outlined"
-          disableRipple
-          sx={{
-            textTransform: 'none',
-            color: '#333',
-            borderColor: '#333',
-            '&:hover': { backgroundColor: '#e0e0e0' },
-          }}
-          onClick={handleClickOpen}
-        >
-          Edit Profile
-        </Button>
       </Box>
 
        {/* Orders, Wishlist,Trendify Credit Section */}
@@ -221,7 +208,7 @@ const OverviewComponent = () => {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
+      </Grid>  
                 
       <Button
         variant="contained"
@@ -241,78 +228,6 @@ const OverviewComponent = () => {
       >
         LOG OUT
       </Button>
-
-      {/* Dialog for Edit Profile */}
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          Edit Details
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
-        <Box sx={{ padding: '20px' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px',...textFieldActiveStateStyle }}>
-            <TextField
-              label="Mobile Number"
-              variant="outlined"
-              fullWidth
-              value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
-            />
-          </Box>
-
-          <TextField
-            label="Full Name"
-            variant="outlined"
-            fullWidth
-            sx={{ marginBottom: '20px' , ...textFieldActiveStateStyle}}
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            sx={{ marginBottom: '20px', ...textFieldActiveStateStyle }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <FormControl component="fieldset" sx={{ marginBottom: '20px',...textFieldActiveStateStyle }}>
-            <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup
-              row
-              aria-label="gender"
-              name="gender"
-              value={gender}
-              onChange={handleGenderChange}
-            >
-              <FormControlLabel value="male" control={<Radio sx={{ "&.Mui-checked": { color: "#FF4141" } }} />} label="Male" />
-              <FormControlLabel value="female" control={<Radio sx={{ "&.Mui-checked": { color: "#FF4141" } }} />} label="Female" />
-            </RadioGroup>
-          </FormControl>
-
-          <Button
-            variant="contained"
-            color="primary"
-            disableRipple
-            fullWidth
-            sx={{
-              backgroundColor: '#ff3f6c', 
-              color: '#fff',
-              "&:hover": {
-                backgroundColor: "#ff3f6c",
-                boxShadow: "none",
-              }
-             }}
-            onClick={handleClose}
-          >
-            Save Details
-          </Button>
-        </Box>
-      </Dialog>
     </Box>
   );
 };
