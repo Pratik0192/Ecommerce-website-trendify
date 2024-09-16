@@ -317,3 +317,8 @@ a {
   white-space: normal;
 }
 
+
+.authentication-message {
+  color: red;
+  text-align: center;
+}
