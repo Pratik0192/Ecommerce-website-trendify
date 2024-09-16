@@ -85,7 +85,7 @@ const ProfileComponent = () => {
             marginRight:'20px',
             padding:'10px 30px',
             borderColor: '#333',
-            '&:hover': { backgroundColor: '#e0e0e0' },
+            '&:hover': { backgroundColor: '#e0e0e0', borderColor:'#333' },
           }}
           onClick={handleClickOpen}
         >
