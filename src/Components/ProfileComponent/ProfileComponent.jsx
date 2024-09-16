@@ -47,17 +47,19 @@ const ProfileComponent = () => {
   const profileDetailLeft={
     fontWeight: '500',
     width:'300px', 
-    fontSize:'20px'
+    fontSize:'18px',
+    marginLeft:'90px'
   }
 
   const profileDetailRight={
     fontWeight: '500', 
     width:'250px', 
-    fontSize:'20px'
+    fontSize:'18px',
+    marginLeft:'-25px'
   }
 
   return (
-    <Box sx={{ padding: '20px' }}>
+    <Box sx={{ padding: '20px', width:'90%'}}>
       {/* Profile Section */}
       <Box
         sx={{
@@ -65,12 +67,13 @@ const ProfileComponent = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: '#f5f5f5',
-          padding: '20px',
-          marginBottom: '30px',
-          width: '1000px',
+          marginBottom: '15px',
+          marginLeft:'-21px',
+          width: '100%',
+          padding:'10px 20px 10px 20px'
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center'}}>
           <img src={Placeholder} alt="Placeholder" height="150px" style={{ margin: '10px' }} />
         </Box>
         <Button
@@ -79,8 +82,10 @@ const ProfileComponent = () => {
           sx={{
             textTransform: 'none',
             color: '#333',
+            marginRight:'20px',
+            padding:'10px 30px',
             borderColor: '#333',
-            '&:hover': { backgroundColor: '#e0e0e0' },
+            '&:hover': { backgroundColor: '#e0e0e0', borderColor:'#333' },
           }}
           onClick={handleClickOpen}
         >
@@ -91,14 +96,15 @@ const ProfileComponent = () => {
       {/* Profile Details Section */}
       <Box 
         sx={{ 
-          margin:'0',
-          padding:'50px 100px',
-          width:'80%',
+          marginLeft:'-21px',
+          paddingBottom:'40px',
+          padding:'20px -1px 200px 119px',
+          width:'105%',
           border:'1px solid #ccc',
           borderRadius: '5px',
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: '700', marginBottom: '25px',marginLeft:'15px',fontSize:'25px' }}>
+        <Typography variant="h6" sx={{ fontWeight: '700',marginTop:'15px', marginBottom: '20px',marginLeft:'80px',fontSize:'25px' }}>
           Profile Details 
         </Typography>
         <Divider sx={{marginBottom: '40px'}}/>
