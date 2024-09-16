@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -23,9 +23,23 @@ import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
 
+import { fetchUserDetails } from "./store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const isUserLoggedIn = useSelector((store) => store.user.isUserLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if(token) {
+      console.log("Token Not Null");
+      dispatch(fetchUserDetails(token));
+    } else {
+      console.log("Token is Null")
+    }
+  }, [dispatch]);
 
   const hideNavbar = () => {
     setIsNavbarVisible(false);
