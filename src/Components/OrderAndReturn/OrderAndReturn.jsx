@@ -80,7 +80,7 @@ const cardHeaderTextBottom = {
 }
 
 
-const OrderAndReturn = () => {
+const OrderAndReturn = ({onTrackPackage}) => {
   return (
     <Box sx={{ padding: '20px', width: "100%"}}>
       {orders.map((order, index) => (
@@ -222,7 +222,13 @@ const OrderAndReturn = () => {
                 </Grid>
                 <Grid item xs={3} spacing={1} sx={{ marginTop: "-12px" }}>
                   <Stack spacing={1} sx={{ width: '150px', margin: 'auto' }}>
-                    <Button variant ="outlined" disableRipple  disableElevation sx={buttonStackStyle}>
+                    <Button 
+                      variant ="outlined" 
+                      disableRipple  
+                      disableElevation 
+                      sx={buttonStackStyle}
+                      onClick={onTrackPackage}  
+                    >
                      Track package
                     </Button>
                     <Button variant="outlined"disableRipple disableElevation sx={buttonStackStyle}>
