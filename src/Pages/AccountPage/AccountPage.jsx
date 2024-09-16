@@ -40,7 +40,7 @@ const AccountPage = () => {
       <Typography sx={{fontSize:'12px', fontWeight:'500', marginTop:'-4px', marginLeft:'13.5%', marginBottom:'15px'}}>
         Trendify User
       </Typography>
-      <Grid container spacing={2} xs={12} md={9} sx={{margin:'auto'}}>
+      <Grid container spacing={2} xs={12} md={9} sx={{margin:'auto',borderTop:'1px solid #d4d5d9'}}>
         <Grid item xs={12} md={2.5} sx={{borderRight:'1px solid #d4d5d9'}}>
           <List component="nav">
             <Box sx={{ padding:'0 10px 10px 0'}}>
