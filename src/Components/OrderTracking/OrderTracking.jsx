@@ -12,6 +12,9 @@ import {
 import { styled } from '@mui/system';
 import trial_image_return from '../Assets/product_10.png';
 import CancelIcon from '@mui/icons-material/Cancel';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 
 // Define a custom connector with no underline
 const CustomStepConnector = styled('div')({
@@ -57,7 +60,7 @@ const OrderTracking = () => {
 
   return (
     <Grid container sx={{background: '#eaeaec', justifyContent: 'center' }}>
-      {/* Image Section */}
+      {/* image section */}
       <Grid item xs={12} md={12} sx={{ justifyContent: 'center', textAlign: 'center', paddingTop:'80px' }}>
         <img src={trial_image_return} alt="Product" style={{ width: '120px' }} />
       </Grid>
@@ -65,7 +68,7 @@ const OrderTracking = () => {
       {/* Product Details */}
       <Grid item xs={12} md={12} sx={{ justifyContent: 'center', textAlign: 'center', marginBottom:'30px' }}>
         <Box>
-          <Typography sx={{fontSize:'15px', fontWeight:'700', marginTop:'20px', marginBottom:'5px'}}>Roadster</Typography>
+          <Typography sx={{fontSize:'15px', fontWeight:'700', marginTop:'20px', marginBottom:'5px', color:'#282c3f'}}>Roadster</Typography>
           <Typography sx={{fontSize:'14px', marginBottom:'5px', color:'#7e818c'}}>Men solid round neck t-shirt</Typography>
           <Typography sx={{fontSize:'14px', color:'#7e818c'}}>Size: S</Typography>
         </Box>
@@ -152,6 +155,8 @@ const OrderTracking = () => {
           )}
         </Box>
       </Grid>
+
+      {/* cancel order part */}
       <Grid xs={12} md={11} 
         sx={{ 
           background: '#ffffff', 
@@ -169,7 +174,82 @@ const OrderTracking = () => {
             Cancel
           </Typography>
         </Box>
-        
+      </Grid>
+
+      {/* Delivery address part */} 
+      <Grid xs={12} md={11} sx={{backgroundColor:'#ffffff', marginBottom:'30px'}}>
+        <Box sx={{padding:'20px'}}>
+          <Typography sx={{color:'#282c3f', fontSize:'16px', fontWeight:'700', marginBottom:'10px'}}>Delivery Address</Typography>
+          <Typography sx={{color:'#282c3f', fontSize:'14px', fontWeight:'700'}}>Pratik Chakraborty <span>7595029561</span></Typography>
+          <Typography sx={{color:'#7e818c', fontSize:'14px', marginBottom:'10px'}}>1/1A, Kedar Nath Das Lane, Kolkata-70030</Typography>
+          <Button
+            variant='outlined'
+            sx={{
+              width:'100%',
+              padding:'10px 0px',
+              color:'#282c3f',
+              border:'1px solid #282c3f',
+              fontWeight:'700',
+              '&:hover':{
+                color:'#282c3f',
+                border:'1px solid #282c3f',
+                background:'#ffffff'
+              }
+            }}
+          >
+            Change Delivery Address
+          </Button>
+        </Box>
+      </Grid >
+
+      {/* total price part */}
+      <Grid xs={12} md={11} sx={{backgroundColor:'#ffffff', marginBottom:'30px'}}>
+        <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
+          <Typography sx={{fontSize:'16px',color:'#282c3f', fontWeight:'700', }}>
+            Total Order Price
+          </Typography>
+          <Typography sx={{fontSize:'16px',color:'#282c3f',fontWeight:'700'}}>
+            Rs.599
+          </Typography>
+        </Box>
+        <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px',marginTop:'-38px'}}>
+          <Typography sx={{fontSize:'14px',color:'#7e818c'}}>
+            You Saved <span style={{fontWeight:'700', color:'#03a685'}}>Rs.629</span> on this order
+          </Typography>
+          <Typography sx={{fontSize:'15px', color:'#ff3f6c', fontWeight:'700'}}>
+            View Breakup
+          </Typography>
+        </Box>
+        <Grid xs={12} md={11.5} sx={{backgroundColor:'#eaeaec', margin:'auto', padding:'20px', marginBottom:'20px'}}>
+          <Typography sx={{fontSize:'16px', color:'#282c3f'}}>
+            <span><PaymentsOutlinedIcon sx={{fontSize:'20px', marginBottom:'-5px', marginRight:'5px'}}/></span>
+            Pay on Delivery
+          </Typography>
+        </Grid>
+      </Grid>
+
+      {/* updates sending part */}
+      <Grid xs={12} md={11} sx={{background:'#ffffff', padding:'20px', marginBottom:'30px'}}>
+        <Box>
+          <Typography sx={{fontSize:'16px', color:'#282c3f', fontWeight:'700', marginBottom:'10px'}}>
+            Updates send to
+          </Typography>
+          <Typography sx={{fontSize:'14px', color:'#7e818c', marginBottom:'10px'}}>
+            <span><LocalPhoneOutlinedIcon sx={{fontSize:'20px', marginBottom:'-5px', marginRight:'5px'}}/></span>
+            7595029561
+          </Typography>
+          <Typography sx={{fontSize:'14px', color:'#7e818c'}}>
+            <span><EmailOutlinedIcon sx={{fontSize:'20px', marginBottom:'-5px', marginRight:'5px'}}/></span>
+            pratikchakraborty019gmail.com
+          </Typography>
+        </Box>
+      </Grid>
+
+      {/* order id part */}
+      <Grid xs={12} md={11} sx={{background:'#ffffff', padding:'20px', marginBottom:'30px'}}>
+        <Typography sx={{fontSize:'14px', color:'#7e818c'}}>
+          Order ID # 408-8465956-2312333
+        </Typography>
       </Grid>
     </Grid>
   );
