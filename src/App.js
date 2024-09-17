@@ -22,6 +22,7 @@ import OrderConfirmed from "./Components/Checkout/OrderConfirmed/OrderConfirmed"
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
+import AccountPage from "./Pages/AccountPage/AccountPage";
 
 import { fetchUserDetails } from "./store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,6 +73,7 @@ function App() {
           <Route path='/checkout/review' element={<OrderReview hideNavbar={hideNavbar} />}/>
           <Route path='/checkout/payment' element={<OrderPayment hideNavbar={hideNavbar} />}/>
           <Route path='/orderconfirmed' element={<OrderConfirmed hideNavbar={hideNavbar} />}/>
+          <Route path='/accountpage' element={<AccountPage/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

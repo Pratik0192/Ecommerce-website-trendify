@@ -89,9 +89,11 @@ const UserProfileDropdown = (props) => {
         </Link>
       </MenuItem>
       <Divider sx={{width: '90%', margin: '0 auto'}}/>
-      <MenuItem sx={menuItemStyle}>
-        Orders
-      </MenuItem>
+      <Link to='/accountpage'>
+        <MenuItem sx={menuItemStyle}>
+          Orders
+        </MenuItem>
+      </Link>
       <MenuItem sx={menuItemStyle}>
         Wishlists
       </MenuItem>
