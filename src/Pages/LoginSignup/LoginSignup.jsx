@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import googleIcon from '../../Components/Assets/google.svg';
 import { registerUser, loginUser } from '../../store/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../store/userSlice';
 
 
 const Login = (props) => {
@@ -16,14 +17,27 @@ const Login = (props) => {
     email: "",
     password: ""
   });
-  const autmMessage = useSelector((store) => store.user.authMessage);
+  const statusCode = useSelector((store) => store.user.statusCode);
+  const authMessage = useSelector((store) => store.user.authMessage);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("CurrentTab", currentTab);
+    console.log(currentTab);
   }, [currentTab]);
 
+  useEffect(() => {
+    if(statusCode === 200){
+      if(currentTab === "SignUp"){
+        window.location = "/login";
+      }
+      if(currentTab === "Login"){
+        window.location = "/";
+      }
+    }
+  }, [statusCode]);
+
   const changeTab = (tab) => {
+    dispatch(userActions.resetStatusCode());
     if(tab === "Login"){
       setCurrentTab("Login");
     } else {
@@ -50,6 +64,7 @@ const Login = (props) => {
   };
 
   const handleNameChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
     setUserDetails({
       ...userDetails,
       name: e.target.value
@@ -57,6 +72,7 @@ const Login = (props) => {
   }
 
   const handleEmailChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
     setEmailErrorMsg(emailValidator(e.target.value));
     setUserDetails({
       ...userDetails,
@@ -65,6 +81,7 @@ const Login = (props) => {
   }
 
   const handlePasswordChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
     setPasswordErrorMsg(passwordValidator(e.target.value));
     setUserDetails({
       ...userDetails,
@@ -72,18 +89,16 @@ const Login = (props) => {
     });
   }
 
-
-  const handleRegisterLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log(currentTab);
     if(currentTab === "SignUp"){
       console.log(userDetails);
       await dispatch(registerUser(userDetails));
-      window.location = "/login";
     } else if (currentTab === "Login"){
       const { name, ...detailsNew } = userDetails;
       console.log(detailsNew);
       await dispatch(loginUser(detailsNew));
-      window.location = "/";
     }
   }
 
@@ -167,9 +182,15 @@ const Login = (props) => {
                   </span>}
                 </a>
               </div>
-              <div className="authentication-message">{autmMessage}</div>
+              {authMessage && 
+                <div className={
+                  statusCode === 200 ? "auth-message-success" : "auth-message-error"
+                }>
+                  {authMessage && authMessage}
+                </div>
+              }
             </div>
-            <button className="login_button" onClick={handleRegisterLogin}>
+            <button className="login_button" onClick={handleSubmit}>
               <span color="#fff" className="login_button_text">
                 {props.authTab === "Login" ? "Login" : "Sign Up"}
               </span>

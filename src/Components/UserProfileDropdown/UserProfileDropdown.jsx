@@ -23,6 +23,7 @@ const UserProfileDropdown = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    window.location = "/";
   }
 
   return (
@@ -72,7 +73,7 @@ const UserProfileDropdown = (props) => {
         </Typography>
       </MenuItem>
       <MenuItem sx={{'&:hover':{backgroundColor: 'transparent'} }}>
-        <Link to='/login'>
+        <Link to={isUserLoggedIn ? '/profile' : '/login'}>
           <Button 
             sx={{ 
                 width: '100%', 
