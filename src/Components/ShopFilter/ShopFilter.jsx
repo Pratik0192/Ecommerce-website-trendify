@@ -1,13 +1,81 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ShopFilter.css';
 import { Checkbox, Divider, FormControlLabel, FormGroup, Slider, Typography } from '@mui/material';
+import { fetchAllBrands } from '../../store/productsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ShopFilter = () => {
+
+const ShopFilter = (props) => {
   const [priceRange, setPriceRange] = useState([500, 2000]);
+  const brandNames = useSelector((store) => store.products.brands);
+  const dispatch = useDispatch();
+  const [brandsList, setBrandsList] = useState([]);
 
   const handleSliderChange = (event, newValue) => {
     setPriceRange(newValue);
   };
+
+  const checkboxStyle = {
+    marginLeft:'-8px',
+    color: '#94969f', //unchecked color
+    '&.Mui-checked': {
+      color: '#ff3f6c', //checked color
+    }
+  }
+
+  const subCategories = [
+    {
+      name: "Top Wear",
+      count: 782
+    },
+    {
+      name: "Bottom Wear",
+      count: 312
+    },
+    /* {
+      name: "Foot Wear",
+      count: 52
+    }, */
+  ];
+
+  const colorsList = [
+    {
+      name: "Red",
+      count: 782,
+      backgroundColor: "red"
+    },
+    {
+      name: "Green",
+      count: 312,
+      backgroundColor: "green"
+    },
+    {
+      name: "Blue",
+      count: 52,
+      backgroundColor: "blue"
+    },
+    {
+      name: "Black",
+      count: 52,
+      backgroundColor: "black"
+    },
+  ];
+
+  useEffect(() => {
+    const fetchBrandsAsync = async () => {
+      await dispatch(fetchAllBrands(props.category));
+    }
+    
+    fetchBrandsAsync();
+
+  }, [dispatch]);
+
+  useEffect(() => {
+    setBrandsList(brandNames.map((brandname) => {
+      let brand = { name: brandname, count: 100 };
+      return brand;
+    }));
+  }, [brandNames]);
 
   return (
     <div className='shop-filter'>
@@ -49,57 +117,24 @@ const ShopFilter = () => {
         CATEGORY
       </Typography>
       <FormGroup>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
+        {subCategories.map((category) => {
+          return (
+            <FormControlLabel 
+              key={category.name}
+              control={
+                <Checkbox 
+                  sx={checkboxStyle} 
+                />
+              } 
+              label={
+                <Typography sx={{marginLeft:'4px'}}>
+                  <span style={{fontSize:'14px', color: '#282c3f'}}>{category.name}</span>
+                  <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>({category.count})</span>
+                </Typography>
+              }
             />
-          } 
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Top Wear</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(782)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          } 
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Bottom Wear</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(312)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Foot Wear</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(52)</span>
-            </Typography>}/>
+          )
+        })}
       </FormGroup>
       <Divider 
         sx={{
@@ -126,74 +161,24 @@ const ShopFilter = () => {
         BRAND
       </Typography>
       <FormGroup>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
+        {brandsList.map((brand) => {
+          return (
+            <FormControlLabel
+              key={brand.name}
+              control={
+                <Checkbox 
+                  sx={checkboxStyle} 
+                />
+              }
+              label={
+                <Typography sx={{marginLeft:'4px'}}>
+                  <span style={{fontSize:'14px', color: '#282c3f'}}>{brand.name}</span>
+                  <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>({brand.count})</span>
+                </Typography>
+              }
             />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Turtle</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(782)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          } 
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>WROGN</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(312)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          } 
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Roadster</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(52)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Mast & Harbour</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(52)</span>
-            </Typography>}/>
+          )
+        })}
         <Typography
           sx={{
             fontSize: '15px',
@@ -256,8 +241,7 @@ const ShopFilter = () => {
         }}
       />
 
-        {/*Filter color section */}
-
+      {/*Filter color section */}
 
       <Typography
         variant='subtitle1'
@@ -273,114 +257,34 @@ const ShopFilter = () => {
         COLOR
       </Typography>
       <FormGroup>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
+        {colorsList.map((color) => {
+          return (
+            <FormControlLabel
+              key={color.name}
+              control={
+                <Checkbox 
+                  sx={checkboxStyle} 
+                />
+              }
+              label={
+                <Typography sx={{marginLeft:'4px'}}>
+                  <span 
+                    style={{
+                      width: '14px',
+                      height: '14px',
+                      backgroundColor: color.backgroundColor,
+                      display: 'inline-block',
+                      marginRight: '5px',
+                      borderRadius: '25px'
+                    }}
+                  />
+                  <span style={{fontSize:'14px', color: '#282c3f'}}>{color.name}</span>
+                  <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>({color.count})</span>
+                </Typography>
+              }
             />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span 
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  backgroundColor: 'red',
-                  display: 'inline-block',
-                  marginRight: '5px',
-                  borderRadius: '25px'
-                }}
-              />
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Red</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(782)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span 
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  backgroundColor: 'green',
-                  display: 'inline-block',
-                  marginRight: '5px',
-                  borderRadius: '25px'
-                }}
-              />
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Green</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(312)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span 
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  backgroundColor: 'blue',
-                  display: 'inline-block',
-                  marginRight: '5px',
-                  borderRadius: '25px'
-                }}
-              />
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Blue</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(52)</span>
-            </Typography>}/>
-        <FormControlLabel 
-          control={
-            <Checkbox 
-              sx={{
-                marginLeft:'-8px',
-                color: '#94969f', //unchecked color
-                '&.Mui-checked': {
-                color: '#ff3f6c', //checked color
-                }
-              }} 
-            />
-          }
-          label={
-            <Typography sx={{marginLeft:'4px'}}>
-              <span 
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  backgroundColor: 'black',
-                  display: 'inline-block',
-                  marginRight: '5px',
-                  borderRadius: '25px'
-                }}
-              />
-              <span style={{fontSize:'14px', color: '#282c3f'}}>Black</span>
-              <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>(52)</span>
-            </Typography>}/>
+          )
+        })}
         <Typography
           sx={{
             fontSize: '15px',

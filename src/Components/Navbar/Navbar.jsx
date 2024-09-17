@@ -11,11 +11,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { productActions } from '../../store/productsSlice';
+
 
 const Navbar = () => {
   const [menu, setMenu] = useState('shop');
   const menuRef = useRef();
+  const dispatch = useDispatch();
 
   const cartLength = useSelector((store) => store.cart.totalItems);
   const wishlist = useSelector((store) => store.wishlist.data);
@@ -47,25 +50,25 @@ const Navbar = () => {
       </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={() => { setMenu('shop') }}>
+        <li onClick={() => { setMenu('shop'); dispatch(productActions.resetProductsList())}}>
           <Link className="nav-item-link" to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('mens') }}>
+        <li onClick={() => { setMenu('mens'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('womens') }}>
+        <li onClick={() => { setMenu('womens'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('kids') }}>
+        <li onClick={() => { setMenu('kids'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('home&living') }}>
+        <li onClick={() => { setMenu('home&living'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('laptop') }}>
+        <li onClick={() => { setMenu('laptop'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('mobile&tablet') }}>
+        <li onClick={() => { setMenu('mobile&tablet'); dispatch(productActions.resetProductsList()) }}>
           <Link className="nav-item-link" to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
         </li>
       </ul>

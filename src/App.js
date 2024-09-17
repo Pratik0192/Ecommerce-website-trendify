@@ -55,15 +55,15 @@ function App() {
       <BrowserRouter>
         {isNavbarVisible && <Navbar />}
         <Routes>
-          <Route path='/login' element={<LoginSignup authTab="Login"/>}/>
-          <Route path='/signup' element={<LoginSignup authTab="SignUp"/>}/>
+          <Route path='/login' element={<LoginSignup authTab="Login" key="login"/>}/>
+          <Route path='/signup' element={<LoginSignup authTab="SignUp" key="signup"/>}/>
           <Route path='/' element={<Shop showNavbar={showNavbar}/>}/>
           <Route path='/mens' element={<ShopCategory banner={men_banner} category="men"/>}/>
-          <Route path='/womens' element={<ShopCategory banner={women_banner} category="women"/>}/>
-          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid"/>}/>
-          <Route path='/home&living' element={<ShopCategory banner={kid_banner} category="home&living"/>}/>
-          <Route path='/laptop' element={<ShopCategory banner={kid_banner} category="laptop"/>}/>
-          <Route path='/mobile&tablet' element={<ShopCategory banner={kid_banner} category="mobile&tablet"/>}/>
+          <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" key="women"/>}/>
+          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" key="kid"/>}/>
+          <Route path='/home&living' element={<ShopCategory banner={kid_banner} category="home&living" key="home&living"/>}/>
+          <Route path='/laptop' element={<ShopCategory banner={kid_banner} category="laptop" key="laptop"/>}/>
+          <Route path='/mobile&tablet' element={<ShopCategory banner={kid_banner} category="mobile&tablet" key="mobile&tablet"/>}/>
           <Route path='/product' element={<Product/>}>
             <Route path=':productId' element={<Product/>}/>
           </Route>

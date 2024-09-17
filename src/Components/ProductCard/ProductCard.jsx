@@ -16,7 +16,7 @@ const ProductCard = (props) => {
   const dispatch = useDispatch();
   const wishlist = useSelector((store) => store.wishlist.data);
 
-  const { product } = props;
+  const { product, category } = props;
   const productId = product ? product._id : null;
   let isItemInWishlist = wishlist.some((item) => item._id === productId);
   const [liked, setLiked] = useState(isItemInWishlist);
@@ -50,13 +50,16 @@ const ProductCard = (props) => {
 
   return (
     <Card
-      sx={{ height: "456px" }}
+      sx={{ height: category === "laptop" ? "355px" : "456px" }}
       className="item-container"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link to={`/product/${product && product._id}`}>
-        <div className="image-container">
+        <div 
+          className="image-container" 
+          style={{ height: category === "laptop" ? "230px" : "333px" }}
+        >
           <img
             onClick={() => window.scrollTo(0, 0)} 
             src={product && product.image} 

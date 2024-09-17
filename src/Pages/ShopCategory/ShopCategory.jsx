@@ -16,21 +16,20 @@ const ShopCategory = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("Shop Rendered");
     dispatch(productActions.resetProduct());
 
     const fetchProductsAsync = async () => {
-      await dispatch(fetchProducts());
+      await dispatch(fetchProducts(props.category));
     }
 
-    if (!fetchProductsDone) {
-      fetchProductsAsync();
-    }
-  }, [dispatch, fetchProductsDone]);
+    fetchProductsAsync();
+  }, [dispatch]);
+
 
   useEffect(() => {
     console.log(products);
   }, [products]);
-
   
   // Skeleton Placeholder for Loading Items
   const renderSkeletons = () => {
@@ -60,18 +59,21 @@ const ShopCategory = (props) => {
       </div>
       <div className="shopcategory-content">
         <div className="shopcategory-filter">
-          <ShopFilter />
+          <ShopFilter
+            category={props.category}
+          />
         </div>
         <div className="shopcategory-products">
           {/* Render Skeletons if products are null */}
-          {products == null ? 
+          {products.length === 0 ? 
             renderSkeletons() :
             products
-              .filter(item => item.category === props.category)
+              //.filter(item => item.category === props.category)
               .map((item) => (
                 <ProductCard 
                   key={item._id}
                   product={item}
+                  category={props.category}
                 />
               )
             )
