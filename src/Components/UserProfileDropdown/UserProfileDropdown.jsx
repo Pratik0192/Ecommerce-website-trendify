@@ -5,10 +5,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
 
 
 const UserProfileDropdown = (props) => {
   const { anchorEl, open, handleClose } = props;
+  const isUserLoggedIn = useSelector((store) => store.user.isUserLoggedIn);
+
+  const menuItemStyle = {
+    color: '#666', 
+    padding: "3px 18px", 
+    '&:hover': {
+      color: '#000', 
+      fontSize: '17px' 
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location = "/";
+  }
 
   return (
     <Menu
@@ -57,43 +73,46 @@ const UserProfileDropdown = (props) => {
         </Typography>
       </MenuItem>
       <MenuItem sx={{'&:hover':{backgroundColor: 'transparent'} }}>
-        <Link to='/login'>
+        <Link to={isUserLoggedIn ? '/profile' : '/login'}>
           <Button 
             sx={{ 
                 width: '100%', 
-                height: '45px',
+                height: '35px',
                 color: '#ff4141', 
                 borderColor: '#ff4141', 
                 '&:hover': {borderColor: '#ff4141'}, 
             }} 
             variant="outlined"
           >
-            Login / Sign Up
+            {isUserLoggedIn ? 'Profile' : 'Login / Sign Up'}
           </Button>
         </Link>
       </MenuItem>
       <Divider sx={{width: '90%', margin: '0 auto'}}/>
       <Link to='/accountpage'>
-        <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px'}}}>
+        <MenuItem sx={menuItemStyle}>
           Orders
         </MenuItem>
       </Link>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
+      <MenuItem sx={menuItemStyle}>
         Wishlists
       </MenuItem>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
+      <MenuItem sx={menuItemStyle}>
         Gift Cards
       </MenuItem>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
+      <MenuItem sx={menuItemStyle}>
         Contact Us
       </MenuItem>
       <Divider sx={{width: '90%', margin: '0 auto'}}/>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
+      <MenuItem sx={menuItemStyle}>
         Coupons
       </MenuItem>
-      <MenuItem sx={{color: '#666', '&:hover': {color: '#000', fontSize: '17px' }}}>
+      <MenuItem sx={menuItemStyle}>
         Saved Addresses
       </MenuItem>
+      {isUserLoggedIn && <MenuItem sx={menuItemStyle} onClick={handleLogout}>
+        Logout
+      </MenuItem>}
     </Menu>
   )
 }

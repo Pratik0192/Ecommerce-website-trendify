@@ -1,16 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginSignup.css';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import googleIcon from '../../Components/Assets/google.svg';
+import { registerUser, loginUser } from '../../store/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../store/userSlice';
 
 
 const Login = (props) => {
   const [currentTab, setCurrentTab] = useState(props.authTab);
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+  const statusCode = useSelector((store) => store.user.statusCode);
+  const authMessage = useSelector((store) => store.user.authMessage);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(currentTab);
+  }, [currentTab]);
+
+  useEffect(() => {
+    if(statusCode === 200){
+      if(currentTab === "SignUp"){
+        window.location = "/login";
+      }
+      if(currentTab === "Login"){
+        window.location = "/";
+      }
+    }
+  }, [statusCode]);
 
   const changeTab = (tab) => {
+    dispatch(userActions.resetStatusCode());
     if(tab === "Login"){
       setCurrentTab("Login");
     } else {
@@ -36,12 +63,43 @@ const Login = (props) => {
     return "";
   };
 
+  const handleNameChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
+    setUserDetails({
+      ...userDetails,
+      name: e.target.value
+    });
+  }
+
   const handleEmailChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
     setEmailErrorMsg(emailValidator(e.target.value));
+    setUserDetails({
+      ...userDetails,
+      email: e.target.value
+    });
   }
 
   const handlePasswordChange = (e) => {
+    dispatch(userActions.resetAutmMessage());
     setPasswordErrorMsg(passwordValidator(e.target.value));
+    setUserDetails({
+      ...userDetails,
+      password: e.target.value
+    });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(currentTab);
+    if(currentTab === "SignUp"){
+      console.log(userDetails);
+      await dispatch(registerUser(userDetails));
+    } else if (currentTab === "Login"){
+      const { name, ...detailsNew } = userDetails;
+      console.log(detailsNew);
+      await dispatch(loginUser(detailsNew));
+    }
   }
 
 
@@ -61,7 +119,7 @@ const Login = (props) => {
                 <div
                   cursor="pointer" 
                   className={clsx("tab_switcher_inner", props.authTab === "Login" && "tab_active")} 
-                  // onClick={() => changeTab("Login")}
+                  onClick={() => changeTab("Login")}
                 >
                   <span color="#1e2433" className="login_text">Login</span>
                 </div>
@@ -73,15 +131,27 @@ const Login = (props) => {
                 <div 
                   cursor="pointer" 
                   className={clsx("tab_switcher_inner", props.authTab === "SignUp" && "tab_active")} 
-                  // onClick={() => changeTab("SignUp")}
+                  onClick={() => changeTab("SignUp")}
                 >
                   <span color="#818898" className="signup_text">Sign Up</span>
                 </div>
               </Link>
             </div>
           </div>
-          <form noValidate="" className="auth_form_box">
+          <div noValidate="" className="auth_form_box">
             <div className="auth_input_container">
+              {props.authTab === "SignUp" && (
+                <div className="auth_input_inner input_email">
+                  <div data-private="true" className="auth_input_field_box">
+                    <input 
+                      className="input_field" 
+                      placeholder="Enter your Name" 
+                      type="name"
+                      onChange={handleNameChange}
+                    />
+                  </div>
+                </div>
+              )}
               <div className="auth_input_inner input_email">
                 <div data-private="true" className="auth_input_field_box">
                   <input 
@@ -112,8 +182,15 @@ const Login = (props) => {
                   </span>}
                 </a>
               </div>
+              {authMessage && 
+                <div className={
+                  statusCode === 200 ? "auth-message-success" : "auth-message-error"
+                }>
+                  {authMessage && authMessage}
+                </div>
+              }
             </div>
-            <button type="submit" className="login_button">
+            <button className="login_button" onClick={handleSubmit}>
               <span color="#fff" className="login_button_text">
                 {props.authTab === "Login" ? "Login" : "Sign Up"}
               </span>
@@ -134,7 +211,7 @@ const Login = (props) => {
                 <i className="mdi mdi-apple"></i>
                 <span color="#1e2433" className="apple_button_text">Continue with Apple</span></div>
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

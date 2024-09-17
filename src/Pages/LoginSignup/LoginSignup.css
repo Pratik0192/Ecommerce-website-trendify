@@ -317,3 +317,13 @@ a {
   white-space: normal;
 }
 
+
+.auth-message-success {
+  color: green;
+  text-align: center;
+}
+
+.auth-message-error {
+  color: red;
+  text-align: center;
+}
