@@ -15,6 +15,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
+import OrderCancelReason from '../OrderCancelReason/OrderCancelReason';
 
 // Define a custom connector with no underline
 const CustomStepConnector = styled('div')({
@@ -43,7 +44,7 @@ const steps = [
   },
 ];
 
-const OrderTracking = () => {
+const OrderTracking = ({onReturnReason}) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -57,7 +58,7 @@ const OrderTracking = () => {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  
   return (
     <Grid container sx={{background: '#eaeaec', justifyContent: 'center' }}>
       {/* image section */}
@@ -169,7 +170,13 @@ const OrderTracking = () => {
         }}
       >
         <Box>
-          <CancelIcon sx={{color:'#03a685', fontSize:'26px'}} />
+          <Button
+            onClick={onReturnReason}  
+          >
+            <CancelIcon sx={{color:'#03a685', fontSize:'26px'}} />
+          </Button>
+
+          
           <Typography >
             Cancel
           </Typography>
@@ -251,6 +258,7 @@ const OrderTracking = () => {
           Order ID # 408-8465956-2312333
         </Typography>
       </Grid>
+      
     </Grid>
   );
 };
