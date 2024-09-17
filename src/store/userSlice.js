@@ -5,27 +5,39 @@ import axios from "axios";
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (userDetails) => {
-    const res = await axios.post(
+    let payload = {};
+    await axios.post(
       `${process.env.REACT_APP_BASEURL}/api/v1/register`, 
       userDetails
-    );
-    console.log("Register", res.data);
-    return res.data;
+    ).then(res => {
+      payload.status = 200;
+      payload.message = res.data.message;
+    }).catch(err => {
+      payload.status = err.response.status
+      payload.message = err.response.data.message;
+    });
+    return payload;
   }
-)
+);
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (userDetails) => {
-    const res = await axios.post(
+    let payload = {};
+    await axios.post(
       `${process.env.REACT_APP_BASEURL}/api/v1/login`, 
       userDetails
-    );
-    console.log("Login", res.data);
-    return res.data;
+    ).then(res => {
+      payload.status = 200;
+      payload.message = res.data.message;
+      payload.token = res.data.token;
+    }).catch(err => {
+      payload.status = err.response.status;
+      payload.message = err.response.data.message;
+    });
+    return payload;
   }
-)
-
+);
 
 export const fetchUserDetails = createAsyncThunk(
   'user/fetchUserDetails',
@@ -43,7 +55,7 @@ export const fetchUserDetails = createAsyncThunk(
     console.log("UserDetails Fetched: ", res.data);
     return res.data;
   }
-)
+);
 
 
 
@@ -54,11 +66,18 @@ const userSlice = createSlice({
     userData: null, 
     token: null, 
     loading: false,
-    authMessage: "",
+    statusCode: 0,
+    authMessage: null,
   },
   reducers: {
     setUser: (state, action) => {
       return action.payload;
+    },
+    resetStatusCode: (state, action) => {
+      state.statusCode = 0;
+    },
+    resetAutmMessage: (state, action) => {
+      state.authMessage = null;
     }
   },
   extraReducers: (builder) => {
@@ -67,12 +86,11 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        console.log("Successfully Registered User");
+        state.statusCode = action.payload.status;
         state.authMessage = action.payload.message;
         state.loading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.authMessage = action.payload.message;
         state.loading = false;
         console.log(action.error.message);
       })
@@ -80,15 +98,14 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.statusCode = action.payload.status;
         state.authMessage = action.payload.message;
-        console.log("Successfully Logged in User", action.payload.token);
         state.token = action.payload.token;
         localStorage.setItem("token", action.payload.token);
         state.loading = false;
         state.isUserLoggedIn = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.authMessage = action.payload.message;
         state.loading = false;
         console.log(action.error.message);
       })
