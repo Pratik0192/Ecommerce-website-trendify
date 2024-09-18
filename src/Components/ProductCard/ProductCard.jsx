@@ -52,6 +52,7 @@ const ProductCard = (props) => {
     <Card
       sx={{ height: category === "laptop" ? "355px" : "456px" }}
       className="item-container"
+      variant="outlined"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
