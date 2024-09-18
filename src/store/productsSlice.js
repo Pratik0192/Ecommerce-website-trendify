@@ -4,9 +4,9 @@ import axios from "axios";
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts', 
-  async (category) => {
-    category = encodeURIComponent(category);
-    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/products?category=${category}`);
+  async (param) => {
+    const { category, brand, sort, price } = param;
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/products?category=${category}&brand=${brand}&price=${price}&sort=${sort}`);
     const jsonData = await response.json();
     return jsonData.products;
   }

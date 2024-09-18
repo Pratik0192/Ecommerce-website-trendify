@@ -5,13 +5,18 @@ import ShopFilter from '../../Components/ShopFilter/ShopFilter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/productsSlice';
 import RecommendationDropdown from '../../Components/RecommendationDropdown/RecommendationDropdown';
-import { Grid, Skeleton } from '@mui/material'; // Import Material UI Skeleton
+import { 
+  Grid, 
+  Skeleton,
+  Backdrop,
+  CircularProgress
+} from '@mui/material'; // Import Material UI Skeleton
 import { productActions } from '../../store/productsSlice';
 
 
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
-  
+  const loadingProducts = useSelector((store) => store.products.loading);  
   const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
   const dispatch = useDispatch();
 
@@ -20,7 +25,13 @@ const ShopCategory = (props) => {
     dispatch(productActions.resetProduct());
 
     const fetchProductsAsync = async () => {
-      await dispatch(fetchProducts(props.category));
+      let paramObj = {
+        category: encodeURIComponent(props.category),
+        brand: encodeURIComponent(""),
+        sort: encodeURIComponent(""),
+        price: encodeURIComponent(""),
+      }
+      await dispatch(fetchProducts(paramObj));
     }
 
     fetchProductsAsync();
@@ -54,7 +65,9 @@ const ShopCategory = (props) => {
           <span>Showing 1-12</span> out of {products && products.length} products
         </div>
         <div>
-          <RecommendationDropdown />
+          <RecommendationDropdown
+            category={props.category}
+          />
         </div>
       </div>
       <div className="shopcategory-content">
@@ -65,8 +78,14 @@ const ShopCategory = (props) => {
         </div>
         <div className="shopcategory-products">
           {/* Render Skeletons if products are null */}
+          <Backdrop
+            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+            open={loadingProducts}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           {products.length === 0 ? 
-            renderSkeletons() :
+            loadingProducts ? renderSkeletons() : <></> :
             products
               //.filter(item => item.category === props.category)
               .map((item) => (
