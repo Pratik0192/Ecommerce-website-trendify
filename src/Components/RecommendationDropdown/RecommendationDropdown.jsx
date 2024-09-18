@@ -40,7 +40,7 @@ const RecommendationDropdown = (props) => {
     } else if (option === "Recommended"){
       console.log("Comming Soon");
     } else if (option === "Customer Rating"){
-      console.log("Comming Soon");
+      paramObj.sort = encodeURIComponent("rating.stars desc");
     }
 
     await dispatch(fetchProducts(paramObj));
