@@ -8,9 +8,13 @@ import { debounce } from 'lodash';
 
 
 const ShopFilter = (props) => {
-  const [priceRange, setPriceRange] = useState([100, 2000]);
+  const [sliderStep, setSliderStep] = useState(1000);
+  const [priceLimit, setPriceLimit] = useState([0, 0]);
+  const [priceRange, setPriceRange] = useState([0, 0]);
   const brandNames = useSelector((store) => store.products.brands);
   const dispatch = useDispatch();
+
+  console.log("ShopFilter rendered");
 
   const checkboxStyle = {
     marginLeft:'-8px',
@@ -46,12 +50,11 @@ const ShopFilter = (props) => {
         price: encodeURIComponent(priceString)
       }
       dispatch(fetchProducts(paramObj));
-    }, 500),
+    }, 300),
     []
   );
 
   const handleSliderChange = (event, newValue) => {
-    //console.log(newValue);
     debouncedHandleChange(newValue);
   };
 
@@ -62,6 +65,34 @@ const ShopFilter = (props) => {
     
     fetchBrandsAsync();
   }, [dispatch]);
+
+  useEffect(() => {
+    if(props.category === "men"){
+      setSliderStep(500);
+      setPriceLimit([100, 5500]);
+      setPriceRange([0, 5500]);
+    } else if(props.category === "women"){
+      setSliderStep(500);
+      setPriceLimit([100, 4000]);
+      setPriceRange([100, 4000]);
+    } else if(props.category === "kid"){
+      setSliderStep(500);
+      setPriceLimit([100, 2000]);
+      setPriceRange([100, 2000]);
+    } else if(props.category === "home&living"){
+      setSliderStep(500);
+      setPriceLimit([100, 3500]);
+      setPriceRange([100, 3500]);
+    } else if(props.category === "laptop"){
+      setSliderStep(10000);
+      setPriceLimit([20000, 550000]);
+      setPriceRange([20000, 550000]);
+    } else if(props.category === "mobile&tablet"){
+      setSliderStep(5000);
+      setPriceLimit([5000, 180000]);
+      setPriceRange([5000, 180000]);
+    }
+  }, []);
 
   /* useEffect(() => {
     setBrandsList(brandNames.map((brandname) => {
@@ -231,12 +262,13 @@ const ShopFilter = (props) => {
         value={priceRange}
         onChange={handleSliderChange}
         valueLabelDisplay='auto'
-        step={1}
+        step={sliderStep}
         marks
-        min={100}
-        max={5500}
+        min={priceLimit[0]}
+        max={priceLimit[1]}
         sx={{
           color: '#ff3f6c',
+          transition: 'none'
         }}
       />
       <Typography sx={{ fontSize: '14px', color: '#282c3f' }}>
