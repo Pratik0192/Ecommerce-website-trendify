@@ -60,7 +60,7 @@ const OrderTracking = ({onReturnReason}) => {
   };
   
   return (
-    <Grid container sx={{background: '#eaeaec', justifyContent: 'center' }}>
+    <Grid container sx={{background: '#f5f5f6', justifyContent: 'center' }}>
       {/* image section */}
       <Grid item xs={12} md={12} sx={{ justifyContent: 'center', textAlign: 'center', paddingTop:'80px' }}>
         <img src={trial_image_return} alt="Product" style={{ width: '120px' }} />
@@ -175,8 +175,6 @@ const OrderTracking = ({onReturnReason}) => {
           >
             <CancelIcon sx={{color:'#03a685', fontSize:'26px'}} />
           </Button>
-
-          
           <Typography >
             Cancel
           </Typography>
@@ -227,8 +225,8 @@ const OrderTracking = ({onReturnReason}) => {
             View Breakup
           </Typography>
         </Box>
-        <Grid xs={12} md={11.5} sx={{backgroundColor:'#eaeaec', margin:'auto', padding:'20px', marginBottom:'20px'}}>
-          <Typography sx={{fontSize:'16px', color:'#282c3f'}}>
+        <Grid xs={12} md={11.5} sx={{backgroundColor:'#f5f5f6', margin:'auto', padding:'20px', marginBottom:'20px'}}>
+          <Typography sx={{fontSize:'16px', color:'#7e818c'}}>
             <span><PaymentsOutlinedIcon sx={{fontSize:'20px', marginBottom:'-5px', marginRight:'5px'}}/></span>
             Pay on Delivery
           </Typography>
