@@ -25,7 +25,7 @@ const orders = [
   {
     orderPlaced: '20 June 2024',
     total: '₹2,436.00', 
-    shippedTo: 'Pratik Mondal',
+    shippedTo: 'Pratik Chakraborty',
     orderNumber: '408-2142465-0473104',
     deliveryDate: 'Delivered 21 June',
     products: [
@@ -59,6 +59,7 @@ const buttonStackStyle = {
   fontWeight: 'bold',
   textTransform: 'none',
   fontSize: '10px',
+  paddingTop:'7px',
   borderRadius:'13px',
   "&:hover": {
     backgroundColor: "white",

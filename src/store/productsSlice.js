@@ -6,7 +6,7 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProducts', 
   async () => {
     console.log("fetching Data");
-    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/allproducts`);
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/products`);
     const jsonData = await response.json();
     return jsonData.products;
   }
