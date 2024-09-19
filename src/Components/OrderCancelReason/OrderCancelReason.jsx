@@ -65,7 +65,7 @@ const inputStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',  // Center vertically
-    width: '50%',         // Set width as per your requirement
+    width: '40%',         // Set width as per your requirement
     '&:hover': {
       backgroundColor: '#ff3f6c',
     },
@@ -79,9 +79,9 @@ const inputStyle = {
 
 const OrderCancelReason = ({onCancelConfirm}) => {
   return (
-    <Grid xs={12} md={12} sx={{backgroundColor:'#eaeaec', padding:'10px'}}>
-      <Box sx={{backgroundColor:'#ffffff', margin:'auto', padding:'20px'}}>
-        <Box sx={{display:'flex',backgroundColor:'#eaeaec', margin:'auto', borderRadius:'4px', padding:'10px'}}>
+    <Box sx={{backgroundColor:'#f5f5f6', padding:'10px', width:'100%'}}>
+      <Box sx={{backgroundColor:'#ffffff', padding:'20px'}}>
+        <Box sx={{display:'flex',backgroundColor:'#f5f5f6', margin:'auto', borderRadius:'4px', padding:'10px'}}>
           <img src={trial_image_return} alt="" style={{width:'80px'}} />
           <Box sx={{marginLeft:'10px'}}>
             <Typography sx={{fontSize:'15px', color:'#282c3f', fontWeight:'700'}}>
@@ -211,7 +211,7 @@ const OrderCancelReason = ({onCancelConfirm}) => {
           <ArrowForwardIcon />
         </Button>
       </Box>
-    </Grid>
+    </Box>
   )
 }
 

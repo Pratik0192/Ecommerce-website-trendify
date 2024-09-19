@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ShopFilter.css';
 import { Checkbox, Divider, FormControlLabel, FormGroup, Slider, Typography } from '@mui/material';
-import { fetchAllBrands } from '../../store/productsSlice';
+import { fetchProducts, fetchAllBrands } from '../../store/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { productActions } from '../../store/productsSlice';
+import { debounce } from 'lodash';
 
 
 const ShopFilter = (props) => {
-  const [priceRange, setPriceRange] = useState([500, 2000]);
+  const [sliderStep, setSliderStep] = useState(1000);
+  const [priceLimit, setPriceLimit] = useState([0, 0]);
+  const [priceRange, setPriceRange] = useState([0, 0]);
   const brandNames = useSelector((store) => store.products.brands);
   const dispatch = useDispatch();
-  const [brandsList, setBrandsList] = useState([]);
-
-  const handleSliderChange = (event, newValue) => {
-    setPriceRange(newValue);
-  };
 
   const checkboxStyle = {
     marginLeft:'-8px',
@@ -24,42 +23,39 @@ const ShopFilter = (props) => {
   }
 
   const subCategories = [
-    {
-      name: "Top Wear",
-      count: 782
-    },
-    {
-      name: "Bottom Wear",
-      count: 312
-    },
-    /* {
-      name: "Foot Wear",
-      count: 52
-    }, */
+    { name: "Top Wear", count: 782 },
+    { name: "Bottom Wear", count: 312 },
+    /* { name: "Foot Wear", count: 52 }, */
   ];
 
   const colorsList = [
-    {
-      name: "Red",
-      count: 782,
-      backgroundColor: "red"
-    },
-    {
-      name: "Green",
-      count: 312,
-      backgroundColor: "green"
-    },
-    {
-      name: "Blue",
-      count: 52,
-      backgroundColor: "blue"
-    },
-    {
-      name: "Black",
-      count: 52,
-      backgroundColor: "black"
-    },
+    { name: "Red", count: 782, backgroundColor: "red" },
+    { name: "Green", count: 312, backgroundColor: "green" },
+    { name: "Blue", count: 52, backgroundColor: "blue" },
+    { name: "Black", count: 52, backgroundColor: "black" },
   ];
+
+  const debouncedHandleChange = useCallback(
+    debounce((newValue) => {
+      //setPriceRange(newValue);
+      console.log("FetchProducts Called");
+      let priceString = newValue[0] + " " + newValue[1];
+      let paramObj = {
+        category: encodeURIComponent(props.category),
+        brand: encodeURIComponent(""),
+        sort: encodeURIComponent("current_price desc"),
+        price: encodeURIComponent(priceString)
+      }
+      dispatch(fetchProducts(paramObj));
+    }, 300),
+    []
+  );
+
+  const handleSliderChange = (event, newValue) => {
+    console.log(newValue);
+    setPriceRange(newValue);
+    debouncedHandleChange(newValue);
+  };
 
   useEffect(() => {
     const fetchBrandsAsync = async () => {
@@ -67,15 +63,58 @@ const ShopFilter = (props) => {
     }
     
     fetchBrandsAsync();
-
   }, [dispatch]);
 
   useEffect(() => {
+    if(props.category === "men"){
+      setSliderStep(250);
+      setPriceLimit([0, 5500]);
+      setPriceRange([0, 5500]);
+    } else if(props.category === "women"){
+      setSliderStep(200);
+      setPriceLimit([0, 4000]);
+      setPriceRange([0, 4000]);
+    } else if(props.category === "kid"){
+      setSliderStep(100);
+      setPriceLimit([0, 2000]);
+      setPriceRange([0, 2000]);
+    } else if(props.category === "home&living"){
+      setSliderStep(175);
+      setPriceLimit([0, 3500]);
+      setPriceRange([0, 3500]);
+    } else if(props.category === "laptop"){
+      setSliderStep(10000);
+      setPriceLimit([20000, 250000]);
+      setPriceRange([20000, 250000]);
+    } else if(props.category === "mobile&tablet"){
+      setSliderStep(5000);
+      setPriceLimit([5000, 180000]);
+      setPriceRange([5000, 180000]);
+    }
+  }, []);
+
+  /* useEffect(() => {
     setBrandsList(brandNames.map((brandname) => {
-      let brand = { name: brandname, count: 100 };
+      let brand = { name: brandname._id, count: brandname.count };
       return brand;
     }));
-  }, [brandNames]);
+  }, [brandNames]); */
+
+  const handleCheckboxChange = async (event) => {
+    dispatch(productActions.resetProductsList());
+    let paramObj = {};
+    paramObj.category = encodeURIComponent(props.category);
+    paramObj.sort = encodeURIComponent("");
+    paramObj.price = encodeURIComponent("");
+    if(event.target.checked){
+      paramObj.brand = encodeURIComponent(event.target.name);
+    }
+    else {
+      paramObj.brand = encodeURIComponent("");
+    }
+    console.log(event.target.name);
+    await dispatch(fetchProducts(paramObj));
+  }
 
   return (
     <div className='shop-filter'>
@@ -161,18 +200,21 @@ const ShopFilter = (props) => {
         BRAND
       </Typography>
       <FormGroup>
-        {brandsList.map((brand) => {
+        {brandNames.map((brand) => {
           return (
             <FormControlLabel
-              key={brand.name}
+              key={brand._id}
               control={
-                <Checkbox 
+                <Checkbox
+                  name={brand._id}
+                  onChange={handleCheckboxChange}
+                  inputProps={{ 'aria-label': 'controlled' }}
                   sx={checkboxStyle} 
                 />
               }
               label={
                 <Typography sx={{marginLeft:'4px'}}>
-                  <span style={{fontSize:'14px', color: '#282c3f'}}>{brand.name}</span>
+                  <span style={{fontSize:'14px', color: '#282c3f'}}>{brand._id}</span>
                   <span style={{color:'#94969f', fontSize:'11px', marginLeft:'4px'}}>({brand.count})</span>
                 </Typography>
               }
@@ -219,12 +261,13 @@ const ShopFilter = (props) => {
         value={priceRange}
         onChange={handleSliderChange}
         valueLabelDisplay='auto'
-        step={1}
-        marks
-        min={500}
-        max={2000}
+        step={sliderStep}
+        //marks
+        min={priceLimit[0]}
+        max={priceLimit[1]}
         sx={{
           color: '#ff3f6c',
+          transition: 'none'
         }}
       />
       <Typography sx={{ fontSize: '14px', color: '#282c3f' }}>

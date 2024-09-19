@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
+import { fetchProducts } from '../../store/productsSlice';
+import { productActions } from '../../store/productsSlice';
+import { useDispatch } from 'react-redux';
 
 
-const RecommendationDropdown = () => {
+const RecommendationDropdown = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState('Recommended');
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -14,9 +18,32 @@ const RecommendationDropdown = () => {
     setAnchorEl(null);
   };
 
-  const handleMenuItemClick = (option) =>{
+  const handleMenuItemClick = async (option) =>{
     setSelectedOption(option);
     setAnchorEl(null);
+
+    dispatch(productActions.resetProductsList());
+    let paramObj = {};
+    paramObj.category = encodeURIComponent(props.category);
+    paramObj.brand = encodeURIComponent("");
+    paramObj.price = encodeURIComponent("");
+    if(option === "Better Discount"){
+      paramObj.sort = encodeURIComponent("discount_percentage desc");
+    } else if (option === "Price: High to Low"){
+      paramObj.sort = encodeURIComponent("current_price desc");
+    } else if (option === "Price: Low to High"){
+      paramObj.sort = encodeURIComponent("current_price asc");
+    } else if (option === "Latest First"){
+      paramObj.sort = encodeURIComponent("createdAt desc");
+    } else if (option === "Popularity"){
+      paramObj.sort = encodeURIComponent("stock desc");
+    } else if (option === "Recommended"){
+      console.log("Comming Soon");
+    } else if (option === "Customer Rating"){
+      paramObj.sort = encodeURIComponent("rating.stars desc");
+    }
+
+    await dispatch(fetchProducts(paramObj));
   }
 
   const buttonStyle = {
@@ -63,13 +90,27 @@ const RecommendationDropdown = () => {
             }
         }}
       >
-        <MenuItem onClick={() => handleMenuItemClick('Recommended')} sx={menuStyle} >Recommended</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick("What's New")} sx={menuStyle} >What's New</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Popularity')} sx={menuStyle} >Popularity</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Better Discount')} sx={menuStyle} >Better Discount</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Price: High to Low')} sx={menuStyle} >Price: High to Low</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Price: Low to High')} sx={menuStyle} >Price: Low to High</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Customer Rating')} sx={menuStyle} >Customer Rating</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Better Discount')} sx={menuStyle}>
+          Better Discount
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Price: High to Low')} sx={menuStyle}>
+          Price: High to Low
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Price: Low to High')} sx={menuStyle}>
+          Price: Low to High
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick("Latest First")} sx={menuStyle}>
+          Latest First
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Popularity')} sx={menuStyle}>
+          Popularity
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Recommended')} sx={menuStyle}>
+          Recommended
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Customer Rating')} sx={menuStyle}>
+          Customer Rating
+        </MenuItem>
       </Menu>
     </div>
   );
