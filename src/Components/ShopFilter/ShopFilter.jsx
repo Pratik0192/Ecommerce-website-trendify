@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './ShopFilter.css';
-import { Checkbox, Divider, FormControlLabel, FormGroup, Slider, Typography } from '@mui/material';
-import { fetchProducts, fetchAllBrands } from '../../store/productsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { 
+  Checkbox, 
+  Divider, 
+  FormControlLabel, 
+  FormGroup, 
+  Slider, 
+  Typography 
+} from '@mui/material';
+import { fetchAllBrands } from '../../store/productsSlice';
 import { productActions } from '../../store/productsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import setSliderParams from './filterUtils';
 import { debounce } from 'lodash';
 
 
@@ -12,6 +20,7 @@ const ShopFilter = (props) => {
   const [priceLimit, setPriceLimit] = useState([0, 0]);
   const [priceRange, setPriceRange] = useState([0, 0]);
   const brandNames = useSelector((store) => store.products.brands);
+  const fetchParams = useSelector((store) => store.products.fetchParams);
   const dispatch = useDispatch();
 
   const checkboxStyle = {
@@ -35,85 +44,48 @@ const ShopFilter = (props) => {
     { name: "Black", count: 52, backgroundColor: "black" },
   ];
 
-  const debouncedHandleChange = useCallback(
-    debounce((newValue) => {
-      //setPriceRange(newValue);
-      console.log("FetchProducts Called");
-      let priceString = newValue[0] + " " + newValue[1];
-      let paramObj = {
-        category: encodeURIComponent(props.category),
-        brand: encodeURIComponent(""),
-        sort: encodeURIComponent("current_price desc"),
-        price: encodeURIComponent(priceString)
-      }
-      dispatch(fetchProducts(paramObj));
-    }, 300),
-    []
-  );
 
-  const handleSliderChange = (event, newValue) => {
-    console.log(newValue);
-    setPriceRange(newValue);
-    debouncedHandleChange(newValue);
-  };
+  useEffect(() => {
+    setSliderParams(props.category, setSliderStep, setPriceLimit, setPriceRange);
+  }, []);
 
   useEffect(() => {
     const fetchBrandsAsync = async () => {
       await dispatch(fetchAllBrands(props.category));
     }
-    
     fetchBrandsAsync();
   }, [dispatch]);
 
-  useEffect(() => {
-    if(props.category === "men"){
-      setSliderStep(250);
-      setPriceLimit([0, 5500]);
-      setPriceRange([0, 5500]);
-    } else if(props.category === "women"){
-      setSliderStep(200);
-      setPriceLimit([0, 4000]);
-      setPriceRange([0, 4000]);
-    } else if(props.category === "kid"){
-      setSliderStep(100);
-      setPriceLimit([0, 2000]);
-      setPriceRange([0, 2000]);
-    } else if(props.category === "home&living"){
-      setSliderStep(175);
-      setPriceLimit([0, 3500]);
-      setPriceRange([0, 3500]);
-    } else if(props.category === "laptop"){
-      setSliderStep(10000);
-      setPriceLimit([20000, 250000]);
-      setPriceRange([20000, 250000]);
-    } else if(props.category === "mobile&tablet"){
-      setSliderStep(5000);
-      setPriceLimit([5000, 180000]);
-      setPriceRange([5000, 180000]);
-    }
-  }, []);
 
-  /* useEffect(() => {
-    setBrandsList(brandNames.map((brandname) => {
-      let brand = { name: brandname._id, count: brandname.count };
-      return brand;
-    }));
-  }, [brandNames]); */
+
+  const debouncedHandleChange = useCallback(
+    debounce((newValue) => {
+      console.log("FetchProducts Called");
+      let priceString = newValue[0] + " " + newValue[1];
+      let paramObj = {};
+      paramObj.price = priceString;
+      props.fetchProductsAsync("", fetchParams.brand, fetchParams.sort, priceString, 1);
+      dispatch(productActions.setfetchParams(paramObj));
+    }, 400),
+    [fetchParams]
+  );
+
+  const handleSliderChange = (event, newValue) => {
+    setPriceRange(newValue);
+    debouncedHandleChange(newValue);
+  };
 
   const handleCheckboxChange = async (event) => {
-    dispatch(productActions.resetProductsList());
-    let paramObj = {};
-    paramObj.category = encodeURIComponent(props.category);
-    paramObj.sort = encodeURIComponent("");
-    paramObj.price = encodeURIComponent("");
+    let brand = "";
     if(event.target.checked){
-      paramObj.brand = encodeURIComponent(event.target.name);
+      brand = event.target.name;
+    } else {
+      brand = "";
     }
-    else {
-      paramObj.brand = encodeURIComponent("");
-    }
-    console.log(event.target.name);
-    await dispatch(fetchProducts(paramObj));
+    let paramObj = {};
+    paramObj.brand = brand;
+    props.fetchProductsAsync("", brand, fetchParams.sort, fetchParams.price, 1);
+    dispatch(productActions.setfetchParams(paramObj));
   }
 
   return (
