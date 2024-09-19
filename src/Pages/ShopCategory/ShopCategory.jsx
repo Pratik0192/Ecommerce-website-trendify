@@ -37,7 +37,8 @@ const paginationArrowStyle = {
 
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
-  const loadingProducts = useSelector((store) => store.products.loading);  
+  const loadingProducts = useSelector((store) => store.products.loading);
+  const triggerKeywordChange = useSelector((store) => store.products.triggerKeywordChange);
   const pageParams = useSelector((store) => store.products.page);
   const fetchParams = useSelector((store) => store.products.fetchParams);
   const { totalProductsCount, pageLength, totalPages } = pageParams;
@@ -78,9 +79,11 @@ const ShopCategory = (props) => {
       return;
     }
     console.log("Keyword Changed");
-    dispatch(productActions.resetFetchParams());
-    fetchProductsAsync(fetchParams.keyword, "", "", "", currentPage);
-  }, [fetchParams.keyword])
+    if(triggerKeywordChange){
+      dispatch(productActions.resetFetchParams());
+      fetchProductsAsync(fetchParams.keyword, "", "", "", currentPage);
+    }
+  }, [fetchParams.keyword]);
 
 
   useEffect(() => {
@@ -91,14 +94,14 @@ const ShopCategory = (props) => {
 
   const handlePageDecrement = () => {
     if (currentPage > 1){
-      fetchProductsAsync("", fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage - 1);
+      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage - 1);
       window.scrollTo(0, 0);
     }
   }
 
   const handlePageIncrement = () => {
     if(currentPage < totalPages){
-      fetchProductsAsync("", fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage + 1);
+      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage + 1);
       window.scrollTo(0, 0);
     }
   }

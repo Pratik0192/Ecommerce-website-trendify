@@ -39,6 +39,8 @@ const RecommendationDropdown = (props) => {
       sortBy = "rating.stars desc";
     }
     let paramObj = {};
+    dispatch(productActions.setTriggerKeywordChange(false));
+    paramObj.keyword = "";
     paramObj.sort = sortBy;
     props.fetchProductsAsync("", fetchParams.brand, sortBy, fetchParams.price, 1);
     dispatch(productActions.setfetchParams(paramObj));

@@ -46,6 +46,7 @@ const productsSlice = createSlice({
       sort: "",
       price: "",
     },
+    triggerKeywordChange: true,
     product: null,
     brands: [],
     loading: false,
@@ -66,6 +67,9 @@ const productsSlice = createSlice({
       state.page.currentPage = action.payload;
     },
     setfetchParams: (state, action) => {
+      if(action.payload.keyword !== undefined){
+        state.fetchParams.keyword = action.payload.keyword;
+      }
       if(action.payload.brand !== undefined){
         state.fetchParams.brand = action.payload.brand;
       }
@@ -80,9 +84,13 @@ const productsSlice = createSlice({
       state.fetchParams.keyword = action.payload
     },
     resetFetchParams: (state, action) => {
+      //state.fetchParams.keyword = "";
       state.fetchParams.brand = "";
       state.fetchParams.sort = "";
       state.fetchParams.price = "";
+    },
+    setTriggerKeywordChange: (state, action) => {
+      state.triggerKeywordChange = action.payload;
     }
   },
   extraReducers: (builder) => {

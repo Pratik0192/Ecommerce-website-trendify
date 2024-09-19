@@ -46,6 +46,7 @@ const Navbar = () => {
 
   const debouncedHandleSearchChange = debounce((value) => {
     console.log(value);
+    dispatch(productActions.setTriggerKeywordChange(true));
     dispatch(productActions.setfetchParamKeyword(value));
   }, 550);
 

@@ -69,6 +69,8 @@ const ShopFilter = (props) => {
       console.log("FetchProducts Called");
       let priceString = newValue[0] + " " + newValue[1];
       let paramObj = {};
+      dispatch(productActions.setTriggerKeywordChange(false));
+      paramObj.keyword = "";
       paramObj.price = priceString;
       props.fetchProductsAsync("", fetchParams.brand, fetchParams.sort, priceString, 1);
       dispatch(productActions.setfetchParams(paramObj));
@@ -89,6 +91,8 @@ const ShopFilter = (props) => {
       brand = "";
     }
     let paramObj = {};
+    dispatch(productActions.setTriggerKeywordChange(false));
+    paramObj.keyword = "";
     paramObj.brand = brand;
     props.fetchProductsAsync("", brand, fetchParams.sort, fetchParams.price, 1);
     dispatch(productActions.setfetchParams(paramObj));
