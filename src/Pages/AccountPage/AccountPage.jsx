@@ -5,6 +5,7 @@ import OrderAndReturn from '../../Components/OrderAndReturn/OrderAndReturn';
 import ProfileComponent from '../../Components/ProfileComponent/ProfileComponent';
 import OrderTracking from '../../Components/OrderTracking/OrderTracking';
 import OrderCancelReason from '../../Components/OrderCancelReason/OrderCancelReason';
+import OrderCancelConfirmed from '../../Components/OrderCancelConfirmed/OrderCancelConfirmed';
 
 const subtitleStyle = {
   fontSize:'12px',
@@ -125,7 +126,9 @@ const AccountPage = () => {
           ) : selectedItem === 'trackpackage' ? (
             <OrderTracking onReturnReason={() => handleItemSelect('returnReason')}/>
           ) : selectedItem === 'returnReason' ? (
-            <OrderCancelReason/>
+            <OrderCancelReason onCancelConfirm = {() => handleItemSelect('ordercancelconfirmed')}/>
+          ) : selectedItem === 'ordercancelconfirmed' ? (
+            <OrderCancelConfirmed/>
           ) : (
             <div></div>
           )}

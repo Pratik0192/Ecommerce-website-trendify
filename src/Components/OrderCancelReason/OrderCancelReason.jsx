@@ -77,7 +77,7 @@ const inputStyle = {
     },
   }
 
-const OrderCancelReason = () => {
+const OrderCancelReason = ({onCancelConfirm}) => {
   return (
     <Grid xs={12} md={12} sx={{backgroundColor:'#eaeaec', padding:'10px'}}>
       <Box sx={{backgroundColor:'#ffffff', margin:'auto', padding:'20px'}}>
@@ -200,7 +200,11 @@ const OrderCancelReason = () => {
             Rs.0
           </Typography>
         </Box>
-        <Button variant="contained" sx={buttonStyle}>
+        <Button
+          variant="contained"
+          sx={buttonStyle}
+          onClick={onCancelConfirm}
+        >
           <Typography sx={{ marginRight: 'auto',  fontWeight:'700' }}> {/* Pushes the text to the left */}
             Cancel
           </Typography>
