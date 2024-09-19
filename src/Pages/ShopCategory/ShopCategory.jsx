@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ShopCategory.css';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import ShopFilter from '../../Components/ShopFilter/ShopFilter';
@@ -38,17 +38,16 @@ const paginationArrowStyle = {
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
   const loadingProducts = useSelector((store) => store.products.loading);  
-  const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
-  
-  const totalProductsCount = useSelector((store) => store.products.page.totalProductsCount);
-  const pageLength = useSelector((store) => store.products.page.pageLength);
-  const totalPages = useSelector((store) => store.products.page.totalPages);
-
+  const pageParams = useSelector((store) => store.products.page);
   const fetchParams = useSelector((store) => store.products.fetchParams);
+  const { totalProductsCount, pageLength, totalPages } = pageParams;
+  const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
-  const dispatch = useDispatch();
+
+  const isFirstRender = useRef(true);
+
 
   const fetchProductsAsync = async (keyword, brand, sort, price, page) => {
     dispatch(productActions.resetProduct());
@@ -74,12 +73,16 @@ const ShopCategory = (props) => {
   }, []);
 
   useEffect(() => {
+    if(isFirstRender.current){
+      isFirstRender.current = false;
+      return;
+    }
     console.log("Keyword Changed");
     dispatch(productActions.resetFetchParams());
     fetchProductsAsync(fetchParams.keyword, "", "", "", currentPage);
   }, [fetchParams.keyword])
 
-  
+
   useEffect(() => {
     console.log("CurrentPage: ", currentPage);
   }, [currentPage]);
