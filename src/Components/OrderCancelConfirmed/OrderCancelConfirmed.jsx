@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -49,7 +50,7 @@ const OrderCancelConfirmed = () => {
             </Typography>
           </Box>
         </Box>
-        <hr></hr>
+        <Divider/>
         <Box>
           <Typography
             sx={{ fontWeight: "bold", padding: "10px", color: "#282c3f" }}

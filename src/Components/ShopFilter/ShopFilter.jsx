@@ -13,6 +13,7 @@ import { productActions } from '../../store/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import setSliderParams from './filterUtils';
 import { debounce } from 'lodash';
+import { Padding } from '@mui/icons-material';
 
 
 const ShopFilter = (props) => {
@@ -24,10 +25,15 @@ const ShopFilter = (props) => {
   const dispatch = useDispatch();
 
   const checkboxStyle = {
-    marginLeft:'-8px',
+    //border:'1px solid black',
+    padding:'5px',
+    //marginLeft:'-6px',
     color: '#94969f', //unchecked color
     '&.Mui-checked': {
       color: '#ff3f6c', //checked color
+    },
+    '&:hover':{
+      backgroundColor:'#ffffff'
     }
   }
 
@@ -275,6 +281,7 @@ const ShopFilter = (props) => {
         {colorsList.map((color) => {
           return (
             <FormControlLabel
+              //sx={{border:'1px solid black'}}
               key={color.name}
               control={
                 <Checkbox 
@@ -290,7 +297,8 @@ const ShopFilter = (props) => {
                       backgroundColor: color.backgroundColor,
                       display: 'inline-block',
                       marginRight: '5px',
-                      borderRadius: '25px'
+                      borderRadius: '25px',
+
                     }}
                   />
                   <span style={{fontSize:'14px', color: '#282c3f'}}>{color.name}</span>

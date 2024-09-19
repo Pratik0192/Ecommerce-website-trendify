@@ -9,9 +9,30 @@ import {
   Grid, 
   Skeleton,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  Button,
+  Typography
 } from '@mui/material'; // Import Material UI Skeleton
 import { productActions } from '../../store/productsSlice';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+const paginationButtonStyle = {
+  fontWeight:'700',
+  color:"#282c3f",
+  width:'150px',
+  height:'50px',
+  border:'1px solid #d4d5d9',
+  fontSize:'16px',
+  '&:hover':{
+    backgroundColor:'#ffffff',
+    border:'1px solid #d4d5d9',
+  }
+}
+
+const paginationArrowStyle = {
+  fontSize:"18px"
+}
 
 
 const ShopCategory = (props) => {
@@ -138,7 +159,28 @@ const ShopCategory = (props) => {
         </div>
       </div>
       <div className="shopcategory-pagination">
-        <button 
+        <Button
+          variant='outlined'
+          onClick={handlePageDecrement}
+          disabled={currentPage === 1}
+          sx={{...paginationButtonStyle, marginRight:'64px'}}
+        >
+          <ArrowBackIosIcon sx={paginationArrowStyle}/> 
+          Previous
+        </Button>
+        <Typography sx={{color:'#535766', fontSize:'16px'}}>
+          Page {currentPage} of {totalPages}
+        </Typography>
+        <Button
+          variant='outlined'
+          onClick={handlePageIncrement}
+          disabled={currentPage === totalPages}
+          sx={{...paginationButtonStyle, marginLeft:'64px'}}
+        >
+          Next
+          <ArrowForwardIosIcon sx={paginationArrowStyle}/>
+        </Button>
+        {/* <button 
           className="previous-button" 
           onClick={handlePageDecrement}
         >
@@ -152,7 +194,7 @@ const ShopCategory = (props) => {
           onClick={handlePageIncrement}
         >
           Next
-        </button>
+        </button> */}
       </div>
     </div>
   );
