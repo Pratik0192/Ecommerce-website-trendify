@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
-import { fetchProducts } from '../../store/productsSlice';
 import { productActions } from '../../store/productsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const RecommendationDropdown = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState('Recommended');
+  const fetchParams = useSelector((store) => store.products.fetchParams);
   const dispatch = useDispatch();
 
   const handleClick = (event) => {
@@ -22,28 +22,26 @@ const RecommendationDropdown = (props) => {
     setSelectedOption(option);
     setAnchorEl(null);
 
-    dispatch(productActions.resetProductsList());
-    let paramObj = {};
-    paramObj.category = encodeURIComponent(props.category);
-    paramObj.brand = encodeURIComponent("");
-    paramObj.price = encodeURIComponent("");
-    if(option === "Better Discount"){
-      paramObj.sort = encodeURIComponent("discount_percentage desc");
+    let sortBy = "";
+    if (option === "Recommended"){
+      sortBy = "createdAt asc";
+    } else if(option === "Better Discount"){
+      sortBy = "discount_percentage desc";
     } else if (option === "Price: High to Low"){
-      paramObj.sort = encodeURIComponent("current_price desc");
+      sortBy = "current_price desc";
     } else if (option === "Price: Low to High"){
-      paramObj.sort = encodeURIComponent("current_price asc");
+      sortBy = "current_price asc";
     } else if (option === "Latest First"){
-      paramObj.sort = encodeURIComponent("createdAt desc");
+      sortBy = "createdAt desc";
     } else if (option === "Popularity"){
-      paramObj.sort = encodeURIComponent("stock desc");
-    } else if (option === "Recommended"){
-      console.log("Comming Soon");
+      sortBy = "stock desc";
     } else if (option === "Customer Rating"){
-      paramObj.sort = encodeURIComponent("rating.stars desc");
+      sortBy = "rating.stars desc";
     }
-
-    await dispatch(fetchProducts(paramObj));
+    let paramObj = {};
+    paramObj.sort = sortBy;
+    props.fetchProductsAsync("", fetchParams.brand, sortBy, fetchParams.price, 1);
+    dispatch(productActions.setfetchParams(paramObj));
   }
 
   const buttonStyle = {
@@ -90,6 +88,9 @@ const RecommendationDropdown = (props) => {
             }
         }}
       >
+        <MenuItem onClick={() => handleMenuItemClick('Recommended')} sx={menuStyle}>
+          Recommended
+        </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Better Discount')} sx={menuStyle}>
           Better Discount
         </MenuItem>
@@ -104,9 +105,6 @@ const RecommendationDropdown = (props) => {
         </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Popularity')} sx={menuStyle}>
           Popularity
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Recommended')} sx={menuStyle}>
-          Recommended
         </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Customer Rating')} sx={menuStyle}>
           Customer Rating

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useCallback } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { productActions } from '../../store/productsSlice';
+import { debounce } from 'lodash';
 
 
 const Navbar = () => {
@@ -38,6 +39,20 @@ const Navbar = () => {
     e.target.classList.toggle('open');
   };
 
+  const handlePageRouteChange = (pageName) => {
+    setMenu(pageName);
+    dispatch(productActions.resetProductsList())
+  }
+
+  const debouncedHandleSearchChange = debounce((value) => {
+    console.log(value);
+    dispatch(productActions.setfetchParamKeyword(value));
+  }, 550);
+
+  const handleSearchChange = (e) => {
+    debouncedHandleSearchChange(e.target.value);
+  }
+
   // Calculate total number of wishlist items
   const totalWishlistItems = wishlist.length;
 
@@ -50,31 +65,35 @@ const Navbar = () => {
       </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={() => { setMenu('shop'); dispatch(productActions.resetProductsList())}}>
+        <li onClick={() => handlePageRouteChange('shop')}>
           <Link className="nav-item-link" to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('mens'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('mens')}>
           <Link className="nav-item-link" to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('womens'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('womens')}>
           <Link className="nav-item-link" to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('kids'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('kids')}>
           <Link className="nav-item-link" to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('home&living'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('home&living')}>
           <Link className="nav-item-link" to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('laptop'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('laptop')}>
           <Link className="nav-item-link" to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('mobile&tablet'); dispatch(productActions.resetProductsList()) }}>
+        <li onClick={() => handlePageRouteChange('mobile&tablet')}>
           <Link className="nav-item-link" to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="search">
         <BiSearch className='search-icon' />
-        <input type="text" placeholder='search for product, brands and more' />
+        <input 
+          type="text" 
+          placeholder="search for product, brands and more"
+          onChange={handleSearchChange}
+        />
       </div>
       <div className="nav-login-cart">
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

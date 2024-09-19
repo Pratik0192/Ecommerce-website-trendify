@@ -5,10 +5,10 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts', 
   async (params) => {
-    const { category, brand, sort, price } = params;
-    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/products?category=${category}&brand=${brand}&price=${price}&sort=${sort}`);
+    const { category, keyword, brand, sort, price, page, limit } = params;
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/api/v1/products?category=${category}&keyword=${keyword}&brand=${brand}&price=${price}&sort=${sort}&page=${page}&limit=${limit}`);
     const jsonData = await response.json();
-    return jsonData.products;
+    return jsonData;
   }
 );
 
@@ -34,6 +34,18 @@ const productsSlice = createSlice({
   name: "Products",
   initialState: { 
     data: [],
+    page: {
+      totalProductsCount: 0,
+      pageLength: 0,
+      totalPages: 0,
+      currentPage: 1,
+    },
+    fetchParams: {
+      keyword: "",
+      brand: "",
+      sort: "",
+      price: "",
+    },
     product: null,
     brands: [],
     loading: false,
@@ -49,6 +61,28 @@ const productsSlice = createSlice({
     },
     resetProduct: (state, action) => {
       state.product = null;
+    },
+    setCurrentPage: (state, action) => {
+      state.page.currentPage = action.payload;
+    },
+    setfetchParams: (state, action) => {
+      if(action.payload.brand !== undefined){
+        state.fetchParams.brand = action.payload.brand;
+      }
+      if(action.payload.sort !== undefined){
+        state.fetchParams.sort = action.payload.sort;
+      }
+      if(action.payload.price !== undefined){
+        state.fetchParams.price = action.payload.price;
+      }
+    },
+    setfetchParamKeyword: (state, action) => {
+      state.fetchParams.keyword = action.payload
+    },
+    resetFetchParams: (state, action) => {
+      state.fetchParams.brand = "";
+      state.fetchParams.sort = "";
+      state.fetchParams.price = "";
     }
   },
   extraReducers: (builder) => {
@@ -57,7 +91,16 @@ const productsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.products;
+        state.page.totalProductsCount = action.payload.totalCount;
+        state.page.pageLength = action.payload.pageLength;
+        if(state.page.currentPage === 1){
+          const denominator = action.payload.pageLength !== 0 ?
+            action.payload.pageLength : 1;
+          state.page.totalPages = Math.ceil(
+            action.payload.totalCount/denominator
+          );
+        }
         state.loading = false;
         state.fetchProductsDone = true;
       })

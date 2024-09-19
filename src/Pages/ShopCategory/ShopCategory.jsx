@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ShopCategory.css';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import ShopFilter from '../../Components/ShopFilter/ShopFilter';
@@ -18,29 +18,67 @@ const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
   const loadingProducts = useSelector((store) => store.products.loading);  
   const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
+  
+  const totalProductsCount = useSelector((store) => store.products.page.totalProductsCount);
+  const pageLength = useSelector((store) => store.products.page.pageLength);
+  const totalPages = useSelector((store) => store.products.page.totalPages);
+
+  const fetchParams = useSelector((store) => store.products.fetchParams);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const dispatch = useDispatch();
+
+  const fetchProductsAsync = async (keyword, brand, sort, price, page) => {
+    dispatch(productActions.resetProduct());
+    dispatch(productActions.setCurrentPage(page));
+    setCurrentPage(page);
+    let paramObj = {
+      category: encodeURIComponent(props.category),
+      keyword: encodeURIComponent(keyword),
+      brand: encodeURIComponent(brand),
+      sort: encodeURIComponent(sort),
+      price: encodeURIComponent(price),
+      page: page,
+      limit: itemsPerPage,
+    }
+    await dispatch(fetchProducts(paramObj));
+  }
+
 
   useEffect(() => {
     console.log("Shop Rendered");
-    dispatch(productActions.resetProduct());
-
-    const fetchProductsAsync = async () => {
-      let paramObj = {
-        category: encodeURIComponent(props.category),
-        brand: encodeURIComponent(""),
-        sort: encodeURIComponent(""),
-        price: encodeURIComponent(""),
-      }
-      await dispatch(fetchProducts(paramObj));
-    }
-
-    fetchProductsAsync();
-  }, [dispatch]);
-
+    dispatch(productActions.resetFetchParams());
+    fetchProductsAsync("", "", "", "", currentPage);
+  }, []);
 
   useEffect(() => {
-    console.log(products);
-  }, [products]);
+    console.log("Keyword Changed");
+    dispatch(productActions.resetFetchParams());
+    fetchProductsAsync(fetchParams.keyword, "", "", "", currentPage);
+  }, [fetchParams.keyword])
+
+  
+  useEffect(() => {
+    console.log("CurrentPage: ", currentPage);
+  }, [currentPage]);
+
+
+
+  const handlePageDecrement = () => {
+    if (currentPage > 1){
+      fetchProductsAsync("", fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  const handlePageIncrement = () => {
+    if(currentPage < totalPages){
+      fetchProductsAsync("", fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  }
+
   
   // Skeleton Placeholder for Loading Items
   const renderSkeletons = () => {
@@ -59,14 +97,17 @@ const ShopCategory = (props) => {
 
   return (
     <div className='shop-category'>
-      <img className='shopcategory-banner' src={props.banner} alt="Category Banner" />
+      <img className='shopcategory-banner' src={props.banner} alt="Category Banner"/>
       <div className="shopcategory-indexSort">
         <div>
-          <span>Showing 1-12</span> out of {products && products.length} products
+          <span>
+            Showing {itemsPerPage*(currentPage-1)+1}-{itemsPerPage*(currentPage-1)+pageLength}
+          </span> out of {totalProductsCount} products
         </div>
         <div>
           <RecommendationDropdown
             category={props.category}
+            fetchProductsAsync={fetchProductsAsync}
           />
         </div>
       </div>
@@ -74,10 +115,10 @@ const ShopCategory = (props) => {
         <div className="shopcategory-filter">
           <ShopFilter
             category={props.category}
+            fetchProductsAsync={fetchProductsAsync}
           />
         </div>
         <div className="shopcategory-products">
-          {/* Render Skeletons if products are null */}
           <Backdrop
             sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
             open={loadingProducts}
@@ -85,22 +126,33 @@ const ShopCategory = (props) => {
             <CircularProgress color="inherit" />
           </Backdrop>
           {products.length === 0 ? 
-            loadingProducts ? renderSkeletons() : <></> :
-            products
-              //.filter(item => item.category === props.category)
-              .map((item) => (
-                <ProductCard 
-                  key={item._id}
-                  product={item}
-                  category={props.category}
-                />
-              )
-            )
+            loadingProducts ? renderSkeletons() : <>No items to show</> :
+            products.map((item) => (
+              <ProductCard 
+                key={item._id}
+                product={item}
+                category={props.category}
+              />
+            ))
           }
         </div>
       </div>
-      <div className="shopcategory-loadmore">
-        Explore More
+      <div className="shopcategory-pagination">
+        <button 
+          className="previous-button" 
+          onClick={handlePageDecrement}
+        >
+          Previous
+        </button>
+        <p className="pageno-text">
+          Page {currentPage} of {totalPages}
+        </p>
+        <button 
+          className="next-button" 
+          onClick={handlePageIncrement}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
