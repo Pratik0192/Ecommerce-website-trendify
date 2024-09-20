@@ -25,6 +25,7 @@ import kid_banner from './Components/Assets/banner_kids.png';
 import AccountPage from "./Pages/AccountPage/AccountPage";
 
 import { fetchUserDetails } from "./store/userSlice";
+import { fetchCartData } from "./store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
   useEffect(() => {
     let token = localStorage.getItem("token");
     if(token) {
-      console.log("Token Not Null");
+      console.log("Token: ", token);
       dispatch(fetchUserDetails(token));
+      dispatch(fetchCartData(token));
     } else {
       console.log("Token is Null")
     }

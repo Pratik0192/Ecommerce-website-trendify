@@ -56,7 +56,10 @@ const ProductCard = (props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={`/product/${product && product._id}`} target="_blank">
+      <Link 
+        to={`/product/${product && product._id}`} 
+        //target="_blank"
+      >
         <div 
           className="image-container" 
           style={{ height: category === "laptop" ? "230px" : "333px" }}
