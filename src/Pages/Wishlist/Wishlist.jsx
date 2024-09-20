@@ -6,11 +6,13 @@ import { CancelOutlined, Star } from '@mui/icons-material';
 import wishlist_icon from '../../Components/Assets/wishlist.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { wishlistActions } from '../../store/wishlistSlice';
-import { cartActions } from '../../store/cartSlice';
+import { removeFromWishlist } from '../../store/wishlistSlice';
+
 
 
 const Wishlist = (props) => {
   const wishlistItems = useSelector((store) => store.wishlist.data);
+  const token = useSelector((store) => store.user.token);
   const dispatch = useDispatch();
 
   const buttonStyle = {
@@ -57,22 +59,25 @@ const Wishlist = (props) => {
             My Wishlist
           </Typography>
           {wishlistItems.map((item) => (
-            <Card key={item._id} className='wishlist-item'>
+            <Card key={item.productId} className='wishlist-item'>
               <div className="wishlist-img-container">
-                <Link to={`/product/${item._id}`}>
+                <Link to={`/product/${item.productId}`}>
                   <img src={item.image} alt={item.name} />
                 </Link>
                 <CancelOutlined 
                   className="wishlist-remove-icon" 
                   onClick={() => {
-                    dispatch(wishlistActions.removeFromWishlist(item._id));
+                    const paramObj = { productId: item.productId, token: token };
+                    dispatch(wishlistActions.setRemoveWishlistProductId(item.productId));
+                    dispatch(removeFromWishlist(paramObj));
+                    //dispatch(wishlistActions.removeFromWishlist(item._id));
                   }}
                 />
               </div>
               <CardContent>
-                <Typography style={{marginTop:'-10px'}}>
+                {/* <Typography style={{marginTop:'-10px'}}>
                   {item.rating_stars} <Star sx={{color:'#ff4141', marginBottom:'-5px'}} />
-                </Typography>
+                </Typography> */}
                 <div className="wishlist-item-info">
                   <Typography style={{fontSize:'16px', fontWeight:'700', color:'#282c3f', display:'block', marginBottom:'60px'}}>
                     {item.company}
@@ -116,14 +121,17 @@ const Wishlist = (props) => {
                       Rs.{item.original_price}
                     </Typography>
                     <Typography style={{fontSize:'14px', marginLeft:'120px', color:'#ff905a', marginTop:'-20.5px'}} >
-                      ({item.discount}% off)
+                      ({item.discount_percentage}% off)
                     </Typography>
                 </div>
                 <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
                 <Button
                   onClick={() => {
                     //addToCart(item._id);
-                    dispatch(wishlistActions.removeFromWishlist(item._id));
+                    const paramObj = { productId: item.productId, token: token };
+                    dispatch(wishlistActions.setRemoveWishlistProductId(item.productId));
+                    dispatch(removeFromWishlist(paramObj));
+                    //dispatch(wishlistActions.removeFromWishlist(item._id));
                   }}
                   sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
                 >

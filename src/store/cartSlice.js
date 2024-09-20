@@ -106,7 +106,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartData.fulfilled, (state, action) => {
-        console.log(action.payload.cart);
+        console.log("Cart: ", action.payload.cart);
         state.data = action.payload.cart;
         let numItems = 0;
         action.payload.cart.forEach((item) => {
@@ -145,6 +145,7 @@ const cartSlice = createSlice({
         );
       })
       .addCase(removeFromCart.rejected, (state, action) => {
+        state.loading = false;
         console.log("Failed to remove from cart.");
       })
       .addCase(incrementCartItemQuantity.fulfilled, (state, action) => {
@@ -172,7 +173,6 @@ const cartSlice = createSlice({
           }
           state.totalItems -= 1;
         }
-        
       })
   },
   reducers: {
