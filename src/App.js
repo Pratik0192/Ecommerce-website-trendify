@@ -37,12 +37,9 @@ function App() {
   useEffect(() => {
     let token = localStorage.getItem("token");
     if(token) {
-      console.log("Token: ", token);
       dispatch(fetchUserDetails(token));
       dispatch(fetchCartData(token));
       dispatch(fetchWishlistData(token));
-    } else {
-      console.log("Token is Null")
     }
   }, [dispatch]);
 
