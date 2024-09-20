@@ -40,21 +40,21 @@ const ProfileComponent = () => {
   };
 
   const profileDetailContainer = { 
-    margin: '25px 10px',
+    margin: '20px 10px',
     display:'flex'
   }
 
   const profileDetailLeft={
     fontWeight: '500',
     width:'300px', 
-    fontSize:'18px',
+    fontSize:'16px',
     marginLeft:'90px'
   }
 
   const profileDetailRight={
     fontWeight: '500', 
     width:'250px', 
-    fontSize:'18px',
+    fontSize:'16px',
     marginLeft:'-25px'
   }
 
@@ -104,7 +104,7 @@ const ProfileComponent = () => {
           borderRadius: '5px',
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: '700',marginTop:'15px', marginBottom: '20px',marginLeft:'80px',fontSize:'25px' }}>
+        <Typography sx={{ fontWeight: '700',marginTop:'15px', marginBottom: '20px',marginLeft:'80px',fontSize:'22px' }}>
           Profile Details 
         </Typography>
         <Divider sx={{marginBottom: '40px'}}/>

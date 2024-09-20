@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import { ShopContext } from "../../../Context/ShopContext";
-
+import React, { useState } from "react";
 import {
   Grid,
   TextField,
@@ -75,8 +73,6 @@ const addressButtonStyle = {
 
 
 const AddressForm = () => {
-  const { addShippingAddress } = useContext(ShopContext);
-
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -88,6 +84,7 @@ const AddressForm = () => {
 
   const shippingSubmit = (e) => {
     e.preventDefault();
+    console.log("Add Address");
     const shippingAddress = {
       name,
       address,
@@ -98,7 +95,6 @@ const AddressForm = () => {
       phoneNo,
       addressType,
     };
-    addShippingAddress(shippingAddress);
     // window.location = "/checkout/confirm";
   };
   return (

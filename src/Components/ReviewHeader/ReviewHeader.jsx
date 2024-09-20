@@ -13,7 +13,7 @@ const ReviewHeader = () => {
     <Box sx={{ p: 0 }}>
       <Box sx={{ p: 2 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom sx={{ fontSize: "25px", marginTop: "-20px" }}>
             What Customers Say
           </Typography>
         </Stack>
