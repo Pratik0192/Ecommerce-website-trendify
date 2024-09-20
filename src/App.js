@@ -26,6 +26,7 @@ import AccountPage from "./Pages/AccountPage/AccountPage";
 
 import { fetchUserDetails } from "./store/userSlice";
 import { fetchCartData } from "./store/cartSlice";
+import { fetchWishlistData } from "./store/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       console.log("Token: ", token);
       dispatch(fetchUserDetails(token));
       dispatch(fetchCartData(token));
+      dispatch(fetchWishlistData(token));
     } else {
       console.log("Token is Null")
     }

@@ -16,6 +16,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { cartActions } from "../../store/cartSlice";
 import { addToCart } from "../../store/cartSlice";
 import { wishlistActions } from "../../store/wishlistSlice";
+import { addToWishlist, removeFromWishlist } from "../../store/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductDisplay = (props) => {
@@ -64,17 +65,40 @@ const ProductDisplay = (props) => {
   };
 
   const handleWishlistClick = () => {
-    setLiked(!liked);
-    if (!liked) {
-      dispatch(wishlistActions.addToWishlist(product));
-    } else {
-      dispatch(wishlistActions.removeFromWishlist(product._id));
+    if(isUserLoggedIn){
+      setLiked(!liked);
+      if (!liked) {
+        const wishlistObj = {
+          productId: product._id,
+          name: product.name,
+          category: product.category,
+          company: product.company,
+          image: product.image,
+          original_price: product.original_price,
+          current_price: product.current_price,
+          discount_percentage: product.discount_percentage,
+        };
+        const paramObj = { payload: wishlistObj, token: token };
+        dispatch(wishlistActions.setWishlistItem(wishlistObj));
+        dispatch(addToWishlist(paramObj));
+        //dispatch(wishlistActions.addToWishlist(product));
+      } else {
+        const paramObj2 = { productId: product._id, token: token };
+        dispatch(wishlistActions.setRemoveWishlistProductId(product._id));
+        dispatch(removeFromWishlist(paramObj2));
+        //dispatch(wishlistActions.removeFromWishlist(product._id));
+      }
+    }
+    else {
+      window.location = "/login";
     }
   };
 
   const handleAddToCart = () => {
     if(isUserLoggedIn){
-      const itemIndex = cart.findIndex((item) => item.productId === product._id);
+      const itemIndex = cart.findIndex(
+        (item) => item.productId === product._id
+      );
       if(itemIndex === -1){
         const productObj = {
           productId: product._id,
