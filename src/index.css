@@ -14,8 +14,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'poppins', sans-serif;
-  /* font-family: Outfit, sans-serif; */
+  /* font-family: 'poppins', sans-serif; */
+  font-family: Outfit, sans-serif;
 }
 
 code {

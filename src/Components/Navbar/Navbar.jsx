@@ -66,9 +66,9 @@ const Navbar = () => {
       </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={() => handlePageRouteChange('shop')}>
+        {/* <li onClick={() => handlePageRouteChange('shop')}>
           <Link className="nav-item-link" to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
-        </li>
+        </li> */}
         <li onClick={() => handlePageRouteChange('mens')}>
           <Link className="nav-item-link" to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
         </li>
@@ -85,7 +85,7 @@ const Navbar = () => {
           <Link className="nav-item-link" to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
         </li>
         <li onClick={() => handlePageRouteChange('mobile&tablet')}>
-          <Link className="nav-item-link" to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
+          <Link className="nav-item-link" to='/mobile&tablet'>Mobiles</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="search">
