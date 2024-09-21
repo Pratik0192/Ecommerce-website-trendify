@@ -39,6 +39,7 @@ const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
   const loadingProducts = useSelector((store) => store.products.loading);
   const triggerKeywordChange = useSelector((store) => store.products.triggerKeywordChange);
+  const renderProductsFlag = useSelector((store) => store.products.renderProductsFlag);
   const pageParams = useSelector((store) => store.products.page);
   const fetchParams = useSelector((store) => store.products.fetchParams);
   const { totalProductsCount, pageLength, totalPages } = pageParams;
@@ -66,11 +67,15 @@ const ShopCategory = (props) => {
     await dispatch(fetchProducts(paramObj));
   }
 
-
   useEffect(() => {
     console.log("Shop Rendered");
-    dispatch(productActions.resetFetchParams());
-    fetchProductsAsync("", "", "", "", currentPage);
+    if(renderProductsFlag){
+      dispatch(productActions.resetFetchParams());
+      fetchProductsAsync("", "", "", "", currentPage);
+    }
+    else {
+      dispatch(productActions.setRenderProductsFlag(true));
+    }
   }, []);
 
   useEffect(() => {
@@ -155,7 +160,7 @@ const ShopCategory = (props) => {
           {products.length === 0 ? 
             loadingProducts ? renderSkeletons() : <>No items to show</> :
             products.map((item) => (
-              <ProductCard 
+              <ProductCard
                 key={item._id}
                 product={item}
                 category={props.category}

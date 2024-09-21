@@ -34,6 +34,7 @@ const productsSlice = createSlice({
   name: "Products",
   initialState: { 
     data: [],
+    loading: false,
     page: {
       totalProductsCount: 0,
       pageLength: 0,
@@ -46,11 +47,11 @@ const productsSlice = createSlice({
       sort: "",
       price: "",
     },
+    renderProductsFlag: true,
     triggerKeywordChange: true,
     product: null,
-    brands: [],
-    loading: false,
     loadingProduct: false,
+    brands: [],
     fetchProductsDone: false
   },
   reducers: {
@@ -91,6 +92,9 @@ const productsSlice = createSlice({
     },
     setTriggerKeywordChange: (state, action) => {
       state.triggerKeywordChange = action.payload;
+    },
+    setRenderProductsFlag: (state, action) => {
+      state.renderProductsFlag = action.payload;
     }
   },
   extraReducers: (builder) => {
