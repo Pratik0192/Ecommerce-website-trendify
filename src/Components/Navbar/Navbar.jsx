@@ -136,7 +136,7 @@ const Navbar = () => {
   const totalWishlistItems = wishlist.length;
 
   return (
-    <AppBar position="sticky" sx={{backgroundColor:'#ffffff', padding:'12px 16px'}}>
+    <AppBar position="sticky" sx={{backgroundColor:'#ffffff', padding:'7px 16px'}}>
       <Toolbar>
         {/* Logo */}
         <Box sx={{display:'flex', alignItems:'center', flexGrow:'1'}}>
