@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 export const fetchCartData = createAsyncThunk(
@@ -125,6 +126,16 @@ const cartSlice = createSlice({
         state.loading = false;
         state.data.push(state.cartItem);
         state.totalItems += 1;
+
+        //toast notification
+        toast.success("Added to cart!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -143,6 +154,16 @@ const cartSlice = createSlice({
         state.data = state.data.filter(
           (item) => item.productId !== state.removeCartProductId
         );
+
+        //remove from cart toast
+        toast.error(`Removed from cart!`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;

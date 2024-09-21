@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 export const fetchWishlistData = createAsyncThunk(
@@ -75,6 +76,16 @@ const wishlistSlice = createSlice({
         state.loading = false;
         state.data.push(state.wishlistItem);
         console.log("Item added to wishlist");
+
+        //toast notification
+        toast.success(`Added to wishlist!`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       })
       .addCase(addToWishlist.rejected, (state, action) => {
         state.loading = false;
@@ -86,6 +97,16 @@ const wishlistSlice = createSlice({
           (item) => item.productId !== state.removeWishlistProductId
         );
         console.log("Item removed from wishlist");
+
+        //toast notification
+        toast.error(`Removed from wishlist!`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       })
       .addCase(removeFromWishlist.rejected, (state, action) => {
         state.loading = false;

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/ReactToastify.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
@@ -52,33 +54,36 @@ function App() {
   }
 
   return (
-    <div> 
-      <BrowserRouter>
-        {isNavbarVisible && <Navbar />}
-        <Routes>
-          <Route path='/login' element={<LoginSignup authTab="Login" key="login"/>}/>
-          <Route path='/signup' element={<LoginSignup authTab="SignUp" key="signup"/>}/>
-          <Route path='/' element={<Shop showNavbar={showNavbar}/>}/>
-          <Route path='/mens' element={<ShopCategory banner={men_banner} category="men"/>}/>
-          <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" key="women"/>}/>
-          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" key="kid"/>}/>
-          <Route path='/home&living' element={<ShopCategory banner={kid_banner} category="home&living" key="home&living"/>}/>
-          <Route path='/laptop' element={<ShopCategory banner={kid_banner} category="laptop" key="laptop"/>}/>
-          <Route path='/mobile&tablet' element={<ShopCategory banner={kid_banner} category="mobile&tablet" key="mobile&tablet"/>}/>
-          <Route path='/product' element={<Product/>}>
-            <Route path=':productId' element={<Product/>}/>
-          </Route>
-          <Route path='/cart' element={<Cart showNavbar={showNavbar} />}/>
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path='/checkout/address' element={<OrderAddress hideNavbar={hideNavbar} />}/>
-          <Route path='/checkout/review' element={<OrderReview hideNavbar={hideNavbar} />}/>
-          <Route path='/checkout/payment' element={<OrderPayment hideNavbar={hideNavbar} />}/>
-          <Route path='/orderconfirmed' element={<OrderConfirmed hideNavbar={hideNavbar} />}/>
-          <Route path='/accountpage' element={<AccountPage/>} />
-        </Routes>
-        <Footer/>
-      </BrowserRouter>
-    </div>
+    <>
+      <div> 
+        <BrowserRouter>
+          {isNavbarVisible && <Navbar />}
+          <Routes>
+            <Route path='/login' element={<LoginSignup authTab="Login" key="login"/>}/>
+            <Route path='/signup' element={<LoginSignup authTab="SignUp" key="signup"/>}/>
+            <Route path='/' element={<Shop showNavbar={showNavbar}/>}/>
+            <Route path='/mens' element={<ShopCategory banner={men_banner} category="men"/>}/>
+            <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" key="women"/>}/>
+            <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" key="kid"/>}/>
+            <Route path='/home&living' element={<ShopCategory banner={kid_banner} category="home&living" key="home&living"/>}/>
+            <Route path='/laptop' element={<ShopCategory banner={kid_banner} category="laptop" key="laptop"/>}/>
+            <Route path='/mobile&tablet' element={<ShopCategory banner={kid_banner} category="mobile&tablet" key="mobile&tablet"/>}/>
+            <Route path='/product' element={<Product/>}>
+              <Route path=':productId' element={<Product/>}/>
+            </Route>
+            <Route path='/cart' element={<Cart showNavbar={showNavbar} />}/>
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path='/checkout/address' element={<OrderAddress hideNavbar={hideNavbar} />}/>
+            <Route path='/checkout/review' element={<OrderReview hideNavbar={hideNavbar} />}/>
+            <Route path='/checkout/payment' element={<OrderPayment hideNavbar={hideNavbar} />}/>
+            <Route path='/orderconfirmed' element={<OrderConfirmed hideNavbar={hideNavbar} />}/>
+            <Route path='/accountpage' element={<AccountPage/>} />
+          </Routes>
+          <Footer/>
+        </BrowserRouter>
+      </div>
+      <ToastContainer />
+    </>
   );
 }
 
