@@ -42,7 +42,6 @@ export const loginUser = createAsyncThunk(
 export const fetchUserDetails = createAsyncThunk(
   'user/fetchUserDetails',
   async (token) => {
-    console.log("fetching User Details");
     const res = await axios.get(
       `${process.env.REACT_APP_BASEURL}/api/v1/userdetails`,
       {
@@ -52,7 +51,6 @@ export const fetchUserDetails = createAsyncThunk(
         }
       }
     );
-    console.log("UserDetails Fetched: ", res.data);
     return res.data;
   }
 );
@@ -111,10 +109,9 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserDetails.pending, (state, action) => {
         state.loading = true;
-        console.log("Fetching User Data");
       })
       .addCase(fetchUserDetails.fulfilled, (state, action) => {
-        console.log("User Data Fetched");
+        console.log("UserDetails: ", action.payload);
         state.isUserLoggedIn = true;
         state.userData = action.payload.user;
         state.token = localStorage.getItem("token");

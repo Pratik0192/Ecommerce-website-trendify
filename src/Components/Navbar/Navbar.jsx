@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useCallback } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
@@ -11,11 +11,15 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { productActions } from '../../store/productsSlice';
+import { debounce } from 'lodash';
+
 
 const Navbar = () => {
   const [menu, setMenu] = useState('shop');
   const menuRef = useRef();
+  const dispatch = useDispatch();
 
   const cartLength = useSelector((store) => store.cart.totalItems);
   const wishlist = useSelector((store) => store.wishlist.data);
@@ -35,6 +39,21 @@ const Navbar = () => {
     e.target.classList.toggle('open');
   };
 
+  const handlePageRouteChange = (pageName) => {
+    setMenu(pageName);
+    dispatch(productActions.resetProductsList())
+  }
+
+  const debouncedHandleSearchChange = debounce((value) => {
+    console.log(value);
+    dispatch(productActions.setTriggerKeywordChange(true));
+    dispatch(productActions.setfetchParamKeyword(value));
+  }, 550);
+
+  const handleSearchChange = (e) => {
+    debouncedHandleSearchChange(e.target.value);
+  }
+
   // Calculate total number of wishlist items
   const totalWishlistItems = wishlist.length;
 
@@ -47,31 +66,35 @@ const Navbar = () => {
       </div>
       <img className='nav-dropdown' onClick={dropdown_toggle} src={dropdown_icon} alt="Dropdown Icon" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={() => { setMenu('shop') }}>
+        {/* <li onClick={() => handlePageRouteChange('shop')}>
           <Link className="nav-item-link" to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}
-        </li>
-        <li onClick={() => { setMenu('mens') }}>
+        </li> */}
+        <li onClick={() => handlePageRouteChange('mens')}>
           <Link className="nav-item-link" to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('womens') }}>
+        <li onClick={() => handlePageRouteChange('womens')}>
           <Link className="nav-item-link" to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('kids') }}>
+        <li onClick={() => handlePageRouteChange('kids')}>
           <Link className="nav-item-link" to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('home&living') }}>
+        <li onClick={() => handlePageRouteChange('home&living')}>
           <Link className="nav-item-link" to='/home&living'>Home & Living</Link>{menu === "home&living" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('laptop') }}>
+        <li onClick={() => handlePageRouteChange('laptop')}>
           <Link className="nav-item-link" to='/laptop'>Laptops</Link>{menu === "laptop" ? <hr /> : <></>}
         </li>
-        <li onClick={() => { setMenu('mobile&tablet') }}>
-          <Link className="nav-item-link" to='/mobile&tablet'>Mobile & Tablets</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
+        <li onClick={() => handlePageRouteChange('mobile&tablet')}>
+          <Link className="nav-item-link" to='/mobile&tablet'>Mobiles</Link>{menu === "mobile&tablet" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="search">
         <BiSearch className='search-icon' />
-        <input type="text" placeholder='search for product, brands and more' />
+        <input 
+          type="text" 
+          placeholder="search for product, brands and more"
+          onChange={handleSearchChange}
+        />
       </div>
       <div className="nav-login-cart">
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

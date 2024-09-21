@@ -35,20 +35,19 @@ const AddressDialog = ({openDialog, handleCloseDialog}) => {
     >
       <DialogTitle 
         sx={{
-            textTransform:'uppercase', 
-            fontSize:'16px', 
-            fontWeight:'700', 
-            color:"#282c3f", 
-            paddingLeft:'47px',
-            paddingBottom:'30px',
-            paddingTop:'30px',
-            borderBottom:'1px solid #eaeaec'
+          textTransform:'uppercase', 
+          fontSize:'16px', 
+          fontWeight:'700', 
+          color:"#282c3f", 
+          paddingLeft:'47px',
+          paddingBottom:'30px',
+          paddingTop:'30px',
+          borderBottom:'1px solid #eaeaec'
         }}
-    >
+      >
         Add New Address
       </DialogTitle>
       <DialogContent>
-        {/* <Divider/> */}
         <AddressForm />
       </DialogContent>
       <DialogActions>

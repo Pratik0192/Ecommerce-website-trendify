@@ -9,26 +9,48 @@ import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { Star } from '@mui/icons-material';
 import { wishlistActions } from '../../store/wishlistSlice';
+import { addToWishlist, removeFromWishlist } from '../../store/wishlistSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProductCard = (props) => {
 
   const dispatch = useDispatch();
   const wishlist = useSelector((store) => store.wishlist.data);
+  const isUserLoggedIn = useSelector((store) => store.user.isUserLoggedIn);
+  const token = useSelector((store) => store.user.token);
 
-  const { product } = props;
+  const { product, category } = props;
   const productId = product ? product._id : null;
-  let isItemInWishlist = wishlist.some((item) => item._id === productId);
+  let isItemInWishlist = wishlist.some((item) => item.productId === productId);
   const [liked, setLiked] = useState(isItemInWishlist);
   const [isHovered, setIsHovered] = useState(false);
 
 
   const handleLikeClick = () => {
-    setLiked(!liked);
-    if (!liked) {
-      dispatch(wishlistActions.addToWishlist(product));
-    } else {
-      dispatch(wishlistActions.removeFromWishlist(product._id));
+    if(isUserLoggedIn){
+      setLiked(!liked);
+      if (!liked) {
+        const wishlistObj = {
+          productId: product._id,
+          name: product.name,
+          category: product.category,
+          company: product.company,
+          image: product.image,
+          original_price: product.original_price,
+          current_price: product.current_price,
+          discount_percentage: product.discount_percentage,
+        };
+        const paramObj = { payload: wishlistObj, token: token };
+        dispatch(wishlistActions.setWishlistItem(wishlistObj));
+        dispatch(addToWishlist(paramObj));
+      } else {
+        const paramObj2 = { productId: product._id, token: token };
+        dispatch(wishlistActions.setRemoveWishlistProductId(product._id));
+        dispatch(removeFromWishlist(paramObj2));
+      }
+    }
+    else {
+      window.location = "/login";
     }
   };
 
@@ -50,13 +72,20 @@ const ProductCard = (props) => {
 
   return (
     <Card
-      sx={{ height: "456px" }}
+      sx={{ height: category === "laptop" ? "355px" : "456px" }}
       className="item-container"
+      variant="outlined"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={`/product/${product && product._id}`}>
-        <div className="image-container">
+      <Link 
+        to={`/product/${product && product._id}`} 
+        //target="_blank"
+      >
+        <div 
+          className="image-container" 
+          style={{ height: category === "laptop" ? "230px" : "333px" }}
+        >
           <img
             onClick={() => window.scrollTo(0, 0)} 
             src={product && product.image} 

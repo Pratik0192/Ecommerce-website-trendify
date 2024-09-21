@@ -1,35 +1,110 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ShopCategory.css';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import ShopFilter from '../../Components/ShopFilter/ShopFilter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/productsSlice';
 import RecommendationDropdown from '../../Components/RecommendationDropdown/RecommendationDropdown';
-import { Grid, Skeleton } from '@mui/material'; // Import Material UI Skeleton
+import { 
+  Grid, 
+  Skeleton,
+  Backdrop,
+  CircularProgress,
+  Button,
+  Typography
+} from '@mui/material'; // Import Material UI Skeleton
 import { productActions } from '../../store/productsSlice';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+const paginationButtonStyle = {
+  fontWeight:'700',
+  color:"#282c3f",
+  width:'150px',
+  height:'50px',
+  border:'1px solid #d4d5d9',
+  fontSize:'16px',
+  '&:hover':{
+    backgroundColor:'#ffffff',
+    border:'1px solid #d4d5d9',
+  }
+}
+
+const paginationArrowStyle = {
+  fontSize:"18px"
+}
 
 
 const ShopCategory = (props) => {
   const products = useSelector((store) => store.products.data);
-  
-  const fetchProductsDone = useSelector((store) => store.products.fetchProductsDone);
+  const loadingProducts = useSelector((store) => store.products.loading);
+  const triggerKeywordChange = useSelector((store) => store.products.triggerKeywordChange);
+  const pageParams = useSelector((store) => store.products.page);
+  const fetchParams = useSelector((store) => store.products.fetchParams);
+  const { totalProductsCount, pageLength, totalPages } = pageParams;
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  const isFirstRender = useRef(true);
+
+
+  const fetchProductsAsync = async (keyword, brand, sort, price, page) => {
     dispatch(productActions.resetProduct());
-
-    const fetchProductsAsync = async () => {
-      await dispatch(fetchProducts());
+    dispatch(productActions.setCurrentPage(page));
+    setCurrentPage(page);
+    let paramObj = {
+      category: encodeURIComponent(props.category),
+      keyword: encodeURIComponent(keyword),
+      brand: encodeURIComponent(brand),
+      sort: encodeURIComponent(sort),
+      price: encodeURIComponent(price),
+      page: page,
+      limit: itemsPerPage,
     }
+    await dispatch(fetchProducts(paramObj));
+  }
 
-    if (!fetchProductsDone) {
-      fetchProductsAsync();
-    }
-  }, [dispatch, fetchProductsDone]);
 
   useEffect(() => {
-    console.log(products);
-  }, [products]);
+    console.log("Shop Rendered");
+    dispatch(productActions.resetFetchParams());
+    fetchProductsAsync("", "", "", "", currentPage);
+  }, []);
+
+  useEffect(() => {
+    if(isFirstRender.current){
+      isFirstRender.current = false;
+      return;
+    }
+    console.log("Keyword Changed");
+    if(triggerKeywordChange){
+      dispatch(productActions.resetFetchParams());
+      fetchProductsAsync(fetchParams.keyword, "", "", "", currentPage);
+    }
+  }, [fetchParams.keyword]);
+
+
+  useEffect(() => {
+    console.log("CurrentPage: ", currentPage);
+  }, [currentPage]);
+
+
+
+  const handlePageDecrement = () => {
+    if (currentPage > 1){
+      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  const handlePageIncrement = () => {
+    if(currentPage < totalPages){
+      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  }
 
   
   // Skeleton Placeholder for Loading Items
@@ -49,37 +124,83 @@ const ShopCategory = (props) => {
 
   return (
     <div className='shop-category'>
-      <img className='shopcategory-banner' src={props.banner} alt="Category Banner" />
+      <img className='shopcategory-banner' src={props.banner} alt="Category Banner"/>
       <div className="shopcategory-indexSort">
         <div>
-          <span>Showing 1-12</span> out of {products && products.length} products
+          <span>
+            Showing {itemsPerPage*(currentPage-1)+1}-{itemsPerPage*(currentPage-1)+pageLength}
+          </span> out of {totalProductsCount} products
         </div>
         <div>
-          <RecommendationDropdown />
+          <RecommendationDropdown
+            category={props.category}
+            fetchProductsAsync={fetchProductsAsync}
+          />
         </div>
       </div>
       <div className="shopcategory-content">
         <div className="shopcategory-filter">
-          <ShopFilter />
+          <ShopFilter
+            category={props.category}
+            fetchProductsAsync={fetchProductsAsync}
+          />
         </div>
         <div className="shopcategory-products">
-          {/* Render Skeletons if products are null */}
-          {products == null ? 
-            renderSkeletons() :
-            products
-              .filter(item => item.category === props.category)
-              .map((item) => (
-                <ProductCard 
-                  key={item._id}
-                  product={item}
-                />
-              )
-            )
+          <Backdrop
+            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+            open={loadingProducts}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+          {products.length === 0 ? 
+            loadingProducts ? renderSkeletons() : <>No items to show</> :
+            products.map((item) => (
+              <ProductCard 
+                key={item._id}
+                product={item}
+                category={props.category}
+              />
+            ))
           }
         </div>
       </div>
-      <div className="shopcategory-loadmore">
-        Explore More
+      <div className="shopcategory-pagination">
+        <Button
+          variant='outlined'
+          onClick={handlePageDecrement}
+          disabled={currentPage === 1}
+          sx={{...paginationButtonStyle, marginRight:'64px'}}
+        >
+          <ArrowBackIosIcon sx={paginationArrowStyle}/> 
+          Previous
+        </Button>
+        <Typography sx={{color:'#535766', fontSize:'16px'}}>
+          Page {currentPage} of {totalPages}
+        </Typography>
+        <Button
+          variant='outlined'
+          onClick={handlePageIncrement}
+          disabled={currentPage === totalPages}
+          sx={{...paginationButtonStyle, marginLeft:'64px'}}
+        >
+          Next
+          <ArrowForwardIosIcon sx={paginationArrowStyle}/>
+        </Button>
+        {/* <button 
+          className="previous-button" 
+          onClick={handlePageDecrement}
+        >
+          Previous
+        </button>
+        <p className="pageno-text">
+          Page {currentPage} of {totalPages}
+        </p>
+        <button 
+          className="next-button" 
+          onClick={handlePageIncrement}
+        >
+          Next
+        </button> */}
       </div>
     </div>
   );

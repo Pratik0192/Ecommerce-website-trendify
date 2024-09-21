@@ -5,11 +5,18 @@ import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, 
 import { Undo } from '@mui/icons-material';
 import expressicon from '../Assets/express.png';
 import { Close } from '@mui/icons-material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../store/cartSlice';
+import { 
+  removeFromCart,
+  incrementCartItemQuantity,
+  decrementCartItemQuantity
+} from '../../store/cartSlice';
+
 
 const CartItems = (props) => {
-  const{ cartItem } = props;
+  const { cartItem } = props;
+  const token = useSelector((store) => store.user.token);
   const dispatch = useDispatch();
 
   const spanStyle = {
@@ -34,15 +41,31 @@ const CartItems = (props) => {
   }
 
   const handleRemoveFromCart = () => {
-    dispatch(cartActions.removeFromCart(cartItem._id))
+    //dispatch(cartActions.removeFromCart(cartItem._id));
+    dispatch(cartActions.setRemoveCartProductId(cartItem.productId));
+    const paramObj = {
+      productId: cartItem.productId,
+      token: token
+    };
+    dispatch(removeFromCart(paramObj));
   }
 
   const handleIncrementCartItemQuantity = () => {
-    dispatch(cartActions.incrementCartItemQuantity(cartItem._id));
+    //dispatch(cartActions.incrementCartItemQuantity(cartItem._id));
+    const paramObj = {
+      productId: cartItem.productId,
+      token: token
+    };
+    dispatch(incrementCartItemQuantity(paramObj));
   }
 
   const handleDecrementCartItemQuantity = () => {
-    dispatch(cartActions.decrementCartItemQuantity(cartItem._id));
+    //dispatch(cartActions.decrementCartItemQuantity(cartItem._id));
+    const paramObj = {
+      productId: cartItem.productId,
+      token: token
+    };
+    dispatch(decrementCartItemQuantity(paramObj));
   }
 
   return (

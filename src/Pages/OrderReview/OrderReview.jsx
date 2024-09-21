@@ -1,16 +1,18 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { ShopContext } from "../../Context/ShopContext";
+import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../../Components/Checkout/CheckoutSteps/CheckoutSteps";
 import OrderSummary from "../../Components/Checkout/OrderSummary/OrderSummary";
-
-import trial_image from "../../Components/Assets/product_10.png";
-import { FormControl, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { 
+  FormControl, 
+  FormControlLabel, 
+  IconButton, 
+  Radio, 
+  RadioGroup,
+  Typography,
+  Box
+} from "@mui/material";
 import { useSelector } from "react-redux";
+
 
 
 const ConfirmOrder = (props) => {
@@ -18,8 +20,13 @@ const ConfirmOrder = (props) => {
   const navigate = useNavigate();
   const cartItems = useSelector((store) => store.cart.data);
 
-  const { getShippingAddress } = useContext(ShopContext);
-  const [shippingInfo, setShippingInfo] = useState({});
+  const shippingInfo = {
+    address: "Rushikulya-206, Godrej Prakriti, Sukchar, North 24 Paraganas",
+    city: "Kolkata",
+    state: "West Bengal",
+    pinCode: 700115,
+    country: "India"
+  };
   const [address, setAddress] = useState("");
   const [subtotal, setSubTotal] = useState(0);
   const [shippingCharges, setShippingCharges] = useState(0);
@@ -31,9 +38,6 @@ const ConfirmOrder = (props) => {
   }, [hideNavbar]);
 
   useEffect(() => {
-    //console.log(getShippingAddress());
-    setShippingInfo(getShippingAddress());
-
     setShippingCharges(subtotal > 1000 ? 0 : 200);
     setTax(subtotal * 0.18);
     setTotalPrice(subtotal + tax + shippingCharges);
@@ -41,7 +45,7 @@ const ConfirmOrder = (props) => {
     const addressLine = 
       `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
     setAddress(addressLine);
-  }, [getShippingAddress, subtotal, tax, shippingCharges, shippingInfo]);
+  }, []);
 
   const proceedToPayment = () => {
     console.log("Proceed To Payment");
@@ -129,12 +133,12 @@ const ConfirmOrder = (props) => {
                 </Typography>
                 <Box display="flex" marginTop={2}>
                   <Typography sx={shippingInfosubHeadingStyle} >Name:</Typography>
-                  <Typography sx={shippingInfosubHeadingStyle}>User Name</Typography>
+                  <Typography sx={shippingInfosubHeadingStyle}>Swetabja Hazra</Typography>
                 </Box>
 
                 <Box display="flex" marginTop={0.5}>
                   <Typography sx={shippingInfosubHeadingStyle}>Phone:</Typography>
-                  <Typography sx={shippingInfosubHeadingStyle}>{shippingInfo.phoneNo}</Typography>
+                  <Typography sx={shippingInfosubHeadingStyle}>6290772206</Typography>
                 </Box>
 
                 <Box display="flex" marginTop={0.5}>
@@ -219,7 +223,8 @@ const ConfirmOrder = (props) => {
           </Typography>
           {cartItems.map((item) => {
             return (
-              <Box 
+              <Box
+                key={item.productId}
                 marginTop={1} 
                 marginBottom={2} 
                 display="flex" 
@@ -260,17 +265,7 @@ const ConfirmOrder = (props) => {
                         fontWeight: '700',
                       }}
                     >
-                      Rs.{item.current_price}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: '14px',
-                        color: '#282c3f',
-                        fontWeight: '700',
-                        marginRight: '6px'
-                      }}
-                    >
-                      * {item.quantity}
+                      Rs {item.current_price} X {item.quantity} = 
                     </Typography>
                     <Typography
                       sx={{
@@ -278,7 +273,7 @@ const ConfirmOrder = (props) => {
                         color: '#f16565',
                       }}
                     >
-                      Rs.{item.current_price * item.quantity}
+                      Rs {item.current_price * item.quantity}
                     </Typography>
                   </Box>
                 </Box>

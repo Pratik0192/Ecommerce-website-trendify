@@ -26,6 +26,7 @@ import PaymentNetbanking from "./PaymentNetbanking";
 const theme = createTheme({
   typography: {
     allVariants: {
+      fontFamily: 'Outfit, sans-serif',
       textTransform: 'none',
       fontSize: 14,
       zoom: 0.95
@@ -77,9 +78,9 @@ const OrderPayment = (props) => {
         >
           Choose Payment Mode
         </Typography>
-        <Box sx={{ width: "100%" }} display="flex" flexDirection="row" >
-            
+        <Box sx={{ width: "100%" }} display="flex" flexDirection="row">
         <Grid
+          item
           xs={7.5}
           container 
           spacing={2} 
@@ -109,7 +110,7 @@ const OrderPayment = (props) => {
                 <ListItemIcon>
                   <Money />
                 </ListItemIcon>
-                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>
+                <Typography sx={{fontSize:"15px", fontWeight: "600",color:"#424553"}}>
                   Cash On Delivery
                 </Typography>
               </ListItem>
@@ -121,7 +122,7 @@ const OrderPayment = (props) => {
               >
                 <img src={UPILogo} alt="Axis Bank" width={50} height={50} style={{ marginRight: 8 }} />
                 {/* <ListItemText primary="UPI (Pay via any App)" secondary="2 Offers" sx={{ color: "green" }} /> */}
-                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                <Typography sx={{fontSize:"15px", fontWeight: "600",color:"#424553"}}>          
                   UPI (Pay via any App)
                 </Typography>
               </ListItem>
@@ -135,7 +136,7 @@ const OrderPayment = (props) => {
                   <CreditCard />
                 </ListItemIcon>
                 {/* <ListItemText primary="Credit/Debit Card" secondary="9 Offers" sx={{ color: "green" }} /> */}
-                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                <Typography sx={{fontSize:"15px", fontWeight: "600",color:"#424553"}}>          
                   Credit/Debit Card
                 </Typography>
               </ListItem>
@@ -149,7 +150,7 @@ const OrderPayment = (props) => {
                   <AccountBalance />
                 </ListItemIcon>
                 {/* <ListItemText primary="Net Banking" /> */}
-                <Typography sx={{fontSize:"16px", fontWeight: "700",color:"#424553"}}>          
+                <Typography sx={{fontSize:"15px", fontWeight: "600",color:"#424553"}}>          
                   Net Banking
                 </Typography>
               </ListItem>
@@ -198,7 +199,7 @@ const OrderPayment = (props) => {
           </Grid>
         </Grid>
         
-        <Grid xs={3.5} sx={{marginLeft: "20px", marginTop: "16px"}}>
+        <Grid item xs={3.5} sx={{marginLeft: "20px", marginTop: "16px"}}>
           <OrderSummary linkTo="/" displayButton={false} />
         </Grid>
         </Box>
