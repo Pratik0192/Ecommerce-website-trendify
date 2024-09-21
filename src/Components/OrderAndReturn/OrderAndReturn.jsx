@@ -166,28 +166,32 @@ const OrderAndReturn = ({onTrackPackage}) => {
           <Box sx={{ marginTop: '0px', marginBottom: '0px' }}>
             {order.products.map((product, productIndex) => (
               <Grid container spacing={1} key={productIndex}
-                sx={{ margin: "25px 0 35px 0" }}
+                sx={{ margin: "20px 0 35px 0"}}
               >
-                <Grid container xs={8.5}>
-                  <Grid item xs={2.1} 
+                <Grid item container xs={8.5}>
+                  <Grid item xs={2.4} 
                     sx={{ 
                       padding: "0 8px 0 0",
-                      height: "120px"
+                      height: "130px",
+                      // border:'1px solid black',
+                      marginTop:'-8px',
+                      marginLeft:'-8px'
                     }}
                   >
                     <img
                       src={product.productImage ? product.productImage : image4}
                       alt="Product"
-                      width="100px"
-                      style={{ borderRadius:'2px',boxShadow:'1px solid #333' }}
+                      width="100%"
+                      style={{ borderRadius:'2px',boxShadow:'1px solid #333', maxHeight:'150px' }}
                     />
                   </Grid>
-                  <Grid item xs={9.9} sx={{ marginTop: "-8px" }}>
+                  <Grid item xs={9.6} sx={{ marginTop: "-15px"}}>
                     <Typography variant="subtitle1" 
                       sx={{ 
                         fontWeight: 'bold',
                         fontSize: '15px', 
-                        color: '#535665'
+                        color: '#535665',
+                        // marginRight:'-10px'
                       }}
                     >
                       {order.deliveryDate}

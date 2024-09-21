@@ -228,16 +228,18 @@ const ProfileAddress = () => {
                 </Grid>
 
                 <Grid
+                  item
                   container
                   justifyContent="center"
                   spacing={2}
                   md={16}
                   sx={{
-                    marginTop: "10px",
+                    marginTop: "6px",
                     marginLeft: "-11px",
                     marginRight: "-11px",
-                    marginBottom: "-11px",
+                    marginBottom: "-6px",
                     borderTop: "1px solid #d4d5d9",
+                    // border:'1px solid black'
                   }}
                 >
                   <Grid
@@ -245,8 +247,9 @@ const ProfileAddress = () => {
                     xs={6}
                     sx={{
                       marginLeft: "-18px",
-                      marginBottom: "4px",
-                      marginTop: "-1px",
+                      marginBottom: "2px",
+                      marginTop: "-4px",
+                      // border:'1px solid black',
                     }}
                   >
                     <Link to="/">
@@ -277,7 +280,7 @@ const ProfileAddress = () => {
                   <Grid
                     item
                     xs={6}
-                    sx={{ marginBottom: "4px", marginTop: "-1px" }}
+                    sx={{ marginBottom: "2px", marginTop: "-4px"}}
                   >
                     <Button
                       disableRipple
