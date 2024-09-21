@@ -5,7 +5,7 @@ import OrderAndReturn from '../../Components/OrderAndReturn/OrderAndReturn';
 import ProfileComponent from '../../Components/ProfileComponent/ProfileComponent';
 import OrderTracking from '../../Components/OrderTracking/OrderTracking';
 import OrderCancelReason from '../../Components/OrderCancelReason/OrderCancelReason';
-import OrderCancelConfirmed from '../../Components/OrderCancelConfirmed/OrderCancelConfirmed';
+import ProfileAddress from '../../Components/ProfileAddress/ProfileAddress';
 
 const subtitleStyle = {
   fontSize:'12px',
@@ -46,13 +46,11 @@ const AccountPage = () => {
         <Grid item xs={12} md={2.5} sx={{borderRight:'1px solid #d4d5d9'}}>
           <List component="nav">
             <Box sx={{ padding:'0 10px 10px 0'}}>
-
             {/* Sidebar Links */}
               <Box sx={{borderBottom:'1px solid #d4d5d9'}}>
                 <ListItem
                   sx={selectedItem === "overview" ? selectedStyle : {margin:'-12px 0 0 -15px', cursor:'pointer', color:'#282c3f', fontSize:'15px'}}
-                  onClick={() => handleItemSelect("overview")}
-                  
+                  onClick={() => handleItemSelect("overview")} 
                 >
                   <Typography style={{ padding:'10px 0 20px 0'}}>
                     Overview
@@ -101,9 +99,14 @@ const AccountPage = () => {
                 <Typography sx={optionStyle}>
                   Saved Cards
                 </Typography>
-                <Typography sx={optionStyle}>
+                <ListItem
+                  sx={selectedItem === "addressProfile" ? selectedStyle : {margin:'-12px 0 0 -15px', cursor:'pointer', color:'#282c3f'}}
+                  onClick={() => handleItemSelect("addressProfile")}
+                >
+                 <Typography sx={optionStyle}>
                   Addresses
-                </Typography>
+                 </Typography>
+                </ListItem>
                 <Typography sx={optionStyle}>
                   Saved Upi
                 </Typography>
@@ -126,9 +129,9 @@ const AccountPage = () => {
           ) : selectedItem === 'trackpackage' ? (
             <OrderTracking onReturnReason={() => handleItemSelect('returnReason')}/>
           ) : selectedItem === 'returnReason' ? (
-            <OrderCancelReason onCancelConfirm = {() => handleItemSelect('ordercancelconfirmed')}/>
-          ) : selectedItem === 'ordercancelconfirmed' ? (
-            <OrderCancelConfirmed/>
+            <OrderCancelReason/>
+          ) : selectedItem === 'addressProfile' ? (
+             <ProfileAddress/>
           ) : (
             <div></div>
           )}

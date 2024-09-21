@@ -12,6 +12,7 @@ const savedAddressesObj = [
     type: "Home",
     address: "1/1A, Kedar Nath Das Lane, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
+    type: "Office",
     codAvailable: false,
   },
   {
@@ -19,6 +20,7 @@ const savedAddressesObj = [
     type: "Office",
     address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
+    type: "Office",
     codAvailable: false,
   },
   {
@@ -26,6 +28,7 @@ const savedAddressesObj = [
     type: "Home 2",
     address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
+    type: "home",
     codAvailable: false,
   }
 ];
@@ -34,6 +37,7 @@ const OrderAddress = (props) => {
   const { hideNavbar } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState(0);
+  // const [selectedValue, setSelectedValue] = useState(savedAddressesObj[0].name);
   const [savedAddresses, setSavedAddresses] = useState(savedAddressesObj);
 
   useEffect(() => {
@@ -46,8 +50,15 @@ const OrderAddress = (props) => {
     }
   }, [savedAddresses]);
 
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+  // const handleChange = (event,name) => {
+  //   // console.log("radio button")
+  //   // console.log("Selected Name:", name);
+  //   setSelectedValue(event.target.value);
+  // };
+
+  const handleSelectAddress = (name) => {
+    console.log("Selected Name:", name);
+    setSelectedValue(name);
   };
 
   const handleOpenDialog = () => {
@@ -76,10 +87,12 @@ const OrderAddress = (props) => {
     paddingRight:"70%",
     paddingTop:'18px',
     paddingBottom:'18px',
-    border: '1px solid #d4d5d9',
+    // border: '1px solid #d4d5d9',
+    border: '1px dashed #d4d5d9',
     marginTop:'15px',
     '&:hover': {
-      borderColor: '#d4d5d9',
+      border: '1px dashed #d4d5d9',
+      // borderColor: '#d4d5d9',
       backgroundColor: '#ffffff',
     },
   };
@@ -95,7 +108,12 @@ const OrderAddress = (props) => {
       backgroundColor: "#ff3f6c",
     },
   };
-
+  
+  const radioButtonSTyle = {
+    '&.Mui-checked': {
+      color: '#ff3f6c',
+    },
+  }
   return (
     <div>
       <CheckoutSteps activeStep={0} />
@@ -113,14 +131,14 @@ const OrderAddress = (props) => {
                 width: '734px',
               }}
             >
-              <Typography sx={{ fontSize: '18px', color: '#282c3f', fontWeight: '700' }}>
+              <Typography sx={{ marginLeft:'-7px',fontSize: '18px', color: '#282c3f', fontWeight: '700', marginBottom:'4px' }}>
                 Select Delivery Address
               </Typography>
               {/* <Button variant="outlined" sx={addressButtonStyle}>
                 Add new Address
               </Button> */}
             </Box>
-            <Typography sx={{ fontSize: '12px', color: '#535766', fontWeight: '700', marginLeft: '138px' }}>
+            <Typography sx={{ fontSize: '12px', color: '#535766', fontWeight: '700', marginLeft: '130px', marginBottom:'-8px'}}>
               DEFAULT ADDRESS
             </Typography>
           </Grid>
@@ -143,27 +161,62 @@ const OrderAddress = (props) => {
                 <Grid
                   key={address.name}
                   container 
-                  spacing={1} 
+                  spacing={1}
+                  // onClick={() => setSelectedValue(address.name)} 
+                  // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
+                  onClick={() => handleSelectAddress(address.name)}
                   sx={{
-                    boxShadow: '0px 2px 5px rgba(212, 213, 217, 0.5) ', 
+                    // boxShadow: '0px 0px 1px 1.5px rgba(40, 44, 63, .2)'', 
+                    boxShadow: selectedValue === address.name ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
+                    // border: selectedValue === address.name ? "1px solid #eaeaec" : "1px solid #eaeaec",
+                    border:'1px solid #eaeaec',
                     padding:'10px', 
                     paddingBottom:'20px', 
                     borderRadius:'4px', 
                     marginBottom:'25px', 
-                    cursor:'pointer'
+                    cursor:'pointer',
                   }}>
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex' }}>
                       <Radio
                         checked={selectedValue === address.name}
-                        onChange={handleChange}
+                        // onChange={handleChange}
+                        onChange={() => handleSelectAddress}
                         value={address.name}
                         name="radio-buttons"
-                        sx={{ marginTop: '-10px', marginLeft: '-15px' }}
+                        // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
+                        sx={{ marginTop: '-10px', marginLeft: '-15px', ...radioButtonSTyle}}
                       />
                       <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
                         {address.name}
                       </Typography>
+                      <span>
+                        <Button
+                          variant="outline"
+                          disableElevation
+                          disableRipple
+                          sx={{
+                            color: "#03a685",
+                            fontWeight: "700",
+                            textTransform: "uppercase",
+                            padding:'3px 3px 2px 3px',
+                            // backgroundColor: "#F5F5F6",
+                            border:'1.3px solid #03A685',
+                            borderRadius: "20px",
+                            fontSize: "10px",
+                            lineHeight: '14px',
+                            minWidth: "55px",
+                            marginLeft:'10px',
+                            "&:hover":{
+                              backgroundColor:"#ffffff",
+                              border:'1.3px solid #03A685',
+
+                            }
+                          }}
+                        >
+                          {address.type}
+                        </Button>
+                      </span>
                     </Box>
                   </Grid>
                   <Grid item xs={12}>

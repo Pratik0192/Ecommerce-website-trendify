@@ -3,7 +3,9 @@ import { Box, Typography, Button, Grid, Divider,Link, Stack,Card,CardContent} fr
 import image1 from '../Assets/product_2.png';
 import image2 from '../Assets/product_3.png';
 import image3 from '../Assets/product_8.png';
-import image4 from '../Assets/nullpicture.jpg'
+import image4 from '../Assets/nullpicture.jpg';
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import LockResetIcon from '@mui/icons-material/LockReset';
 
@@ -25,7 +27,7 @@ const orders = [
   {
     orderPlaced: '20 June 2024',
     total: '₹2,436.00', 
-    shippedTo: 'Pratik Mondal',
+    shippedTo: 'Pratik Chakraborty',
     orderNumber: '408-2142465-0473104',
     deliveryDate: 'Delivered 21 June',
     products: [
@@ -43,6 +45,15 @@ const orders = [
   },
 ];
 
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      // textTransform: 'none',
+      // fontSize: 14,
+      zoom: 1.1
+    }
+  },
+});
 
 const buttonStyle = {
   textTransform: 'uppercase', 
@@ -53,13 +64,14 @@ const buttonStyle = {
 }
 
 const buttonStackStyle = {
-  height: "25px",
+  height: "27px",
   borderColor: '#535665',
+  textTransform: 'none',
   color: '#333',
   fontWeight: 'bold',
-  textTransform: 'none',
-  fontSize: '10px',
-  borderRadius:'13px',
+  fontSize: '11px',
+  paddingTop:'5px',
+  borderRadius:'14px',
   "&:hover": {
     backgroundColor: "white",
     borderColor:'#535665'
@@ -84,6 +96,7 @@ const cardHeaderTextBottom = {
 const OrderAndReturn = ({onTrackPackage}) => {
 
   return (
+    <ThemeProvider theme={theme}> 
     <Box sx={{ padding: '20px', width: "100%"}}>
       {orders.map((order, index) => (
         <Box
@@ -103,10 +116,10 @@ const OrderAndReturn = ({onTrackPackage}) => {
             marginTop: "-13px", 
             marginBottom:"10px", 
             paddingBottom:'4px',
-            paddingTop:'3px'
+            paddingTop:'3px',
             }}
           >
-            <Grid item xs={9.1} container>
+            <Grid item xs={9} container>
               <Grid item xs={3}>
                 <Typography variant='caption'> 
                   <Typography variant="caption" sx={cardHeaderTextTop}>
@@ -136,7 +149,7 @@ const OrderAndReturn = ({onTrackPackage}) => {
             </Grid>
 
             {/* Order ID and Links */}
-            <Grid item xs={2.9}>
+            <Grid item xs={3}>
               <Typography variant="caption" sx={cardHeaderTextTop}>
                 ORDER # {order.orderNumber}
               </Typography>
@@ -152,9 +165,9 @@ const OrderAndReturn = ({onTrackPackage}) => {
           <Box sx={{ marginTop: '0px', marginBottom: '0px' }}>
             {order.products.map((product, productIndex) => (
               <Grid container spacing={1} key={productIndex}
-                sx={{ margin: "20px 0" }}
+                sx={{ margin: "24px 0",}}
               >
-                <Grid container xs={9}>
+                <Grid container xs={8.5}>
                   <Grid item xs={2.4} 
                     sx={{ 
                       padding: "0 8px 0 0",
@@ -222,8 +235,8 @@ const OrderAndReturn = ({onTrackPackage}) => {
                     </Button>
                   </Grid>
                 </Grid>
-                <Grid item xs={3} spacing={1} sx={{ marginTop: "-12px" }}>
-                  <Stack spacing={1} sx={{ width: '150px', margin: 'auto' }}>
+                <Grid item xs={3.5} spacing={1} sx={{ marginTop: "-12px", marginRight:'-5px'}}>
+                  <Stack spacing={1} sx={{ width: '175px', margin: 'auto', }}>
                     <Button 
                       variant ="outlined" 
                       disableRipple  
@@ -251,6 +264,7 @@ const OrderAndReturn = ({onTrackPackage}) => {
       ))}
 
     </Box>
+  </ThemeProvider>
   );
 };
 
