@@ -37,6 +37,7 @@ const OrderAddress = (props) => {
   const { hideNavbar } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState(0);
+  // const [selectedValue, setSelectedValue] = useState(savedAddressesObj[0].name);
   const [savedAddresses, setSavedAddresses] = useState(savedAddressesObj);
 
   useEffect(() => {
@@ -49,9 +50,15 @@ const OrderAddress = (props) => {
     }
   }, [savedAddresses]);
 
-  const handleChange = (event) => {
-    console.log("radio")
-    setSelectedValue(event.target.value);
+  // const handleChange = (event,name) => {
+  //   // console.log("radio button")
+  //   // console.log("Selected Name:", name);
+  //   setSelectedValue(event.target.value);
+  // };
+
+  const handleSelectAddress = (name) => {
+    console.log("Selected Name:", name);
+    setSelectedValue(name);
   };
 
   const handleOpenDialog = () => {
@@ -155,11 +162,14 @@ const OrderAddress = (props) => {
                   key={address.name}
                   container 
                   spacing={1}
-                  onClick={() => setSelectedValue(address.name)} 
+                  // onClick={() => setSelectedValue(address.name)} 
+                  // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
+                  onClick={() => handleSelectAddress(address.name)}
                   sx={{
-                    // boxShadow: '0px 2px 5px rgba(212, 213, 217, 0.5) ', 
+                    // boxShadow: '0px 0px 1px 1.5px rgba(40, 44, 63, .2)'', 
                     boxShadow: selectedValue === address.name ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
-                    border: selectedValue === address.name ? "none" : "1px solid #eaeaec",
+                    // border: selectedValue === address.name ? "1px solid #eaeaec" : "1px solid #eaeaec",
+                    border:'1px solid #eaeaec',
                     padding:'10px', 
                     paddingBottom:'20px', 
                     borderRadius:'4px', 
@@ -170,9 +180,11 @@ const OrderAddress = (props) => {
                     <Box sx={{ display: 'flex' }}>
                       <Radio
                         checked={selectedValue === address.name}
-                        onChange={handleChange}
+                        // onChange={handleChange}
+                        onChange={() => handleSelectAddress}
                         value={address.name}
                         name="radio-buttons"
+                        // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
                         sx={{ marginTop: '-10px', marginLeft: '-15px', ...radioButtonSTyle}}
                       />
                       <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
@@ -185,19 +197,19 @@ const OrderAddress = (props) => {
                           disableRipple
                           sx={{
                             color: "#03a685",
-                            fontWeight: "780",
+                            fontWeight: "700",
                             textTransform: "uppercase",
-                            padding:'1px 0px',
+                            padding:'3px 3px 2px 3px',
                             // backgroundColor: "#F5F5F6",
-                            border:'1px solid #03A685',
+                            border:'1.3px solid #03A685',
                             borderRadius: "20px",
                             fontSize: "10px",
                             lineHeight: '14px',
-                            minWidth: "50px",
+                            minWidth: "55px",
                             marginLeft:'10px',
                             "&:hover":{
                               backgroundColor:"#ffffff",
-                              border:'1px solid #03A685',
+                              border:'1.3px solid #03A685',
 
                             }
                           }}

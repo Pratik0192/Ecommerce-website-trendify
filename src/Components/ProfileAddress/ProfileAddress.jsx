@@ -44,6 +44,11 @@ const ProfileAddress = () => {
     setAddresses(updatedAddresses);
   };
 
+  const handleSelectAddress = (id) => {
+    console.log("Selected Name:", id);
+    setSelectedValue(id);
+  };
+
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -102,6 +107,8 @@ const ProfileAddress = () => {
             container
             key={index}
             spacing={1}
+            // onClick={() => setSelectedValue(address.id)} // Handle grid click to select address
+            onClick={() => handleSelectAddress(address.id)}
             sx={{
               boxShadow:'0 1px 2px 1px rgb(212, 213, 217 , 0.5)',
               padding: "10px",
@@ -111,7 +118,6 @@ const ProfileAddress = () => {
                 boxShadow: "0px 3px 9px 3px rgba(212, 213, 217, 0.5)",
               }
             }}
-            onClick={() => setSelectedValue(address.id)} // Handle grid click to select address
           >
             <Grid
               item
