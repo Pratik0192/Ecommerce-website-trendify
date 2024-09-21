@@ -48,7 +48,6 @@ const Product = () =>{
 
   useEffect(() => {
     const handleScroll = debounce(() => {
-      console.log("HandleScroll Called");
       if(!productsFetchedFlag && relatedProductsRef.current) {
         const top = relatedProductsRef.current.getBoundingClientRect().top;
         if(top < window.innerHeight){
@@ -85,10 +84,10 @@ const Product = () =>{
               <RelatedProducts 
                 product={product} 
                 all_products={products}
+                relatedProductsRef={relatedProductsRef}
               />
             }
           </div>
-          <div ref={relatedProductsRef}></div>
         </div>
       }
     </>

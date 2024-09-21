@@ -31,6 +31,7 @@ import { fetchCartData } from "./store/cartSlice";
 import { fetchWishlistData } from "./store/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+
 function App() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const isUserLoggedIn = useSelector((store) => store.user.isUserLoggedIn);

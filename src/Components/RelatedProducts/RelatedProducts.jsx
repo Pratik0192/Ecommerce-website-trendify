@@ -11,7 +11,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useSelector } from 'react-redux';
 
 const RelatedProducts = (props) => {
-  const { product, all_products } = props;
+  const { product, all_products, relatedProductsRef } = props;
   const loading = useSelector((store) => store.products.loading);
 
   const relatedProducts = all_products.filter(
@@ -33,6 +33,7 @@ const RelatedProducts = (props) => {
     <div className='relatedproducts'>
       <h2>Related Products</h2>
       <hr />
+      <Box ref={relatedProductsRef}></Box>
       {loading ? (
         <Box height="300px" display="flex" alignItems="center">
           <CircularProgress size={80} />
