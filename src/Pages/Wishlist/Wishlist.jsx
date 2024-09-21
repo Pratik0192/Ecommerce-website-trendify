@@ -124,7 +124,7 @@ const Wishlist = (props) => {
                       ({item.discount_percentage}% off)
                     </Typography>
                 </div>
-                <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'20px'}} />
+                <Divider sx={{width:'120%', marginLeft:'-20px', marginTop:'10px', marginBottom:'0px'}} />
                 <Button
                   onClick={() => {
                     //addToCart(item._id);
@@ -133,7 +133,14 @@ const Wishlist = (props) => {
                     dispatch(removeFromWishlist(paramObj));
                     //dispatch(wishlistActions.removeFromWishlist(item._id));
                   }}
-                  sx={{width:'100%', marginTop:'10px',fontWeight:'700', color:'#ff3e6c', fontSize:'16px', marginBottom:'-13px'}}
+                  sx={{
+                    width:'100%',
+                    fontWeight:'700', 
+                    color:'#ff3e6c', 
+                    fontSize:'16px',
+                    marginBottom:'-16px',
+                    marginTop:'5px'
+                  }}
                 >
                   Move to bag
                 </Button>

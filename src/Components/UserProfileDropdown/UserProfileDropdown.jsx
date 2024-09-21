@@ -73,7 +73,7 @@ const UserProfileDropdown = (props) => {
         </Typography>
       </MenuItem>
       <MenuItem sx={{'&:hover':{backgroundColor: 'transparent'} }}>
-        <Link to={isUserLoggedIn ? '/profile' : '/login'}>
+        <Link to={isUserLoggedIn ? '/accountpage' : '/login'}>
           <Button 
             sx={{ 
                 width: '100%', 
