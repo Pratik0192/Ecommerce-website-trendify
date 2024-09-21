@@ -20,7 +20,7 @@ const orders = [
       {
         productTitle: 'The Souled Store Official Money Heist: Master Mind Berlin',
         returnWindow: 'Return window closed on 4 July 2024',
-        productImage: image1, 
+        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725216929/products/Men_Blue_Typography_Printed_Slim_Fit_T-shirt_ol1vkc.jpg", 
       },
     ],
   },
@@ -34,12 +34,12 @@ const orders = [
       {
         productTitle: 'Ant Esports MK1400 Pro  Wired Double Injection Key Caps - Black',
         returnWindow: 'Return and replacement windows have closed',
-        productImage: image2, 
+        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725217184/products/Men_Polo_Collar_Slim_Fit_T-shirt_ohh37v.jpg", 
       },
       {
         productTitle: 'Ant Esports GM320 RGB Optical Wired Gaming Mouse Ergonomic- Black',
         returnWindow: 'Return and replacement windows have closed',
-        productImage: null, 
+        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725218109/products/Men_Solid_Polo_Collar_Slim_Fit_T-shirt_oikqdp.jpg", 
       },
     ],
   },
@@ -110,13 +110,14 @@ const OrderAndReturn = ({onTrackPackage}) => {
           }}
         >
           {/* Order Info */}
-          <Grid container 
-           sx={{
-            borderBottom: "1px solid #ddd", 
-            marginTop: "-13px", 
-            marginBottom:"10px", 
-            paddingBottom:'4px',
-            paddingTop:'3px',
+          <Grid
+            container 
+            sx={{
+              borderBottom: "1px solid #ddd", 
+              marginTop: "-13px", 
+              marginBottom:"10px", 
+              paddingBottom:'4px',
+              paddingTop:'3px',
             }}
           >
             <Grid item xs={9} container>
@@ -165,10 +166,10 @@ const OrderAndReturn = ({onTrackPackage}) => {
           <Box sx={{ marginTop: '0px', marginBottom: '0px' }}>
             {order.products.map((product, productIndex) => (
               <Grid container spacing={1} key={productIndex}
-                sx={{ margin: "24px 0",}}
+                sx={{ margin: "25px 0 35px 0" }}
               >
                 <Grid container xs={8.5}>
-                  <Grid item xs={2.4} 
+                  <Grid item xs={2.1} 
                     sx={{ 
                       padding: "0 8px 0 0",
                       height: "120px"
@@ -177,10 +178,11 @@ const OrderAndReturn = ({onTrackPackage}) => {
                     <img
                       src={product.productImage ? product.productImage : image4}
                       alt="Product"
-                      style={{ width: "100%", borderRadius:'2px',boxShadow:'1px solid #333' }}
+                      width="100px"
+                      style={{ borderRadius:'2px',boxShadow:'1px solid #333' }}
                     />
                   </Grid>
-                  <Grid item xs={9.6} sx={{ marginTop: "-8px" }}>
+                  <Grid item xs={9.9} sx={{ marginTop: "-8px" }}>
                     <Typography variant="subtitle1" 
                       sx={{ 
                         fontWeight: 'bold',
@@ -235,7 +237,7 @@ const OrderAndReturn = ({onTrackPackage}) => {
                     </Button>
                   </Grid>
                 </Grid>
-                <Grid item xs={3.5} spacing={1} sx={{ marginTop: "-12px", marginRight:'-5px'}}>
+                <Grid item xs={3.5} sx={{ marginTop: "-12px", marginRight:'-5px'}}>
                   <Stack spacing={1} sx={{ width: '175px', margin: 'auto', }}>
                     <Button 
                       variant ="outlined" 

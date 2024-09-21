@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react'
-import { Grid, Typography, Box, List, ListItem } from '@mui/material';
+import { Grid, Typography, Box, List, ListItem, useMediaQuery } from '@mui/material';
 import OverviewComponent from '../../Components/OverviewComponent/OverviewComponent';
 import OrderAndReturn from '../../Components/OrderAndReturn/OrderAndReturn';
 import ProfileComponent from '../../Components/ProfileComponent/ProfileComponent';
 import OrderTracking from '../../Components/OrderTracking/OrderTracking';
 import OrderCancelReason from '../../Components/OrderCancelReason/OrderCancelReason';
 import ProfileAddress from '../../Components/ProfileAddress/ProfileAddress';
+
 
 const subtitleStyle = {
   fontSize:'12px',
@@ -29,20 +30,42 @@ const selectedStyle = {
 
 const AccountPage = () => {
   const [selectedItem, setSelectedItem] = useState("overview");
+  const isSmallScreen = useMediaQuery('(max-width:1280px)');
 
   const handleItemSelect = (item) => {
     setSelectedItem(item);
   };
 
   return (
-    <Fragment>
-      <Typography sx={{fontSize:'18px', fontWeight:'700', marginLeft:'13.5%', marginTop:'5%'}}>
+    <>
+      <Typography 
+        sx={{
+          fontSize:'20px', 
+          fontWeight:'700', 
+          marginLeft: isSmallScreen ? '15px' : "11%", 
+          marginTop:'5%'
+        }}
+      >
         Account
       </Typography>
-      <Typography sx={{fontSize:'12px', fontWeight:'500', marginTop:'-4px', marginLeft:'13.5%', marginBottom:'15px'}}>
+      <Typography 
+        sx={{
+          fontSize:'15px', 
+          fontWeight:'500', 
+          marginTop:'-4px', 
+          marginLeft: isSmallScreen ? '15px' : "11%", 
+          marginBottom:'15px'
+        }}
+      >
         Trendify User
       </Typography>
-      <Grid container spacing={2} xs={12} md={9} sx={{margin:'auto',borderTop:'1px solid #d4d5d9'}}>
+      <Grid container spacing={2} 
+        sx={{ 
+          width: isSmallScreen ? '100%' : '80%', 
+          margin:'auto',
+          borderTop:'1px solid #d4d5d9'
+        }}
+      >
         <Grid item xs={12} md={2.5} sx={{borderRight:'1px solid #d4d5d9'}}>
           <List component="nav">
             <Box sx={{ padding:'0 10px 10px 0'}}>
@@ -118,7 +141,7 @@ const AccountPage = () => {
           </List>
         </Grid>
 
-      {/* Main Content */}
+        {/* Main Content */}
         <Grid item xs={12} md={9.5} container justifyContent="center" alignItems="center" >
           {selectedItem === 'overview' ? (
             <OverviewComponent />
@@ -137,7 +160,7 @@ const AccountPage = () => {
           )}
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   )
 }
 
