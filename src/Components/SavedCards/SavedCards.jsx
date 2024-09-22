@@ -68,6 +68,7 @@ const SavedCards = () => {
       {cards.map((card) => (
         <Box
           key={card.id}
+          onClick={() => handleRadioChange(card.id)}  // Add onClick to the whole Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -76,7 +77,11 @@ const SavedCards = () => {
             border: '1px solid #e0e0e0',
             borderRadius: '10px',
             backgroundColor: '#fff',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            cursor: 'pointer',
+            "&:hover":{
+              boxShadow: "0px 3px 9px 3px rgba(212, 213, 217, 0.5)",
+            }
           }}
         >
           <Radio
@@ -108,6 +113,7 @@ const SavedCards = () => {
                 )
               }}
               sx={{ width: '100px', ...textFieldActiveStateStyle }}
+              onClick={(e) => e.stopPropagation()} // Prevent click on the TextField from triggering the box click
             />
           </Box>
         </Box>
