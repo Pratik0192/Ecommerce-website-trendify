@@ -40,8 +40,8 @@ const ShopCategory = (props) => {
   const loadingProducts = useSelector((store) => store.products.loading);
   const triggerKeywordChange = useSelector((store) => store.products.triggerKeywordChange);
   const renderProductsFlag = useSelector((store) => store.products.renderProductsFlag);
-  const pageParams = useSelector((store) => store.products.page);
   const fetchParams = useSelector((store) => store.products.fetchParams);
+  const pageParams = useSelector((store) => store.products.page);
   const { totalProductsCount, pageLength, totalPages } = pageParams;
   const dispatch = useDispatch();
 
@@ -99,14 +99,26 @@ const ShopCategory = (props) => {
 
   const handlePageDecrement = () => {
     if (currentPage > 1){
-      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage - 1);
+      fetchProductsAsync(
+        fetchParams.keyword, 
+        fetchParams.brand, 
+        fetchParams.sort, 
+        fetchParams.price, 
+        currentPage - 1
+      );
       window.scrollTo(0, 0);
     }
   }
 
   const handlePageIncrement = () => {
     if(currentPage < totalPages){
-      fetchProductsAsync(fetchParams.keyword, fetchParams.brand, fetchParams.sort, fetchParams.price, currentPage + 1);
+      fetchProductsAsync(
+        fetchParams.keyword, 
+        fetchParams.brand, 
+        fetchParams.sort, 
+        fetchParams.price, 
+        currentPage + 1
+      );
       window.scrollTo(0, 0);
     }
   }
@@ -191,21 +203,6 @@ const ShopCategory = (props) => {
           Next
           <ArrowForwardIosIcon sx={paginationArrowStyle}/>
         </Button>
-        {/* <button 
-          className="previous-button" 
-          onClick={handlePageDecrement}
-        >
-          Previous
-        </button>
-        <p className="pageno-text">
-          Page {currentPage} of {totalPages}
-        </p>
-        <button 
-          className="next-button" 
-          onClick={handlePageIncrement}
-        >
-          Next
-        </button> */}
       </div>
     </div>
   );
