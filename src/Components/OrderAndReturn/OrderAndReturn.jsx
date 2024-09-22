@@ -20,7 +20,7 @@ const orders = [
       {
         productTitle: 'The Souled Store Official Money Heist: Master Mind Berlin',
         returnWindow: 'Return window closed on 4 July 2024',
-        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725216929/products/Men_Blue_Typography_Printed_Slim_Fit_T-shirt_ol1vkc.jpg", 
+        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1726777227/products/Velvet_Finish_Embroidered_Thread_Work_Kurta_with_Trousers_qwpgn9.jpg", 
       },
     ],
   },
@@ -39,7 +39,7 @@ const orders = [
       {
         productTitle: 'Ant Esports GM320 RGB Optical Wired Gaming Mouse Ergonomic- Black',
         returnWindow: 'Return and replacement windows have closed',
-        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725218109/products/Men_Solid_Polo_Collar_Slim_Fit_T-shirt_oikqdp.jpg", 
+        productImage: "https://res.cloudinary.com/dpkktgrqj/image/upload/v1725536789/products/Yellow_Green_Floral_Printed_Cambric_Pleated_Kurti_qykgos.jpg", 
       },
     ],
   },
@@ -173,7 +173,6 @@ const OrderAndReturn = ({onTrackPackage}) => {
                     sx={{ 
                       padding: "0 8px 0 0",
                       height: "130px",
-                      // border:'1px solid black',
                       marginTop:'-8px',
                       marginLeft:'-8px'
                     }}

@@ -239,7 +239,6 @@ const ProfileAddress = () => {
                     marginRight: "-11px",
                     marginBottom: "-6px",
                     borderTop: "1px solid #d4d5d9",
-                    // border:'1px solid black'
                   }}
                 >
                   <Grid
@@ -249,7 +248,6 @@ const ProfileAddress = () => {
                       marginLeft: "-18px",
                       marginBottom: "2px",
                       marginTop: "-4px",
-                      // border:'1px solid black',
                     }}
                   >
                     <Link to="/">
