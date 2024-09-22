@@ -7,13 +7,27 @@ import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { productActions } from '../../store/productsSlice';
 import { debounce } from 'lodash';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Box, Button } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Box, Button, createTheme } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { createAction } from '@reduxjs/toolkit';
+import { ThemeProvider } from '@emotion/react';
 
+
+const theme = createTheme({
+  breakpoints :{
+    values: {
+      xs:0,
+      sm: 600,
+      md: 1175,
+      lg: 1290,
+      xl: 1400,
+    }
+  }
+})
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,10 +63,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: '35ch',
       '&:focus': {
         width: '45ch',
+      },
+    },
+    [theme.breakpoints.down('lg')]: {
+      width: '30ch',
+      '&:focus': {
+        width: '40ch',
+      },
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '23ch',
+      '&:focus': {
+        width: '33ch',
       },
     },
   },
@@ -65,6 +91,12 @@ const linkButtonStyle = {
   fontWeight:'600',
   '&:hover':{
     backgroundColor:'#fff',
+  },
+  [theme.breakpoints.down('lg')]: {
+    fontSize:'14px',
+  },
+  [theme.breakpoints.down('md')] : {
+    fontSize:'12px'
   }
 }
 
@@ -87,13 +119,20 @@ const navIconTypoStyle = {
   color:'#282c3f', 
   marginTop:'-10px',
   fontSize:'12px',
-  fontWeight:'700'
+  fontWeight:'700',
+  [theme.breakpoints.down('lg')] : {
+    fontSize:'11px'
+  }
 }
 
 const navIconStyle = {
+  fontSize:'30px',
   margin:'0px 3px',
   color:'#282c3f',
   marginTop:'-12px',
+  [theme.breakpoints.down('lg')] : {
+    fontSize:'25px',
+  }
 }
 
 const Navbar = () => {
@@ -186,11 +225,13 @@ const Navbar = () => {
           <SearchIconWrapper>
             <SearchIcon sx={{color:'#c4c5c9', marginTop:'-6px'}}/>
           </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search for product, brands and more"
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={handleSearchChange}
-          />
+          <ThemeProvider theme={theme}>
+            <StyledInputBase
+              placeholder="Search for product, brands and more"
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearchChange}
+            />
+          </ThemeProvider>
         </Search>
 
         {/* Account Icon */}
@@ -204,7 +245,7 @@ const Navbar = () => {
               }
             }}
           >
-            <PersonOutlineOutlinedIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <PersonOutlineOutlinedIcon sx={navIconStyle}/>
           </IconButton>
           <Typography sx={navIconTypoStyle}>My Profile</Typography>
         </Tooltip>
@@ -226,7 +267,7 @@ const Navbar = () => {
               }
             }}
           >
-            <FavoriteBorderIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <FavoriteBorderIcon sx={navIconStyle}/>
               {totalWishlistItems > 0 && (
                 <div 
                   style={countStyle}
@@ -250,7 +291,7 @@ const Navbar = () => {
               }
             }}
           >
-            <ShoppingBagOutlinedIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <ShoppingBagOutlinedIcon sx={navIconStyle}/>
             {cartLength > 0 && (
               <div
                 style={countStyle}
