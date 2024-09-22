@@ -6,7 +6,7 @@ import ProfileComponent from '../../Components/ProfileComponent/ProfileComponent
 import OrderTracking from '../../Components/OrderTracking/OrderTracking';
 import OrderCancelReason from '../../Components/OrderCancelReason/OrderCancelReason';
 import ProfileAddress from '../../Components/ProfileAddress/ProfileAddress';
-
+import SavedCards from '../../Components/SavedCards/SavedCards';
 
 const subtitleStyle = {
   fontSize:'12px',
@@ -119,9 +119,14 @@ const AccountPage = () => {
                     Profile
                   </Typography>
                 </ListItem>
-                <Typography sx={optionStyle}>
-                  Saved Cards
-                </Typography>
+                <ListItem
+                  sx={selectedItem === "cardsSaved" ? selectedStyle : {margin:'-12px 0 0 -15px', cursor:'pointer', color:'#282c3f'}}
+                  onClick={() => handleItemSelect("cardsSaved")}
+                >
+                  <Typography sx={optionStyle}>
+                    Saved Cards
+                  </Typography>
+                </ListItem>
                 <ListItem
                   sx={selectedItem === "addressProfile" ? selectedStyle : {margin:'-12px 0 0 -15px', cursor:'pointer', color:'#282c3f'}}
                   onClick={() => handleItemSelect("addressProfile")}
@@ -155,6 +160,8 @@ const AccountPage = () => {
             <OrderCancelReason/>
           ) : selectedItem === 'addressProfile' ? (
              <ProfileAddress/>
+          ) : selectedItem === 'cardsSaved' ? (
+            <SavedCards/>
           ) : (
             <div></div>
           )}
