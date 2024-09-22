@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useState, useCallback } from 'react';
-// import './Navbar.css';
 import logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
@@ -91,6 +90,7 @@ const navIconTypoStyle = {
 }
 
 const navIconStyle = {
+  fontSize:'30px',
   margin:'0px 3px',
   color:'#282c3f',
   marginTop:'-12px',
@@ -204,7 +204,7 @@ const Navbar = () => {
               }
             }}
           >
-            <PersonOutlineOutlinedIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <PersonOutlineOutlinedIcon sx={navIconStyle}/>
           </IconButton>
           <Typography sx={navIconTypoStyle}>My Profile</Typography>
         </Tooltip>
@@ -226,7 +226,7 @@ const Navbar = () => {
               }
             }}
           >
-            <FavoriteBorderIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <FavoriteBorderIcon sx={navIconStyle}/>
               {totalWishlistItems > 0 && (
                 <div 
                   style={countStyle}
@@ -250,7 +250,7 @@ const Navbar = () => {
               }
             }}
           >
-            <ShoppingBagOutlinedIcon sx={{fontSize:'30px',...navIconStyle}}/>
+            <ShoppingBagOutlinedIcon sx={navIconStyle}/>
             {cartLength > 0 && (
               <div
                 style={countStyle}
