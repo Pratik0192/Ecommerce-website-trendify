@@ -95,6 +95,7 @@ const cartSlice = createSlice({
   initialState: { 
     data: [],
     loading: false,
+    changingQuantity: false,
     cartItem: {},
     removeCartProductId: null,
     totalItems: 0,
@@ -169,7 +170,11 @@ const cartSlice = createSlice({
         state.loading = false;
         console.log("Failed to remove from cart.");
       })
+      .addCase(incrementCartItemQuantity.pending, (state, action) => {
+        state.changingQuantity = true;
+      })
       .addCase(incrementCartItemQuantity.fulfilled, (state, action) => {
+        state.changingQuantity = false;
         console.log("Cart Quantity + 1");
         let itemIndex = state.data.findIndex(
           (item) => item.productId === action.payload.productId
@@ -179,7 +184,11 @@ const cartSlice = createSlice({
           state.totalItems += 1;
         }
       })
+      .addCase(decrementCartItemQuantity.pending, (state, action) => {
+        state.changingQuantity = true;
+      })
       .addCase(decrementCartItemQuantity.fulfilled, (state, action) => {
+        state.changingQuantity = false;
         console.log("Cart Quantity - 1");
         let itemIndex = state.data.findIndex(
           (item) => item.productId === action.payload.productId

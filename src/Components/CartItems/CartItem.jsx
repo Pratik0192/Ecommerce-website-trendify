@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import './CartItem.css';
 import { Link } from 'react-router-dom';
-import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox, useScrollTrigger } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Button, Box, IconButton, Divider, colors, Checkbox, useScrollTrigger, CircularProgress } from '@mui/material';
 import { Undo } from '@mui/icons-material';
 import expressicon from '../Assets/express.png';
 import { Close } from '@mui/icons-material';
@@ -17,6 +17,7 @@ import {
 const CartItems = (props) => {
   const { cartItem } = props;
   const token = useSelector((store) => store.user.token);
+  const loading = useSelector((store) => store.cart.changingQuantity);
   const dispatch = useDispatch();
 
   const spanStyle = {
@@ -31,11 +32,12 @@ const CartItems = (props) => {
   const quantityButtonstyle = { 
     minWidth:'30px',
     maxWidth:'30px',
-    minHeight:'20px',
-    maxHeight:'20px',
+    minHeight:'22px',
+    maxHeight:'22px',
     background: '#f5f5f5',
     borderRadius:'0',
-    marginTop:'-2px',
+    marginTop:'-3.5px',
+
     color:'#282c3f',
     '&:hover': {background: '#f5f5f5',}
   }
@@ -114,25 +116,36 @@ const CartItems = (props) => {
               <span style={spanStyle}>
                 Size: 39
               </span>
+
+              
               <span style={{marginLeft:'-3px', marginRight:'-8px'}}>
                 <Button 
                   variant='text' 
                   sx={quantityButtonstyle}
-                  onClick={handleIncrementCartItemQuantity}
+                  onClick={handleDecrementCartItemQuantity}
                 >
-                  +
+                  -
                 </Button>
               </span>
               <span style={spanStyle}>
-                Qty: {cartItem.quantity}                         
+                {loading ? (
+                  <span style={{padding:"10px 12px 0px 12px"}}>
+                    <CircularProgress size="15px" sx={{
+                      color:'#ff3f6c',
+                    }}/>
+                  </span>
+                  ) : (
+                    <>Qty: {cartItem.quantity}</>
+                  )
+                }
               </span>
               <span style={{marginLeft:'-20px', marginRight:'10px'}}>
                 <Button 
                   variant='text'
                   sx={quantityButtonstyle}
-                  onClick={handleDecrementCartItemQuantity}
+                  onClick={handleIncrementCartItemQuantity}
                 >
-                  -
+                  +
                 </Button>
               </span>
               <span
