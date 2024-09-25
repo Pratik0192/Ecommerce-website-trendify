@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Divider, Typography } from '@mui/material'
 import google_play_icon from '../Assets/google-play.png';
 import AppleIcon from '@mui/icons-material/Apple';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -8,7 +8,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import return_icon from '../Assets/14days_return_icon.png';
 import original_icon from '../Assets/footer_original_icon.png';
-import { Height } from '@mui/icons-material';
+import CopyrightIcon from '@mui/icons-material/Copyright';
 
 
 const Footer = () =>{
@@ -47,9 +47,16 @@ const Footer = () =>{
     transition: 'all 0.3s ease',
 	}
 
+	const footerTypoStyle = {
+		fontSize:'16px',
+		color:'#94969f'
+	}
+
 
   return (
     <Box sx={{backgroundColor:'#fafbfc', padding:'30px 0px 40px 0px'}}>
+
+			{/* first section */}
 			<Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto',display:'flex'}}>
 				<Box sx={{width:'15%', paddingRight:'20px'}}>
 					<Typography sx={headingStyles}>
@@ -200,6 +207,38 @@ const Footer = () =>{
             </Box>
           </Box>
         </Box>
+	  	</Box>
+			{/* second section  */}
+			<Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto', marginTop:'15px'}}>
+				<Divider sx={{marginBottom:'12px', border:'2px solid #d4d5d9'}}/>
+				<Typography sx={headingStyles}>
+					popular searches
+				</Typography>
+				<Typography sx={{...subHeadingStyle, lineHeight:'1.6'}}>
+					Makeup | Dresses For Girls | T-Shirts | Sandals | Headphones | Babydolls | Blazers For Men | 
+					Handbags | Ladies Watches | Bags | Sport Shoes | Reebok Shoes | Puma Shoes | Boxers | Wallets | 
+					Tops | Earrings | Fastrack Watches | Kurtis | Nike | Smart Watches | Titan Watches | Designer Blouse |
+					Gowns | Rings | Cricket Shoes | Forever 21 | Eye Makeup | Photo Frames | Punjabi Suits | Bikini |
+					Trendify Fashion Show | Lipstick | Saree | Watches | Dresses | Lehenga | Nike Shoes | Goggles |
+					Bras | Suit | Chinos | Shoes | Adidas Shoes | Woodland Shoes | Jewellery | Designers Sarees
+				</Typography>
+			</Box>
+
+			{/* third section */}
+			<Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto',marginTop:'20px'}}>
+				<Divider sx={{marginBottom:'20px', border:'2px solid #d4d5d9'}}/>
+				<Box sx={{display:'flex', justifyContent:'space-between'}}>
+					<Typography sx={footerTypoStyle}>
+						In case of any concern,<span>Contact Us</span>
+					</Typography>
+					<Typography sx={footerTypoStyle}>
+						<CopyrightIcon sx={{fontSize:'18px', marginBottom:'-3px'}}/> 2024 www.trendify019.com. All rights reserved 
+					</Typography>
+					<Typography sx={footerTypoStyle}>
+						A Trendify Company
+					</Typography>
+				</Box>
+				
 			</Box>
     </Box>
   )
