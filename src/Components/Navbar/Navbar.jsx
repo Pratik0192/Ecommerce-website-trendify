@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useCallback } from 'react';
 // import './Navbar.css';
-import logo from '../Assets/logo.png';
+import logo from '../Assets/trendify-logo.svg';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
