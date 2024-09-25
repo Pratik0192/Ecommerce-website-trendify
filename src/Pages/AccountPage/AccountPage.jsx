@@ -162,7 +162,7 @@ const AccountPage = () => {
           ) : selectedItem === 'cancelConfirm' ? (
             <OrderCancelConfirmed />
           ) : selectedItem === 'addressProfile' ? (
-             <ProfileAddress/>
+            <ProfileAddress/>
           ) : selectedItem === 'cardsSaved' ? (
             <SavedCards/>
           ) : (
@@ -174,4 +174,4 @@ const AccountPage = () => {
   )
 }
 
-export default AccountPage
+export default AccountPage;
