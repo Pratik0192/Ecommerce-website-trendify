@@ -210,7 +210,7 @@ const Footer = () =>{
 	  	</Box>
 			{/* second section  */}
 			<Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto', marginTop:'15px'}}>
-				<Divider sx={{marginBottom:'12px', border:'2px solid #d4d5d9'}}/>
+				<Divider sx={{marginBottom:'12px', border:'1px solid #d4d5d9'}}/>
 				<Typography sx={headingStyles}>
 					popular searches
 				</Typography>
@@ -226,7 +226,7 @@ const Footer = () =>{
 
 			{/* third section */}
 			<Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto',marginTop:'20px'}}>
-				<Divider sx={{marginBottom:'20px', border:'2px solid #d4d5d9'}}/>
+				<Divider sx={{marginBottom:'20px', border:'1px solid #d4d5d9'}}/>
 				<Box sx={{display:'flex', justifyContent:'space-between'}}>
 					<Typography sx={footerTypoStyle}>
 						In case of any concern,<span>Contact Us</span>
