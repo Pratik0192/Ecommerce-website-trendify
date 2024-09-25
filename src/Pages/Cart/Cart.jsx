@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 //import { Undo, Close } from '@mui/icons-material';
 //import expressicon from '../Components/Assets/express.png';
-import emptycart from '../../Components/Assets/emptyCartIcon.png';
+import emptycart from '../../Components/Assets/empty-cart.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../store/cartSlice';
 

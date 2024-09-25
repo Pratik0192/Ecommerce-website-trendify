@@ -191,21 +191,6 @@ const ShopCategory = (props) => {
           Next
           <ArrowForwardIosIcon sx={paginationArrowStyle}/>
         </Button>
-        {/* <button 
-          className="previous-button" 
-          onClick={handlePageDecrement}
-        >
-          Previous
-        </button>
-        <p className="pageno-text">
-          Page {currentPage} of {totalPages}
-        </p>
-        <button 
-          className="next-button" 
-          onClick={handlePageIncrement}
-        >
-          Next
-        </button> */}
       </div>
     </div>
   );
