@@ -37,6 +37,9 @@ import MessageParser from "./Chatbot/MessageParser";
 import ActionProvider from "./Chatbot/ActionProvider";
 import 'react-chatbot-kit/build/main.css';
 import { Button } from "@mui/material";
+import { IconButton, Box, Dialog } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
+import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
 
 
 function App() {
@@ -66,6 +69,16 @@ function App() {
     setIsChatbotVisible(prev => !prev);
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <div> 
@@ -94,7 +107,7 @@ function App() {
           </Routes>
           <Footer/>
           {/* chatbot component */}
-          <Button
+          {/* <Button
             variant="outlined"
             onClick={toggleChatbot}
             style={{
@@ -107,7 +120,21 @@ function App() {
             }}
           >
             {isChatbotVisible ? "Close Chat" : "Chat with us"}
-          </Button>
+          </Button> */}
+          <IconButton
+            onClick={toggleChatbot}
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "30px",
+              backgroundColor:"#ff3f6c",
+              color: "#fff",
+              zIndex: 1000,
+            }}
+          >
+            {/* <ChatIcon /> */}
+            {isChatbotVisible ? <SpeakerNotesOffIcon /> : <ChatIcon/> }
+          </IconButton>
 
           {isChatbotVisible && (
             <div style={{position:'fixed', bottom:'80px', right:'20px', zIndex:1000 }}>
