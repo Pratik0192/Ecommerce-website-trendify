@@ -56,6 +56,23 @@ export const fetchUserDetails = createAsyncThunk(
 );
 
 
+export const getUserAddresses = createAsyncThunk(
+  'user/getUserAddresses',
+  async (token) => {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASEURL}/api/v1/user/address/get`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        }
+      }
+    );
+    return res.data;
+  }
+)
+
+
 
 const userSlice = createSlice({
   name: "User",

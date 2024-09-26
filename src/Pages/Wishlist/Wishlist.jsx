@@ -2,6 +2,8 @@ import React from 'react';
 import "./Wishlist.css";
 import { Link } from 'react-router-dom';
 import { Button, Card, CardContent, Divider, Typography } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import { CancelOutlined, Star } from '@mui/icons-material';
 import wishlist_icon from '../../Components/Assets/wishlist.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +15,7 @@ import { removeFromWishlist } from '../../store/wishlistSlice';
 const Wishlist = (props) => {
   const wishlistItems = useSelector((store) => store.wishlist.data);
   const token = useSelector((store) => store.user.token);
+  const loading = useSelector((store) => store.wishlist.loading)
   const dispatch = useDispatch();
 
   const buttonStyle = {
@@ -27,6 +30,13 @@ const Wishlist = (props) => {
   };
 
   return (
+    <div>
+      <Backdrop
+        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     <div className="wishlist-page">
       {wishlistItems.length === 0 ? (
         <>
@@ -149,6 +159,7 @@ const Wishlist = (props) => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };

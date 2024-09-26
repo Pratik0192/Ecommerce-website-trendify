@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useCallback } from 'react';
 // import './Navbar.css';
-import logo from '../Assets/logo.png';
+import logo from '../Assets/trendify-logo.svg';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import UserProfileDropdown from '../UserProfileDropdown/UserProfileDropdown';
@@ -13,7 +13,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { createAction } from '@reduxjs/toolkit';
 import { ThemeProvider } from '@emotion/react';
 
 
@@ -236,18 +235,20 @@ const Navbar = () => {
 
         {/* Account Icon */}
         <Tooltip>
-          <IconButton 
-            size="large"
-            onClick={handleClick}
-            sx={{
-              '&:hover':{
-                backgroundColor:'transparent'
-              }
-            }}
-          >
-            <PersonOutlineOutlinedIcon sx={navIconStyle}/>
-          </IconButton>
-          <Typography sx={navIconTypoStyle}>My Profile</Typography>
+          <Box>
+            <IconButton 
+              size="large"
+              onClick={handleClick}
+              sx={{
+                '&:hover':{
+                  backgroundColor:'transparent'
+                }
+              }}
+            >
+              <PersonOutlineOutlinedIcon sx={navIconStyle}/>
+            </IconButton>
+            <Typography sx={navIconTypoStyle}>My Profile</Typography>
+          </Box>
         </Tooltip>
         <UserProfileDropdown 
           anchorEl = {anchorEl}
@@ -257,50 +258,54 @@ const Navbar = () => {
         
         {/* Wishlist Icon */}
         <Tooltip>
-          <IconButton
-            size="large" 
-            component={Link} 
-            to="/wishlist"
-            sx={{
-              '&:hover':{
-                backgroundColor:'transparent'
-              }
-            }}
-          >
-            <FavoriteBorderIcon sx={navIconStyle}/>
-              {totalWishlistItems > 0 && (
-                <div 
-                  style={countStyle}
-                >
-                  {totalWishlistItems}
-                </div>
-              )}
-          </IconButton>
-          <Typography sx={{...navIconTypoStyle, marginLeft:'10px'}}>Wishlist</Typography>
+          <Box>
+            <IconButton
+              size="large" 
+              component={Link} 
+              to="/wishlist"
+              sx={{
+                '&:hover':{
+                  backgroundColor:'transparent'
+                }
+              }}
+            >
+              <FavoriteBorderIcon sx={navIconStyle}/>
+                {totalWishlistItems > 0 && (
+                  <div 
+                    style={countStyle}
+                  >
+                    {totalWishlistItems}
+                  </div>
+                )}
+            </IconButton>
+            <Typography sx={{...navIconTypoStyle, marginLeft:'10px'}}>Wishlist</Typography>
+          </Box>
         </Tooltip>
 
         {/* Cart Icon */}
         <Tooltip>
-          <IconButton 
-            size="large"
-            component={Link}
-            to="/cart"
-            sx={{
-              '&:hover':{
-                backgroundColor:'transparent'
-              }
-            }}
-          >
-            <ShoppingBagOutlinedIcon sx={navIconStyle}/>
-            {cartLength > 0 && (
-              <div
-                style={countStyle}
-              >
-                {cartLength}
-              </div>
-            )}
-          </IconButton>
-          <Typography sx={{...navIconTypoStyle, marginLeft:'17.5px'}}>Cart</Typography>
+          <Box>
+            <IconButton 
+              size="large"
+              component={Link}
+              to="/cart"
+              sx={{
+                '&:hover':{
+                  backgroundColor:'transparent'
+                }
+              }}
+            >
+              <ShoppingBagOutlinedIcon sx={navIconStyle}/>
+              {cartLength > 0 && (
+                <div
+                  style={countStyle}
+                >
+                  {cartLength}
+                </div>
+              )}
+            </IconButton>
+            <Typography sx={{...navIconTypoStyle, marginLeft:'17.5px'}}>Cart</Typography>
+          </Box>
         </Tooltip>
       </Toolbar>
     </AppBar>
