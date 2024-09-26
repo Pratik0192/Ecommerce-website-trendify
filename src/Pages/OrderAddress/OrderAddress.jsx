@@ -7,7 +7,7 @@ import CheckoutSteps from "../../Components/Checkout/CheckoutSteps/CheckoutSteps
 import { useSelector } from "react-redux";
 
 
-/* const savedAddressesObj = [
+/* const userData = [
   {
     name: "Pratik Chakraborty",
     type: "Home",
@@ -35,19 +35,22 @@ const OrderAddress = (props) => {
   const { hideNavbar } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState(0);
-  // const [selectedValue, setSelectedValue] = useState(savedAddressesObj[0].name);
-  const savedAddressesObj = useSelector((store) => store.user.userData.address);
-  const [savedAddresses, setSavedAddresses] = useState(savedAddressesObj);
+  const userData = useSelector((store) => store.user.userData);
+  const [savedAddresses, setSavedAddresses] = useState([]);
 
   useEffect(() => {
     hideNavbar();
   }, [hideNavbar]);
 
+
   useEffect(() => {
-    if(savedAddresses.length > 0){
-      setSelectedValue(savedAddresses[0].contactName);
+    if(userData){
+      setSavedAddresses(userData.address);
+      if(userData.address.length > 0){
+        setSelectedValue(userData.address[0]._id);
+      }
     }
-  }, [savedAddresses]);
+  }, [userData]);
 
   // const handleChange = (event,name) => {
   //   // console.log("radio button")
@@ -67,6 +70,12 @@ const OrderAddress = (props) => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   }
+
+  const getAddressLine = (address) => {
+    const line = address.addressLine + ", " + address.locality + ", " + address.city + ", " + address.state;
+    return line;
+  }
+
 
   const savedAddressStyle = {
     fontSize: '13px',
@@ -112,7 +121,55 @@ const OrderAddress = (props) => {
     '&.Mui-checked': {
       color: '#ff3f6c',
     },
+  };
+
+  const addressTypeStyle = {
+    color: "#03a685",
+    fontWeight: "700",
+    textTransform: "uppercase",
+    padding:'3px 3px 2px 3px',
+    // backgroundColor: "#F5F5F6",
+    border:'1.3px solid #03A685',
+    borderRadius: "20px",
+    fontSize: "10px",
+    lineHeight: '14px',
+    minWidth: "55px",
+    marginLeft:'10px',
+    "&:hover":{
+      backgroundColor:"#ffffff",
+      border:'1.3px solid #03A685',
+    }
+  };
+
+  const removeButtonStyle = {
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    fontSize: '12px',
+    borderRadius: '4px',
+    color: "#282c3f",
+    padding: '6.5px 16px',
+    border: '1px solid #282c3f',
+    marginLeft: '25px',
+    '&:hover': {
+      borderColor: '#282c3f',
+      backgroundColor: '#ffffff',
+    },
   }
+
+  const editButtonStyle = {
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    fontSize: '12px',
+    borderRadius: '4px',
+    color: "#282c3f",
+    padding: '6.5px 16px',
+    border: '1px solid #282c3f',
+    '&:hover': {
+      borderColor: '#282c3f',
+      backgroundColor: '#ffffff',
+    },
+  };
+
   return (
     <div>
       <CheckoutSteps activeStep={0} />
@@ -158,16 +215,16 @@ const OrderAddress = (props) => {
             savedAddresses.map((address) => {
               return (
                 <Grid
-                  key={address.name}
+                  key={address._id}
                   container 
                   spacing={1}
                   // onClick={() => setSelectedValue(address.name)} 
                   // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
-                  onClick={() => handleSelectAddress(address.contactName)}
+                  onClick={() => handleSelectAddress(address._id)}
                   sx={{
                     // boxShadow: '0px 0px 1px 1.5px rgba(40, 44, 63, .2)'', 
-                    boxShadow: selectedValue === address.contactName ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
-                    // border: selectedValue === address.name ? "1px solid #eaeaec" : "1px solid #eaeaec",
+                    boxShadow: selectedValue === address._id ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
+                    // border: selectedValue === address._id ? "1px solid #eaeaec" : "1px solid #eaeaec",
                     border:'1px solid #eaeaec',
                     padding:'10px', 
                     paddingBottom:'20px', 
@@ -178,12 +235,12 @@ const OrderAddress = (props) => {
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex' }}>
                       <Radio
-                        checked={selectedValue === address.contactName}
+                        checked={selectedValue === address._id}
                         // onChange={handleChange}
                         onChange={() => handleSelectAddress}
                         value={address.contactName}
                         name="radio-buttons"
-                        // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
+                        // className={`address-grid ${selectedValue === address._id ? 'selected' : ''}`}
                         sx={{ marginTop: '-10px', marginLeft: '-15px', ...radioButtonSTyle}}
                       />
                       <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
@@ -194,24 +251,7 @@ const OrderAddress = (props) => {
                           variant="outline"
                           disableElevation
                           disableRipple
-                          sx={{
-                            color: "#03a685",
-                            fontWeight: "700",
-                            textTransform: "uppercase",
-                            padding:'3px 3px 2px 3px',
-                            // backgroundColor: "#F5F5F6",
-                            border:'1.3px solid #03A685',
-                            borderRadius: "20px",
-                            fontSize: "10px",
-                            lineHeight: '14px',
-                            minWidth: "55px",
-                            marginLeft:'10px',
-                            "&:hover":{
-                              backgroundColor:"#ffffff",
-                              border:'1.3px solid #03A685',
-
-                            }
-                          }}
+                          sx={addressTypeStyle}
                         >
                           {address.contactName}
                         </Button>
@@ -220,7 +260,7 @@ const OrderAddress = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography sx={savedAddressStyle}>
-                      {address.addressLine + " " + address.locality + " " + address.city + " " + address.state}
+                      {getAddressLine(address)}
                     </Typography>
                     <Typography sx={savedAddressStyle}>
                       Mobile: <span style={{ fontWeight: '700' }}>{address.phoneNo}</span>
@@ -228,11 +268,14 @@ const OrderAddress = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography sx={savedAddressStyle}>
-                      {address.default ? "Pay on Delivery available" : "Pay on Delivery not available"}
+                      {address.default ? 
+                        "Pay on Delivery available" : 
+                        "Pay on Delivery not available"
+                      }
                     </Typography>
                   </Grid>
                   {/* Buttons to edit or remove address */}
-                  {selectedValue === address.contactName && (
+                  {selectedValue === address._id && (
                     <Grid
                       item
                       xs={12}
@@ -243,39 +286,14 @@ const OrderAddress = (props) => {
                       <Grid item>
                         <Button
                           variant="outlined"
-                          sx={{
-                            textTransform: 'uppercase',
-                            fontWeight: '700',
-                            fontSize: '12px',
-                            borderRadius: '4px',
-                            color: "#282c3f",
-                            padding: '6.5px 16px',
-                            border: '1px solid #282c3f',
-                            marginLeft: '25px',
-                            '&:hover': {
-                              borderColor: '#282c3f',
-                              backgroundColor: '#ffffff',
-                            },
-                          }}
+                          sx={removeButtonStyle}
                         >
                           Remove
                         </Button>
                       </Grid>
                       <Grid item>
                         <Button variant="outlined" 
-                          sx={{
-                            textTransform: 'uppercase',
-                            fontWeight: '700',
-                            fontSize: '12px',
-                            borderRadius: '4px',
-                            color: "#282c3f",
-                            padding: '6.5px 16px',
-                            border: '1px solid #282c3f',
-                            '&:hover': {
-                              borderColor: '#282c3f',
-                              backgroundColor: '#ffffff',
-                            },
-                          }}
+                          sx={editButtonStyle}
                         >
                           Edit
                         </Button>
