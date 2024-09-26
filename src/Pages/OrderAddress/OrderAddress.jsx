@@ -4,15 +4,15 @@ import OrderSummary from "../../Components/Checkout/OrderSummary/OrderSummary";
 import AddressForm from "../../Components/Checkout/AddressForm/AddressForm";
 import AddressDialog from "../../Components/Checkout/AddressDialog/AddressDialog";
 import CheckoutSteps from "../../Components/Checkout/CheckoutSteps/CheckoutSteps";
+import { useSelector } from "react-redux";
 
 
-const savedAddressesObj = [
+/* const savedAddressesObj = [
   {
     name: "Pratik Chakraborty",
     type: "Home",
     address: "1/1A, Kedar Nath Das Lane, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
-    type: "Office",
     codAvailable: false,
   },
   {
@@ -20,24 +20,23 @@ const savedAddressesObj = [
     type: "Office",
     address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
-    type: "Office",
     codAvailable: false,
   },
   {
     name: "Sayantan Sardar",
-    type: "Home 2",
+    type: "Home",
     address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
     mobile: "7595029561",
-    type: "home",
     codAvailable: false,
   }
-];
+]; */
 
 const OrderAddress = (props) => {
   const { hideNavbar } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState(0);
   // const [selectedValue, setSelectedValue] = useState(savedAddressesObj[0].name);
+  const savedAddressesObj = useSelector((store) => store.user.userData.address);
   const [savedAddresses, setSavedAddresses] = useState(savedAddressesObj);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const OrderAddress = (props) => {
 
   useEffect(() => {
     if(savedAddresses.length > 0){
-      setSelectedValue(savedAddresses[0].name);
+      setSelectedValue(savedAddresses[0].contactName);
     }
   }, [savedAddresses]);
 
@@ -164,10 +163,10 @@ const OrderAddress = (props) => {
                   spacing={1}
                   // onClick={() => setSelectedValue(address.name)} 
                   // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
-                  onClick={() => handleSelectAddress(address.name)}
+                  onClick={() => handleSelectAddress(address.contactName)}
                   sx={{
                     // boxShadow: '0px 0px 1px 1.5px rgba(40, 44, 63, .2)'', 
-                    boxShadow: selectedValue === address.name ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
+                    boxShadow: selectedValue === address.contactName ? '0 0 4px rgba(40, 44, 63, .2)' : 'none',
                     // border: selectedValue === address.name ? "1px solid #eaeaec" : "1px solid #eaeaec",
                     border:'1px solid #eaeaec',
                     padding:'10px', 
@@ -179,16 +178,16 @@ const OrderAddress = (props) => {
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex' }}>
                       <Radio
-                        checked={selectedValue === address.name}
+                        checked={selectedValue === address.contactName}
                         // onChange={handleChange}
                         onChange={() => handleSelectAddress}
-                        value={address.name}
+                        value={address.contactName}
                         name="radio-buttons"
                         // className={`address-grid ${selectedValue === address.name ? 'selected' : ''}`}
                         sx={{ marginTop: '-10px', marginLeft: '-15px', ...radioButtonSTyle}}
                       />
                       <Typography sx={{ fontSize: '14px', color: '#282c3f', fontWeight: '700' }}>
-                        {address.name}
+                        {address.contactName}
                       </Typography>
                       <span>
                         <Button
@@ -214,24 +213,26 @@ const OrderAddress = (props) => {
                             }
                           }}
                         >
-                          {address.type}
+                          {address.contactName}
                         </Button>
                       </span>
                     </Box>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography sx={savedAddressStyle}>{address.address}</Typography>
                     <Typography sx={savedAddressStyle}>
-                      Mobile: <span style={{ fontWeight: '700' }}>{address.mobile}</span>
+                      {address.addressLine + " " + address.locality + " " + address.city + " " + address.state}
+                    </Typography>
+                    <Typography sx={savedAddressStyle}>
+                      Mobile: <span style={{ fontWeight: '700' }}>{address.phoneNo}</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography sx={savedAddressStyle}>
-                      {address.codAvailable ? "Pay on Delivery available" : "Pay on Delivery not available"}
+                      {address.default ? "Pay on Delivery available" : "Pay on Delivery not available"}
                     </Typography>
                   </Grid>
                   {/* Buttons to edit or remove address */}
-                  {selectedValue === address.name && (
+                  {selectedValue === address.contactName && (
                     <Grid
                       item
                       xs={12}
