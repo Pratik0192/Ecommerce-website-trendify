@@ -7,29 +7,6 @@ import CheckoutSteps from "../../Components/Checkout/CheckoutSteps/CheckoutSteps
 import { useSelector } from "react-redux";
 
 
-/* const userData = [
-  {
-    name: "Pratik Chakraborty",
-    type: "Home",
-    address: "1/1A, Kedar Nath Das Lane, Kolkata, West Bengal - 700030",
-    mobile: "7595029561",
-    codAvailable: false,
-  },
-  {
-    name: "Swetabja Hazra",
-    type: "Office",
-    address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
-    mobile: "7595029561",
-    codAvailable: false,
-  },
-  {
-    name: "Sayantan Sardar",
-    type: "Home",
-    address: "1/1A, Godrej Prakriti, Kolkata, West Bengal - 700030",
-    mobile: "7595029561",
-    codAvailable: false,
-  }
-]; */
 
 const OrderAddress = (props) => {
   const { hideNavbar } = props;
@@ -52,15 +29,11 @@ const OrderAddress = (props) => {
     }
   }, [userData]);
 
-  // const handleChange = (event,name) => {
-  //   // console.log("radio button")
-  //   // console.log("Selected Name:", name);
-  //   setSelectedValue(event.target.value);
-  // };
 
-  const handleSelectAddress = (name) => {
-    console.log("Selected Name:", name);
-    setSelectedValue(name);
+
+  const handleSelectAddress = (id) => {
+    console.log("Selected Address:", id);
+    setSelectedValue(id);
   };
 
   const handleOpenDialog = () => {
@@ -175,7 +148,6 @@ const OrderAddress = (props) => {
       <CheckoutSteps activeStep={0} />
       <Grid container spacing={2} justifyContent="center" sx={{ padding: "2rem"}}>
         {/* SHIPPING ADDRESS SECTION */}
-        
         {savedAddresses.length > 0 && (
           <Grid item xs={12} sx={{ marginBottom: "1rem" }}>
             <Box
@@ -236,8 +208,7 @@ const OrderAddress = (props) => {
                     <Box sx={{ display: 'flex' }}>
                       <Radio
                         checked={selectedValue === address._id}
-                        // onChange={handleChange}
-                        onChange={() => handleSelectAddress}
+                        onChange={() => handleSelectAddress(address._id)}
                         value={address.contactName}
                         name="radio-buttons"
                         // className={`address-grid ${selectedValue === address._id ? 'selected' : ''}`}
@@ -300,7 +271,6 @@ const OrderAddress = (props) => {
                       </Grid>
                     </Grid>
                   )}
-                  
                 </Grid>
               )
             })

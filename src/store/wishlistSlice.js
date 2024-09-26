@@ -65,12 +65,20 @@ const wishlistSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchWishlistData.pending, (state, action) => {
+        state.loading = true;
+      })
       .addCase(fetchWishlistData.fulfilled, (state, action) => {
+        state.loading = false;
         console.log("Wishlist: ", action.payload.wishlist);
         state.data = action.payload.wishlist;
       })
       .addCase(fetchWishlistData.rejected, (state, action) => {
+        state.loading = false;
         console.log("Failed to fetch Wishlist");
+      })
+      .addCase(addToWishlist.pending, (state, action) => {
+        state.loading = true;
       })
       .addCase(addToWishlist.fulfilled, (state, action) => {
         state.loading = false;
@@ -90,6 +98,9 @@ const wishlistSlice = createSlice({
       .addCase(addToWishlist.rejected, (state, action) => {
         state.loading = false;
         console.log("Failed to add to wishlist");
+      })
+      .addCase(removeFromWishlist.pending, (state, action) => {
+        state.loading = true;
       })
       .addCase(removeFromWishlist.fulfilled, (state, action) => {
         state.loading = false;
