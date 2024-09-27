@@ -36,6 +36,7 @@ import config from "./Chatbot/config";
 import MessageParser from "./Chatbot/MessageParser";
 import ActionProvider from "./Chatbot/ActionProvider";
 import 'react-chatbot-kit/build/main.css';
+// import './custom.css';
 import { Button } from "@mui/material";
 import { IconButton, Box, Dialog } from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";

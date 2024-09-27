@@ -33,11 +33,11 @@ class MessageParser {
       this.actionProvider.handleShippingInfo();
     }
 
-    if (lowerCaseMessage.includes("shipping delay") || lowerCaseMessage.includes("delayed shipping")) {
+    if (lowerCaseMessage.includes("delay") || lowerCaseMessage.includes("delayed ")) {
       this.actionProvider.handleShippingDelay();
     }
 
-    if (lowerCaseMessage.includes("shipping cost") || lowerCaseMessage.includes("delivery charges")) {
+    if (lowerCaseMessage.includes("cost") || lowerCaseMessage.includes("delivery charges")) {
       this.actionProvider.handleShippingCost();
     }
 

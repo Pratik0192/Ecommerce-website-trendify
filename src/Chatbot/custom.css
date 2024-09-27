@@ -1,0 +1,123 @@
+body {
+  background-color: #f5f5f5;
+}
+
+/* Override the chat input field */
+.react-chatbot-kit-chat-input {
+    border: 1px solid #ff3f6c !important; 
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .react-chatbot-kit-chat-input:focus {
+    border-color: #ff3f6c !important;
+    outline: none;
+  }
+
+  .react-chatbot-kit-chat-box{
+    border-color: #ff3f6c !important; 
+    outline: none;
+  }
+
+
+.react-chatbot-kit-chat-container {
+  min-width: 300px !important; 
+  background-color: #ff3f6c !important; 
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Customize bot message box */
+.react-chatbot-kit-chat-bot-message {
+  background-color: #ff3f6c !important; 
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  /* margin-left:-12px; */
+  margin-right: 35px;
+}
+
+/* Customize user message box */
+.react-chatbot-kit-user-chat-message {
+  background-color: #f1f1f1 !important;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #585858;
+  font-weight: medium;
+  position: relative;
+  text-align: left;
+}
+
+.react-chatbot-kit-user-avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 12.5px;
+  /* background-color: #ff3f6c !important; */
+  /* background-color: #3d4e8d; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-chatbot-kit-user-chat-message-arrow {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #f1f1f1;
+  position: absolute;
+  right: -7px;
+  top: 13px;
+}
+
+
+.react-chatbot-kit-chat-bot-avatar-letter {
+  position: relative;
+  /* text-indent: -9999px;  */
+  visibility: hidden;
+}
+
+/* .react-chatbot-kit-chat-bot-avatar-letter::before {
+  content: "T" !important; 
+  position: absolute;
+  left: -15px;
+  right: 0;
+  top: -8px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #ffffff; 
+  background-color: #ff3f6c; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+} */
+
+
+/* Change bot logo in messages (MessageProvider) */
+.react-chatbot-kit-chat-bot-avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  /* font-size: 1.2rem; */
+  margin-right: 12.5px;
+  background-color: #d8d8d8;
+  background-image: url('../Components/Assets/logo.png') !important;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border:1px solid #ff3f6c; */
+  /* box-shadow:0 1px 2px 1px rgb(212, 213, 217 , 0.5) !important; */
+}
+
+
+
+
+  
