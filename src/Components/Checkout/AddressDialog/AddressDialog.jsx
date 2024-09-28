@@ -1,33 +1,49 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Divider } from '@mui/material'
-import React from 'react'
-import AddressForm from '../AddressForm/AddressForm'
+import React, { useEffect } from 'react'
+import AddressForm from '../AddressForm/AddressForm';
 
 const buttonStyle = {
-    width:'90%',
+    width:'100%',
     color:'#fff',
     backgroundColor: "#ff3f6c",
     borderRadius: "4px",
-    padding: "14px",
+    padding: "10px",
     fontSize: "14px",
     textTransform: "uppercase",
-    marginBottom: "20px",
-    marginRight:'5%',
+    marginBottom: "2px",
     "&:hover": {
       backgroundColor: "#ff3f6c",
     },
 }
 
-const AddressDialog = ({openDialog, handleCloseDialog}) => {
+const AddressDialog = (props) => {
+  const { 
+    openDialog, 
+    setOpenDialog, 
+    handleSubmitAddress,
+    handleUpdateAddress,
+    address
+  } = props;
+
+  const handleSubmit = () => {
+    if(address._id === undefined){
+      handleSubmitAddress();
+    } else {
+      handleUpdateAddress(address._id);
+    }
+  }
+
   return (
     <Dialog
       open={openDialog}
-      onClose={handleCloseDialog}
+      onClose={() => setOpenDialog(false)}
       aria-labelledby="review-dialog-title"
-      maxWidth="sm"
-      fullWidth={true}
       sx={{
+        width: "60vw%",
+        margin: "auto",
+        marginTop: "-80px",
         '& .MuiDialog-paper': {
-          width: '80%',
+          width: "520px",
           maxHeight: '80vh',
           padding:'0'
         },
@@ -39,19 +55,18 @@ const AddressDialog = ({openDialog, handleCloseDialog}) => {
           fontSize:'16px', 
           fontWeight:'700', 
           color:"#282c3f", 
-          paddingLeft:'47px',
-          paddingBottom:'30px',
-          paddingTop:'30px',
           borderBottom:'1px solid #eaeaec'
         }}
       >
         Add New Address
       </DialogTitle>
-      <DialogContent>
-        <AddressForm />
+      <DialogContent sx={{ padding: "0 15px"}} >
+        <AddressForm
+          address={address}
+        />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCloseDialog} sx={buttonStyle}>
+        <Button onClick={handleSubmit} sx={buttonStyle}>
           Add Address
         </Button>
       </DialogActions>

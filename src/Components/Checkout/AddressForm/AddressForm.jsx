@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   TextField,
@@ -8,6 +8,9 @@ import {
   Checkbox,
   Box,
 } from "@mui/material";
+import { userActions } from "../../../store/userSlice";
+import { debounce } from "lodash";
+import { useDispatch } from "react-redux";
 
 
 const detailsHeading = {
@@ -72,139 +75,180 @@ const addressButtonStyle = {
 };
 
 
-const AddressForm = () => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [pinCode, setPinCode] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [addressType, setAddressType] = useState("Home");
-
-  const shippingSubmit = (e) => {
-    e.preventDefault();
-    console.log("Add Address");
-    const shippingAddress = {
-      name,
-      address,
-      city,
-      state,
-      country,
-      pinCode,
-      phoneNo,
-      addressType,
-    };
-    // window.location = "/checkout/confirm";
+const AddressForm = ({ address }) => {
+  const emptyAddress = {
+    contactName: "",
+    phoneNo: "",
+    pinCode: "",
+    addressLine: "",
+    locality: "",
+    city: "",
+    state: "",
+    type: ""
   };
+  const dispatch = useDispatch();
+  const [addressState, setAddressState] = useState(emptyAddress);
+
+
+  useEffect(() => {
+    if(address._id !== undefined){
+      const { _id, default: isDef, ...restAddress } = address;
+      setAddressState(restAddress);
+      dispatch(userActions.setAddressState(restAddress));
+    }
+    else {
+      dispatch(userActions.setAddressState(emptyAddress));
+    }
+  }, []);
+
+
+  const debouncedSetAddress = debounce((e) => {
+    setAddressState({
+      ...addressState,
+      [e.target.name]: e.target.value
+    });
+    dispatch(userActions.setAddressState({
+      ...addressState,
+      [e.target.name]: e.target.value
+    }));
+  }, 600);
+
+  const setAddressValue = (e) => {
+    debouncedSetAddress(e);
+  }
+
+  const setAddressType = (addressType) => {
+    setAddressState({
+      ...addressState,
+      type: addressType
+    });
+    dispatch(userActions.setAddressState({
+      ...addressState,
+      type: addressType
+    }));
+  }
+
+  const getRequiredValue = (value) => {
+    return address !== undefined ? address[value] : ""
+  }
+
   return (
-    <div>
-      <Box sx={{ borderRadius: "10px", padding: "20px" }}>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
         <Typography sx={detailsHeading}>CONTACT DETAILS</Typography>
-        <form onSubmit={shippingSubmit}>
-          <Grid container spacing={2} sx={{ marginTop: "3px" }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Name"
-                variant="outlined"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Mobile No"
-                variant="outlined"
-                required
-                type="tel"
-                value={phoneNo}
-                onChange={(e) => setPhoneNo(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography sx={detailsHeading}>ADDRESS</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                label="Pin Code"
-                variant="outlined"
-                required
-                value={pinCode}
-                onChange={(e) => setPinCode(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Address (House No, Building, Street, Area)"
-                variant="outlined"
-                required
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Locality / Town"
-                variant="outlined"
-                required
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="City / District"
-                variant="outlined"
-                required
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="State"
-                variant="outlined"
-                required
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                sx={inputStyle}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography sx={detailsHeading}>SAVE ADDRESS AS</Typography>
-              <Box sx={{ display: "flex", marginTop: "12px" }}>
-                <Button variant="outlined" sx={addressButtonStyle}>
-                  HOME
-                </Button>
-                <Button variant="outlined" sx={addressButtonStyle}>
-                  WORK
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Make this my default address"
-              />
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </div>
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Name"
+          name="contactName"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("contactName")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Mobile No"
+          name="phoneNo"
+          variant="outlined"
+          required
+          type="tel"
+          defaultValue={getRequiredValue("phoneNo")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Typography sx={detailsHeading}>ADDRESS</Typography>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <TextField
+          fullWidth
+          label="Pin Code"
+          name="pinCode"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("pinCode")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Address (House No, Building, Street, Area)"
+          name="addressLine"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("addressLine")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Locality / Town"
+          name="locality"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("locality")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label="City / District"
+          name="city"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("city")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label="State"
+          name="state"
+          variant="outlined"
+          required
+          defaultValue={getRequiredValue("state")}
+          onChange={setAddressValue}
+          sx={inputStyle}
+        />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Typography sx={detailsHeading}>SAVE ADDRESS AS</Typography>
+        <Box sx={{ display: "flex", marginTop: "12px" }}>
+          <Button variant="outlined"
+            sx={addressButtonStyle}
+            onClick={() => setAddressType("Home")}
+          >
+            HOME
+          </Button>
+          <Button variant="outlined" 
+            sx={addressButtonStyle}
+            onClick={() => setAddressType("Office")}
+          >
+            WORK
+          </Button>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Make this my default address"
+        />
+      </Grid>
+    </Grid>
   );
 };
 

@@ -157,7 +157,6 @@ const Navbar = () => {
 
   const handlePageRouteChange = (pageName) => {
     setMenu(pageName);
-    //dispatch(productActions.resetProductsList())
   }
 
   const debouncedHandleSearchChange = debounce((value) => {

@@ -70,7 +70,61 @@ export const getUserAddresses = createAsyncThunk(
     );
     return res.data;
   }
-)
+);
+
+
+export const createUserAddress = createAsyncThunk(
+  'user/createUserAddress',
+  async (params) => {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASEURL}/api/v1/user/address/add`,
+      params.payload,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': params.token
+        }
+      }
+    );
+    return res.data;
+  }
+);
+
+
+export const updateUserAddress = createAsyncThunk(
+  'user/updateUserAddress',
+  async (params) => {
+    const res = await axios.put(
+      `${process.env.REACT_APP_BASEURL}/api/v1/user/address/edit/${params.addressId}`,
+      params.payload,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': params.token
+        }
+      }
+    );
+    return res.data;
+  }
+);
+
+
+export const deleteUserAddress = createAsyncThunk(
+  'user/deleteUserAddress',
+  async (params) => {
+    const res = await axios.delete(
+      `${process.env.REACT_APP_BASEURL}/api/v1/user/address/delete/${params.addressId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': params.token
+        }
+      }
+    );
+    return res.data;
+  }
+);
+
 
 
 
@@ -79,8 +133,9 @@ const userSlice = createSlice({
   initialState: { 
     isUserLoggedIn: false, 
     userData: null, 
-    token: null, 
+    token: null,
     loading: false,
+    address: null,
     statusCode: 0,
     authMessage: null,
   },
@@ -93,6 +148,9 @@ const userSlice = createSlice({
     },
     resetAutmMessage: (state, action) => {
       state.authMessage = null;
+    },
+    setAddressState: (state, action) => {
+      state.address = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -138,6 +196,49 @@ const userSlice = createSlice({
         console.log("Failed to fetch User Data");
         state.loading = false;
         console.log(action.error.message);
+      })
+      .addCase(createUserAddress.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(createUserAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("Address Posted Successfully");
+        state.userData.address.push(action.payload.address);
+      })
+      .addCase(createUserAddress.rejected, (state, action) => {
+        state.loading = false;
+        console.log("Failed to post address");
+      })
+      .addCase(updateUserAddress.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateUserAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("Address Updated Successfully");
+        const addressIndex = state.userData.address.findIndex(
+          (address) => address._id === action.payload.address._id
+        );
+        if(addressIndex !== -1){
+          state.userData.address[addressIndex] = action.payload.address;
+        }
+      })
+      .addCase(updateUserAddress.rejected, (state, action) => {
+        state.loading = false;
+        console.log("Failed to update address");
+      })
+      .addCase(deleteUserAddress.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteUserAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("Address Deleted Successfully");
+        state.userData.address = state.userData.address.filter(
+          (address) => address._id !== action.payload.addressId
+        );
+      })
+      .addCase(deleteUserAddress.rejected, (state, action) => {
+        state.loading = false;
+        console.log("Failed to delete address");
       })
   }
 });
