@@ -126,7 +126,7 @@ function App() {
             onClick={toggleChatbot}
             style={{
               position: "fixed",
-              bottom: "20px",
+              bottom: "30px",
               right: "30px",
               backgroundColor:"#ff3f6c",
               color: "#fff",
