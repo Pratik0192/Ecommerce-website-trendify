@@ -7,6 +7,8 @@ import NewsLetter from "../../Components/NewsLetter/NewsLetter"
 
 import { fetchUserDetails } from "../../store/userSlice"
 import { useDispatch, useSelector } from "react-redux";
+import { Grid } from "@mui/material"
+import Services from "../../Components/Services/Services"
 
 const Shop = (props) =>{
   const { showNavbar } = props;
@@ -16,13 +18,15 @@ const Shop = (props) =>{
   }, [showNavbar]);
 
   return (
-    <div>
+    <Grid xs={12} md={12}>
       <Hero/>
-      <Popular/>
-      <Offers/>
-      <NewCollections/>
-      <NewsLetter/>
-    </div>
+      <Services />
+    </Grid>
+    //   
+    //   <Popular/>
+    //   <Offers/>
+    //   <NewCollections/>
+    //   <NewsLetter/>
   )
 }
 
