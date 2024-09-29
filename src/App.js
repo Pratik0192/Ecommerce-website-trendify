@@ -31,9 +31,21 @@ import { fetchCartData } from "./store/cartSlice";
 import { fetchWishlistData } from "./store/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+import Chatbot from "react-chatbot-kit";
+import config from "./Chatbot/config";
+import MessageParser from "./Chatbot/MessageParser";
+import ActionProvider from "./Chatbot/ActionProvider";
+import 'react-chatbot-kit/build/main.css';
+// import './custom.css';
+import { Button } from "@mui/material";
+import { IconButton, Box, Dialog } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
+import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
+
 
 function App() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [isChatbotVisible, setIsChatbotVisible] = useState(false);
   const isUserLoggedIn = useSelector((store) => store.user.isUserLoggedIn);
   const dispatch = useDispatch();
 
@@ -53,6 +65,20 @@ function App() {
   const showNavbar = () => {
     setIsNavbarVisible(true);
   }
+
+  const toggleChatbot = () => {
+    setIsChatbotVisible(prev => !prev);
+  }
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -81,6 +107,45 @@ function App() {
             <Route path='/accountpage' element={<AccountPage/>} />
           </Routes>
           <Footer/>
+          {/* chatbot component */}
+          {/* <Button
+            variant="outlined"
+            onClick={toggleChatbot}
+            style={{
+              position:'fixed', 
+              bottom:'20px', 
+              right:'20px', 
+              zIndex:'1000', 
+              padding:'10px 20px', 
+              cursor:'pointer'
+            }}
+          >
+            {isChatbotVisible ? "Close Chat" : "Chat with us"}
+          </Button> */}
+          <IconButton
+            onClick={toggleChatbot}
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "30px",
+              backgroundColor:"#ff3f6c",
+              color: "#fff",
+              zIndex: 1000,
+            }}
+          >
+            {/* <ChatIcon /> */}
+            {isChatbotVisible ? <SpeakerNotesOffIcon /> : <ChatIcon/> }
+          </IconButton>
+
+          {isChatbotVisible && (
+            <div style={{position:'fixed', bottom:'80px', right:'20px', zIndex:1000 }}>
+              <Chatbot 
+                config={config} 
+                messageParser={MessageParser} 
+                actionProvider={ActionProvider} 
+              />
+            </div>
+          )}
         </BrowserRouter>
       </div>
       <ToastContainer />
