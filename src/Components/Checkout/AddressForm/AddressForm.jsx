@@ -11,6 +11,32 @@ import {
 import { userActions } from "../../../store/userSlice";
 import { debounce } from "lodash";
 import { useDispatch } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  contactName: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Name should only contain alphabets")
+    .required("Name is required"),
+  phoneNo: Yup.string()
+    .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits")
+    .required("Mobile number is required"),
+  pinCode: Yup.string()
+    .matches(/^\d{6}$/, "Pincode must be exactly 6 digits")
+    .required("Pincode is required"),
+  addressLine: Yup.string()
+    .matches(/^[A-Za-z0-9\s,.-]+$/, "Address contains invalid characters")
+    .required("Address is required"),
+  locality: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Locality should only contain alphabets")
+    .required("Locality is required"),
+  city: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "City should only contain alphabets")
+    .required("City is required"),
+  state: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "State should only contain alphabets")
+    .required("State is required"),
+});
 
 
 const detailsHeading = {
@@ -101,6 +127,22 @@ const AddressForm = ({ address }) => {
     }
   }, []);
 
+  const handleDebouncedChange = debounce((values) => {
+    dispatch(userActions.setAddressState(values));
+    console.log("Debounced Address data updated:", values);
+  }, 600); // 300ms debounce delay
+
+  const handleAddressTypeChange = (addressType) => {
+    setAddressState({
+      ...addressState,
+      type: addressType
+    });
+    dispatch(userActions.setAddressState({
+      ...addressState,
+      type: addressType
+    }));
+  };
+
 
   const debouncedSetAddress = debounce((e) => {
     setAddressState({
@@ -111,7 +153,7 @@ const AddressForm = ({ address }) => {
       ...addressState,
       [e.target.name]: e.target.value
     }));
-  }, 600);
+  }, 300);
 
   const setAddressValue = (e) => {
     debouncedSetAddress(e);
@@ -133,122 +175,227 @@ const AddressForm = ({ address }) => {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography sx={detailsHeading}>CONTACT DETAILS</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          label="Name"
-          name="contactName"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("contactName")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          label="Mobile No"
-          name="phoneNo"
-          variant="outlined"
-          required
-          type="tel"
-          defaultValue={getRequiredValue("phoneNo")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography sx={detailsHeading}>ADDRESS</Typography>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          label="Pin Code"
-          name="pinCode"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("pinCode")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          label="Address (House No, Building, Street, Area)"
-          name="addressLine"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("addressLine")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          label="Locality / Town"
-          name="locality"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("locality")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          label="City / District"
-          name="city"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("city")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          label="State"
-          name="state"
-          variant="outlined"
-          required
-          defaultValue={getRequiredValue("state")}
-          onChange={setAddressValue}
-          sx={inputStyle}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Typography sx={detailsHeading}>SAVE ADDRESS AS</Typography>
-        <Box sx={{ display: "flex", marginTop: "12px" }}>
-          <Button variant="outlined"
-            sx={addressButtonStyle}
-            onClick={() => setAddressType("Home")}
-          >
-            HOME
-          </Button>
-          <Button variant="outlined" 
-            sx={addressButtonStyle}
-            onClick={() => setAddressType("Office")}
-          >
-            WORK
-          </Button>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Make this my default address"
-        />
-      </Grid>
-    </Grid>
+    <Formik
+      initialValues={{
+        contactName: addressState.contactName || "",
+        phoneNo: addressState.phoneNo || "",
+        pinCode: addressState.pinCode || "",
+        addressLine: addressState.addressLine || "",
+        locality: addressState.locality || "",
+        city: addressState.city || "",
+        state: addressState.state || "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        handleDebouncedChange.cancel(); // Cancel debounced updates on submit
+        dispatch(userActions.setAddressState(values));
+        console.log("Address data submitted:", values);
+      }}
+      validateOnChange={false} // Prevents real-time validation
+      validateOnBlur={true} // Validates on blur
+    >
+      {({ values, handleChange, handleBlur, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography sx={detailsHeading}>CONTACT DETAILS</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="Name"
+                name="contactName"
+                variant="outlined"
+                required
+                value={values.contactName}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, contactName: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="contactName"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="Mobile No"
+                name="phoneNo"
+                variant="outlined"
+                required
+                type="tel"
+                value={values.phoneNo}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, phoneNo: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="phoneNo"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography sx={detailsHeading}>ADDRESS</Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="Pin Code"
+                name="pinCode"
+                variant="outlined"
+                required
+                value={values.pinCode}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, pinCode: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="pinCode"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="Address (House No, Building, Street, Area)"
+                name="addressLine"
+                variant="outlined"
+                required
+                value={values.addressLine}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, addressLine: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="addressLine"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="Locality / Town"
+                name="locality"
+                variant="outlined"
+                required
+                value={values.locality}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, locality: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="locality"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="City / District"
+                name="city"
+                variant="outlined"
+                required
+                value={values.city}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, city: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="city"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                as={TextField}
+                fullWidth
+                label="State"
+                name="state"
+                variant="outlined"
+                required
+                value={values.state}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleDebouncedChange({ ...values, state: e.target.value });
+                }}
+                onBlur={handleBlur}
+                sx={inputStyle}
+              />
+              <ErrorMessage
+                name="state"
+                component="div"
+                style={{ color: "red", fontSize: "12px" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography sx={detailsHeading}>ADDRESS TYPE</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Box>
+                <Button
+                  variant="outlined"
+                  sx={addressButtonStyle}
+                  onClick={() => handleAddressTypeChange("Home")}
+                  color={addressState.type === "Home" ? "error" : "inherit"}
+                >
+                  Home
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={addressButtonStyle}
+                  onClick={() => handleAddressTypeChange("Work")}
+                  color={addressState.type === "Work" ? "error" : "inherit"}
+                >
+                  Work
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="error"
+                    name="isDefault"
+                  />
+                }
+                label="Make this my default address"
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

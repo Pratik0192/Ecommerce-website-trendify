@@ -72,7 +72,14 @@ const ProductCard = (props) => {
 
   return (
     <Card
-      sx={{ height: category === "laptop" ? "355px" : "456px" }}
+      sx={{ 
+        height: category === "laptop" ? "355px" : "456px",
+        transition: 'box-shadow 0.3s ease-in-out',
+        boxShadow:'none',
+        '&:hover': {
+          boxShadow: "0 0 12px 0 rgba(0, 0, 0, .1)",
+        }
+      }}
       className="item-container"
       variant="outlined"
       onMouseEnter={() => setIsHovered(true)}
