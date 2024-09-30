@@ -54,7 +54,7 @@ const Footer = () =>{
 
 
   return (
-    <Box sx={{backgroundColor:'#fafbfc', padding:'30px 0px 40px 0px'}}>
+    <Box sx={{backgroundColor:'#fafbfc', padding:'30px 0px 40px 0px', marginTop:'200px'}}>
 
       {/* first section */}
       <Box sx={{maxWidth:'1080px', minWidth:'980px', margin:'auto',display:'flex'}}>
