@@ -9,6 +9,7 @@ import { fetchUserDetails } from "../../store/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material"
 import Services from "../../Components/Services/Services"
+import Logosection from "../../Components/Logosection/Logosection"
 
 const Shop = (props) =>{
   const { showNavbar } = props;
@@ -21,6 +22,7 @@ const Shop = (props) =>{
     <Grid xs={12} md={12}>
       <Hero/>
       <Services />
+      <Logosection />
     </Grid>
     //   
     //   <Popular/>
