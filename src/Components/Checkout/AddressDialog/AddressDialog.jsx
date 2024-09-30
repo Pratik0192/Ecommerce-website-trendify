@@ -1,5 +1,5 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Divider } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 import AddressForm from '../AddressForm/AddressForm';
 
 const buttonStyle = {
@@ -74,4 +74,4 @@ const AddressDialog = (props) => {
   )
 }
 
-export default AddressDialog
+export default AddressDialog;
